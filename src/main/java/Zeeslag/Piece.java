@@ -1,6 +1,6 @@
 package Zeeslag;
 
-public class Piece extends Coords implements Dimension{
+public class Piece extends Coords{
 
     public Piece(int coordX, int coordY) {
         super(coordX, coordY);
@@ -26,30 +26,24 @@ public class Piece extends Coords implements Dimension{
 
     private int height;
     private int width;
+    private boolean selected;
+    private boolean placed;
 
-    @Override
-    public int getWidth() {
-        return width;
-    }
-
-    @Override
-    public void setWidth(int width) {
-
-    }
-
-    @Override
     public int getHeight() {
         return height;
     }
 
-    @Override
-    public void setHeight(int height) {
-
+    private void setHeight(int height) {
+        this.height = height;
     }
-    private boolean selected;
-    private boolean placed;
 
+    public int getWidth() {
+        return width;
+    }
 
+    private void setWidth(int width) {
+        this.width = width;
+    }
 
     public boolean isPlaced() {
         return placed;
@@ -107,6 +101,5 @@ public class Piece extends Coords implements Dimension{
         this.setSelected(false);
         this.setPlaced(true);
     }
-
 
 }

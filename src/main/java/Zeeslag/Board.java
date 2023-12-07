@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Board implements Dimension {
+public class Board {
 
     public Board() {
         this.width = 20;
@@ -30,32 +30,20 @@ public class Board implements Dimension {
     private int height;
     private List<Piece> pieces;
 
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
     public List<Piece> getPieces() {
         return pieces;
     }
 
     public void setPieces(List<Piece> pieces) {
         this.pieces = pieces;
-    }
-
-    @Override
-    public int getWidth() {
-        return width;
-    }
-
-    @Override
-    public void setWidth(int width) {
-
-    }
-
-    @Override
-    public int getHeight() {
-        return height;
-    }
-
-    @Override
-    public void setHeight(int height) {
-
     }
 
     // Methodes
@@ -150,6 +138,4 @@ public class Board implements Dimension {
             }
         }
     }
-
-
 }
