@@ -1,4 +1,4 @@
-package Zeeslag;
+package fx;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

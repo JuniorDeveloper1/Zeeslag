@@ -1,4 +1,4 @@
-package Zeeslag;
+package fx;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -15,8 +15,6 @@ public class HelloApplication extends Application {
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
-        Board board = new Board();
-
     }
 
     public static void main(String[] args) {
