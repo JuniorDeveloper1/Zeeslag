@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Board {
+public class Board implements Dimension {
 
     public Board() {
         this.width = 20;
@@ -30,22 +30,6 @@ public class Board {
     private int height;
     private List<Piece> pieces;
 
-    public int getWidth() {
-        return width;
-    }
-
-    private void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    private void setHeight(int height) {
-        this.height = height;
-    }
-
     public List<Piece> getPieces() {
         return pieces;
     }
@@ -54,14 +38,46 @@ public class Board {
         this.pieces = pieces;
     }
 
+    @Override
+    public int getWidth() {
+        return width;
+    }
+
+    @Override
+    public void setWidth(int width) {
+
+    }
+
+    @Override
+    public int getHeight() {
+        return height;
+    }
+
+    @Override
+    public void setHeight(int height) {
+
+    }
+
     // Methodes
     public void generateDefaultPieces() {
-        this.getPieces().add(new Piece(4));
-        this.getPieces().add(new Piece(3));
-        this.getPieces().add(new Piece(3));
-        this.getPieces().add(new Piece(2));
-        this.getPieces().add(new Piece(2));
-        this.getPieces().add(new Piece(2));
+        this.getPieces().add(new Piece(getPieces().get(0).getCoordsX()
+                ,getPieces().get(0).getCoordsY(),
+                4));
+        this.getPieces().add(new Piece(getPieces().get(1).getCoordsX()
+                ,getPieces().get(1).getCoordsY(),
+                3));
+        this.getPieces().add(new Piece(getPieces().get(2).getCoordsX()
+                ,getPieces().get(2).getCoordsY(),
+                3));
+        this.getPieces().add(new Piece(getPieces().get(3).getCoordsX()
+                ,getPieces().get(3).getCoordsY(),
+                2));
+        this.getPieces().add(new Piece(getPieces().get(4).getCoordsX()
+                ,getPieces().get(4).getCoordsY(),
+                2));
+        this.getPieces().add(new Piece(getPieces().get(5).getCoordsX()
+                ,getPieces().get(5).getCoordsY(),
+                2));
     }
 
     private boolean isCoordOnBoard(int coordX, int coordY) {
@@ -74,7 +90,7 @@ public class Board {
     private boolean isCoordFree(int coordX, int coordY) {
         for (int i = 0; i < this.getPieces().size(); i++) {
             if (this.getPieces().get(i).isPlaced()) {
-                if (this.getPieces().get(i).getCoordX() == coordX && this.getPieces().get(i).getCoordY() == coordY) {
+                if (this.getPieces().get(i).getCoordsX() == coordX && this.getPieces().get(i).getCoordsY() == coordY) {
                     return false;
                 }
             }
@@ -85,8 +101,8 @@ public class Board {
     public boolean canPieceBePlaced(Piece piece) {
         for (int i = 0; i < piece.getWidth(); i++) {
             for (int j = 0; i < piece.getHeight(); j++) {
-                int coordY = piece.getCoordY() + i;
-                int coordX = piece.getCoordX() + j;
+                int coordY = piece.getCoordsX() + i;
+                int coordX = piece.getCoordsY() + j;
                 if (!this.isCoordFree(coordX, coordY) || !this.isCoordOnBoard(coordX, coordY)) {
                     return false;
                 }
@@ -124,5 +140,16 @@ public class Board {
             this.placePieceRandomally(this.getPieces().get(i));
         }
     }
+
+    public void recieveAttack(int coordsX, int coordY) {
+        for (int i = 0; i < this.getPieces().size(); i++) {
+            if(this.getPieces().get(i).getCoordsX() == coordsX
+                    && this.getPieces().get(i).getCoordsY() == coordY)
+            {
+                //TODO: If it hits then remove tile? ADD LOGIC
+            }
+        }
+    }
+
 
 }
