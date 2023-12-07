@@ -26,7 +26,7 @@ public abstract class Coords {
     }
 
     public void setCoords(int coordsX, int coordsY){
-            setCoordsX(coordsX);
-            setCoordsY(coordsY);
+        setCoordsX(coordsX);
+        setCoordsY(coordsY);
     }
 }
