@@ -131,8 +131,9 @@ public class Board {
 
     public void recieveAttack(int coordsX, int coordY) {
         for (int i = 0; i < this.getPieces().size(); i++) {
-            if(this.getPieces().get(i).getCoordsX() == coordsX
-                    && this.getPieces().get(i).getCoordsY() == coordY)
+            Piece piece = this.getPieces().get(i);
+            if(piece.getCoordsX() == coordsX
+                    && piece.getCoordsY() == coordY)
             {
                 //TODO: If it hits then remove tile? ADD LOGIC
             }
