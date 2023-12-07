@@ -2,13 +2,13 @@ package Zeeslag;
 
 public class Game {
 
+    private Board board1;
+    private Board board2;
+
     public Game() {
         this.board1 = new Board(20, 20);
         this.board2 = new Board(20, 20);
     }
-
-    private Board board1;
-    private Board board2;
 
     public Board getBoard1() {
         return board1;
@@ -26,9 +26,8 @@ public class Game {
         this.board2 = board2;
     }
 
-    // Methodes
     public void loadDefault() {
-        this.getBoard1().placeAllRandomally();
-        this.getBoard2().placeAllRandomally();
+        this.getBoard1().placeAllRandomly();
+        this.getBoard2().placeAllRandomly();
     }
 }

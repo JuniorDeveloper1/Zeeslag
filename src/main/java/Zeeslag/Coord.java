@@ -2,6 +2,11 @@ package Zeeslag;
 
 public class Coord {
 
+
+    private int x;
+    private int y;
+
+
     public Coord() {
         this.x = 1;
         this.y = 1;
@@ -12,8 +17,7 @@ public class Coord {
         this.y = y;
     }
 
-    private int x;
-    private int y;
+    // Methods
 
     public int getX() {
         return x;
@@ -31,10 +35,11 @@ public class Coord {
         this.y = y;
     }
 
-    // Methodes
     public void setCoords(int x, int y) {
         this.setX(x);
         this.setY(y);
     }
+
+    // Getters and Setters
 
 }

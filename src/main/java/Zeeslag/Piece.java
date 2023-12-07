@@ -2,6 +2,10 @@ package Zeeslag;
 
 public class Piece extends Dimension {
 
+    private Coord coord;
+    private boolean selected;
+    private boolean placed;
+
     public Piece() {
         super(1, 2);
         this.placed = false;
@@ -16,10 +20,6 @@ public class Piece extends Dimension {
         super(width, height);
         this.placed = false;
     }
-
-    private Coord coord;
-    private boolean selected;
-    private boolean placed;
 
     public Coord getCoord() {
         return coord;
@@ -45,7 +45,6 @@ public class Piece extends Dimension {
         this.selected = selected;
     }
 
-    // Methodes
     public void rotate() {
         if (this.isPlaced()) {
             return;
@@ -68,5 +67,4 @@ public class Piece extends Dimension {
         this.setSelected(false);
         this.setPlaced(true);
     }
-
 }

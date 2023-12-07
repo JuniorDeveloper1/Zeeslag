@@ -2,6 +2,10 @@ package Zeeslag;
 
 public class Bomb {
 
+
+    private Coord coord;
+    private boolean hit;
+
     public Bomb(int coordX, int coordY) {
         this.coord = new Coord(coordX, coordY);
         this.hit = false;
@@ -17,8 +21,7 @@ public class Bomb {
         this.hit = hit;
     }
 
-    private Coord coord;
-    private boolean hit;
+    // Methods
 
     public Coord getCoord() {
         return coord;
@@ -35,5 +38,7 @@ public class Bomb {
     public void setHit(boolean hit) {
         this.hit = hit;
     }
+
+    // Getters and Setters
 
 }

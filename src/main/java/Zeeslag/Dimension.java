@@ -1,6 +1,11 @@
 package Zeeslag;
 
-public class Dimension {
+public abstract class Dimension {
+
+    private int width;
+    private int height;
+
+    // Constructors
 
     public Dimension() {
         this.width = 1;
@@ -12,8 +17,7 @@ public class Dimension {
         this.height = height;
     }
 
-    private int width;
-    private int height;
+    // Getters and Setters
 
     public int getWidth() {
         return width;

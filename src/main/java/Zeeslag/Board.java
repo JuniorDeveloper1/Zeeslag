@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Random;
 
 public class Board extends Dimension {
+    private List<Piece> pieces;
+    private List<Bomb> bombs;
+
 
     public Board() {
         super(10, 10);
@@ -23,26 +26,7 @@ public class Board extends Dimension {
         this.pieces = pieces;
     }
 
-    private List<Piece> pieces;
-    private List<Bomb> bombs;
 
-    public List<Piece> getPieces() {
-        return pieces;
-    }
-
-    public void setPieces(List<Piece> pieces) {
-        this.pieces = pieces;
-    }
-
-    public List<Bomb> getBombs() {
-        return bombs;
-    }
-
-    public void setBombs(List<Bomb> bombs) {
-        this.bombs = bombs;
-    }
-
-    // Methodes
     public void generateDefaultPieces() {
         this.getPieces().add(new Piece(4));
         this.getPieces().add(new Piece(3));
@@ -53,10 +37,7 @@ public class Board extends Dimension {
     }
 
     private boolean isCoordOnBoard(int coordX, int coordY) {
-        if (coordX >= 1 && coordX <= this.getHeight() && coordY >= 1 && coordY <= this.getWidth()) {
-            return true;
-        }
-        return false;
+        return coordX >= 1 && coordX <= this.getHeight() && coordY >= 1 && coordY <= this.getWidth();
     }
 
     private boolean isCoordFree(int coordX, int coordY) {
@@ -83,7 +64,7 @@ public class Board extends Dimension {
         return true;
     }
 
-    public void placePieceRandomally(Piece piece) {
+    public void placePieceRandomly(Piece piece) {
         Random random = new Random();
 
         int randomX = random.nextInt(this.getHeight()) + 1;
@@ -109,10 +90,27 @@ public class Board extends Dimension {
         piece.lock();
     }
 
-    public void placeAllRandomally() {
+    public void placeAllRandomly() {
         for (int i = 0; i < this.getPieces().size(); i++) {
-            this.placePieceRandomally(this.getPieces().get(i));
+            this.placePieceRandomly(this.getPieces().get(i));
         }
+    }
+
+    // Getters and Setters
+    public List<Piece> getPieces() {
+        return pieces;
+    }
+
+    public void setPieces(List<Piece> pieces) {
+        this.pieces = pieces;
+    }
+
+    public List<Bomb> getBombs() {
+        return bombs;
+    }
+
+    public void setBombs(List<Bomb> bombs) {
+        this.bombs = bombs;
     }
 
 }
