@@ -13,4 +13,6 @@ module com.jrdev.zeeslag {
 
     opens Zeeslag to javafx.fxml;
     exports Zeeslag;
+    exports fx;
+    opens fx to javafx.fxml;
 }
