@@ -1,9 +1,32 @@
-package Zeeslag;
+public class Dimension {
 
-public interface Dimension {
-    int getWidth();
-    void setWidth(int width);
+    public Dimension() {
+        this.width = 1;
+        this.height = 1;
+    }
 
-    int getHeight();
-    void setHeight(int height);
+    public Dimension(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    private int width;
+    private int height;
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
 }

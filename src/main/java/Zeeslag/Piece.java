@@ -1,54 +1,31 @@
-package Zeeslag;
+public class Piece extends Dimension {
 
-public class Piece extends Coords implements Dimension{
-
-    public Piece(int coordX, int coordY) {
-        super(coordX, coordY);
-        this.height = 3;
-        this.width = 1;
-        this.placed = false;
-
-    }
-
-    public Piece(int coordX, int coordY,int height) {
-        super(coordX, coordY);
-        this.height = height;
-        this.width = 1;
+    public Piece() {
+        super(1, 2);
         this.placed = false;
     }
 
-    public Piece(int coordX, int coordY, int height, int width) {
-        super(coordX, coordY);
-        this.height = height;
-        this.width = width;
+    public Piece(int height) {
+        super(1, height);
         this.placed = false;
     }
 
-    private int height;
-    private int width;
+    public Piece(int height, int width) {
+        super(width, height);
+        this.placed = false;
+    }
+
+    private Coord coord;
     private boolean selected;
     private boolean placed;
 
-    @Override
-    public int getWidth() {
-        return width;
+    public Coord getCoord() {
+        return coord;
     }
 
-    @Override
-    public void setWidth(int width) {
-        this.width = width;
+    private void setCoord(Coord coord) {
+        this.coord = coord;
     }
-
-    @Override
-    public int getHeight() {
-        return height;
-    }
-
-    @Override
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
 
     public boolean isPlaced() {
         return placed;
@@ -77,15 +54,7 @@ public class Piece extends Coords implements Dimension{
         this.setHeight(temp);
     }
 
-    public String getImage() {
-        if (this.getHeight() > this.getWidth()) {
-            return "images/piece-" + this.getHeight() + ".png";
-        }
-
-        return "images/piece-"+this.getWidth()+".png";
-    }
-
-    public int getImageRotation() {
+    public int getRotation() {
         if (this.getHeight() > this.getWidth()) {
             return 0;
         }
@@ -93,19 +62,9 @@ public class Piece extends Coords implements Dimension{
         return 90;
     }
 
-    @Override
-    public void setCoords(int coordX, int coordY) {
-        if (this.isPlaced()) {
-            return;
-        }
-        setCoordsX(coordX);
-        setCoordsY(coordY);
-    }
-
     public void lock() {
         this.setSelected(false);
         this.setPlaced(true);
     }
-
 
 }

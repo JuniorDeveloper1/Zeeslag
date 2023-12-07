@@ -1,5 +1,3 @@
-package Zeeslag;
-
 public class Game {
 
     public Game() {
