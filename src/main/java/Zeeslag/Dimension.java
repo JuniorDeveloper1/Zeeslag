@@ -1,3 +1,5 @@
+package Zeeslag;
+
 public class Dimension {
 
     public Dimension() {

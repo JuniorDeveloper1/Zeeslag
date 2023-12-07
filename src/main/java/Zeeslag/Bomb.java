@@ -1,3 +1,5 @@
+package Zeeslag;
+
 public class Bomb {
 
     public Bomb(int coordX, int coordY) {

@@ -1,3 +1,5 @@
+package Zeeslag;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -5,7 +7,7 @@ import java.util.Random;
 public class Board extends Dimension {
 
     public Board() {
-        super(20, 20);
+        super(10, 10);
         this.pieces = new ArrayList<>();
         this.generateDefaultPieces();
     }

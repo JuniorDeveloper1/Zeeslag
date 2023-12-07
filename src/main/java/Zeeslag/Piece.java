@@ -1,3 +1,5 @@
+package Zeeslag;
+
 public class Piece extends Dimension {
 
     public Piece() {
