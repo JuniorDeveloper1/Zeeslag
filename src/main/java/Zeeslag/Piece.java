@@ -1,20 +1,24 @@
 package Zeeslag;
 
-public class Piece {
+public class Piece extends Coords implements Dimension{
 
-    public Piece() {
+    public Piece(int coordX, int coordY) {
+        super(coordX, coordY);
         this.height = 3;
         this.width = 1;
         this.placed = false;
+
     }
 
-    public Piece(int height) {
+    public Piece(int coordX, int coordY,int height) {
+        super(coordX, coordY);
         this.height = height;
         this.width = 1;
         this.placed = false;
     }
 
-    public Piece(int height, int width) {
+    public Piece(int coordX, int coordY, int height, int width) {
+        super(coordX, coordY);
         this.height = height;
         this.width = width;
         this.placed = false;
@@ -22,42 +26,30 @@ public class Piece {
 
     private int height;
     private int width;
-    private int coordX;
-    private int coordY;
-    private boolean selected;
-    private boolean placed;
 
-    public int getHeight() {
-        return height;
-    }
-
-    private void setHeight(int height) {
-        this.height = height;
-    }
-
+    @Override
     public int getWidth() {
         return width;
     }
 
-    private void setWidth(int width) {
-        this.width = width;
+    @Override
+    public void setWidth(int width) {
+
     }
 
-    public int getCoordX() {
-        return coordX;
+    @Override
+    public int getHeight() {
+        return height;
     }
 
-    private void setCoordX(int coordX) {
-        this.coordX = coordX;
-    }
+    @Override
+    public void setHeight(int height) {
 
-    public int getCoordY() {
-        return coordY;
     }
+    private boolean selected;
+    private boolean placed;
 
-    private void setCoordY(int coordY) {
-        this.coordY = coordY;
-    }
+
 
     public boolean isPlaced() {
         return placed;
@@ -102,18 +94,19 @@ public class Piece {
         return 90;
     }
 
+    @Override
     public void setCoords(int coordX, int coordY) {
         if (this.isPlaced()) {
             return;
         }
-
-        this.setCoordX(coordX);
-        this.setCoordY(coordY);
+        setCoordsX(coordX);
+        setCoordsY(coordY);
     }
 
     public void lock() {
         this.setSelected(false);
         this.setPlaced(true);
     }
+
 
 }
