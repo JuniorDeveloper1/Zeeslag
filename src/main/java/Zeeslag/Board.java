@@ -40,15 +40,21 @@
             return coordX >= 1 && coordX <= this.getHeight() && coordY >= 1 && coordY <= this.getWidth();
         }
 
-        private boolean isCoordFree(int coordX, int coordY) {
+        private boolean isCoordOnPiece(int coordX, int coordY) {
             for (int i = 0; i < this.getPieces().size(); i++) {
                 if (this.getPieces().get(i).isPlaced()) {
-                    if (this.getPieces().get(i).getCoord().getX() == coordX && this.getPieces().get(i).getCoord().getY() == coordY) {
-                        return false;
+                    for (int y = 0; y < this.getPieces().get(i).getWidth(); y++) {
+                        for (int x = 0; x < this.getPieces().get(i).getHeight(); x++) {
+                            int pieceY = this.getPieces().get(i).getCoord().getY() + y;
+                            int pieceX = this.getPieces().get(i).getCoord().getX() + x;
+                            if (coordX == pieceX && coordY == pieceY) {
+                                return true;
+                            }
+                        }
                     }
                 }
             }
-            return true;
+            return false;
         }
 
         public boolean canPieceBePlaced(Piece piece) {
@@ -56,7 +62,7 @@
                 for (int j = 0; i < piece.getHeight(); j++) {
                     int coordY = piece.getCoord().getY() + i;
                     int coordX = piece.getCoord().getX() + j;
-                    if (!this.isCoordFree(coordX, coordY) || !this.isCoordOnBoard(coordX, coordY)) {
+                    if (!this.isCoordOnPiece(coordX, coordY) || !this.isCoordOnBoard(coordX, coordY)) {
                         return false;
                     }
                 }
@@ -96,16 +102,15 @@
             }
         }
 
-        public void recieveBomb(Bomb bomb, int x, int y) {
-            for(Piece piece : this.getPieces()){
-                Coord coord = piece.getCoord();
-                if(coord.getX() == x && coord.getY() == y){
-                    bomb.setHit(true);
-                    if(bomb.isHit()){
-                        getBombs().add(bomb);
-                    }
-                }
+        public boolean recieveBomb(Bomb bomb) {
+            this.getBombs().add(bomb);
+
+            if (isCoordOnPiece(bomb.getCoord().getX(), bomb.getCoord().getY())) {
+                bomb.setHit(true);
+                return true;
             }
+
+            return false;
         }
 
         // Getters and Setters

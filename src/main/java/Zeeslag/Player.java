@@ -12,31 +12,46 @@ public class Player {
     }
 
     public void attack(Player otherPlayer, int x, int y){
-        Bomb bomb = new Bomb(x, y);
-        Coord bombC = bomb.getCoord();
-        otherPlayer.getBoard().recieveBomb(bomb, bombC.getX(), bombC.getY());
-
         if(otherPlayer.equals(this)){
-            System.out.println(" You can only attack you oponnent");
-            return;
+            throw new IllegalArgumentException("Exception: you can only attack a different player");
+        }
+
+        Bomb bomb = new Bomb(x, y);
+        if (otherPlayer.getBoard().recieveBomb(bomb)) {
+            System.out.println("Je hebt geraakt");
+        } else {
+            System.out.println("Je hebt gemist");
         }
 
         if(hasWon(otherPlayer)){
             //TODO: Stop fighting
+            System.out.println(this.getName() + " Has won!");
         }
 
     }
 
     public boolean hasWon(Player otherPlayer) {
         List<Piece> opponentPieces = otherPlayer.getBoard().getPieces();
-        List<Bomb> bombs = this.getBoard().getBombs();
 
-        if((opponentPieces.size() != bombs.size())) {
-            return false;
+        int totalPieces = 0;
+        for (int i = 0; i < opponentPieces.size(); i++) {
+            totalPieces += opponentPieces.get(i).getHeight() * opponentPieces.get(i).getWidth();
         }
 
-        System.out.println(this.getName() + " Has won!");
-        return true;
+        List<Bomb> bombs = otherPlayer.getBoard().getBombs();
+
+        int totalHits = 0;
+        for (int i = 0; i < bombs.size(); i++) {
+            if (bombs.get(i).isHit()) {
+                totalHits++;
+            }
+        }
+
+        if (totalHits >= totalPieces) {
+            return true;
+        }
+
+        return false;
     }
 
     public String getName() {
