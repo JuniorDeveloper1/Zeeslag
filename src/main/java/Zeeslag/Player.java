@@ -25,7 +25,7 @@ public class Player {
 
         if(hasWon(otherPlayer)){
             //TODO: Stop fighting
-            System.out.println(this.getName() + " Has won!");
+
         }
 
     }
@@ -48,6 +48,8 @@ public class Player {
         }
 
         if (totalHits >= totalPieces) {
+            System.out.println(this.getName() + " Has won!");
+            //Player has won
             return true;
         }
 
