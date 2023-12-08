@@ -12,12 +12,14 @@
         public Board() {
             super(10, 10);
             this.pieces = new ArrayList<>();
+            this.bombs = new ArrayList<>();
             this.generateDefaultPieces();
         }
 
         public Board(int width, int height) {
             super(width, height);
             this.pieces = new ArrayList<>();
+            this.bombs = new ArrayList<>();
             this.generateDefaultPieces();
         }
 
@@ -85,6 +87,7 @@
             while (!this.canPieceBePlaced(piece)) {
                 randomX = random.nextInt(this.getHeight()) + 1;
                 randomY = random.nextInt(this.getWidth()) + 1;
+
                 piece.getCoord().setCoords(randomX, randomY);
 
                 rotate = random.nextBoolean();
