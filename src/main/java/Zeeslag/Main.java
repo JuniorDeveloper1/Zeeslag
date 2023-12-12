@@ -1,8 +1,14 @@
 package Zeeslag;
 
-public class Main {
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-    public static void main(String[] args) {
+
+public class Main extends Application {
+
+    public static void main(String[] args){
 
         Game game = new Game();
         game.loadDefault();
@@ -19,4 +25,12 @@ public class Main {
         //THIS IS WRONG you player2 cannot attack player2
     }
 
+    @Override
+    public void start(Stage stage) throws Exception {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("hello-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        stage.setTitle("Zeeslag");
+        stage.setScene(scene);
+        stage.show();
+    }
 }
