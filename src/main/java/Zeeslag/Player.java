@@ -25,6 +25,8 @@ public class Player {
 
         if(hasWon(otherPlayer)){
             //TODO: Stop fighting
+            //GameManager gameManager = GameManager.getInstance();
+            //gameManager.openScene("win.fxml", "win");
 
         }
 
