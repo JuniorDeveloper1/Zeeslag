@@ -30,7 +30,7 @@ public class Player {
 
     }
 
-    public boolean hasWon(Player otherPlayer) {
+    private boolean hasWon(Player otherPlayer) {
         List<Piece> opponentPieces = otherPlayer.getBoard().getPieces();
 
         int totalPieces = 0;
