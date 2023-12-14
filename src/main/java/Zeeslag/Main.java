@@ -7,12 +7,9 @@ import javafx.stage.Stage;
 
 
 public class Main extends Application {
+    GameManager gameManager = GameManager.getInstance();
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main_menu.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Zeeslag");
-        stage.setScene(scene);
-        stage.show();
+        gameManager.openScene("main_menu.fxml", "Zeeslag");
     }
 }

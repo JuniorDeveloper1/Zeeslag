@@ -1,14 +1,18 @@
 package Zeeslag;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Player {
     private String name;
     private Board board;
 
+    private final UUID uuid;
+
     public Player(String name, Board board){
         this.name = name;
         this.board = board;
+        this.uuid = generateUUID();
     }
 
     public void attack(Player otherPlayer, int x, int y){
@@ -65,4 +69,13 @@ public class Player {
     public Board getBoard() {
         return board;
     }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    private UUID generateUUID() {
+        return UUID.randomUUID();
+    }
 }
+
