@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 public class MainMenuController {
     public GameManager gameManager = GameManager.getInstance();
@@ -13,30 +14,37 @@ public class MainMenuController {
 
     @FXML
     public void initialize(){
-
+        gameManager.startGame();
     }
 
     public void play() throws IOException {
-        String player1 = "";
-        String player2 = "";
+        /**
+         * Create hero logic stuff..
+         */
 
+        createHero(null, null);
 
-        createHero(player1, player2);
-        gameManager.openScene("game_controller.fxm", null);
+        //System.out.println(gameManager.getPlayer1().getName());
+        //System.out.println(gameManager.getPlayer1().getUuid());
+
+        gameManager.openScene("game_controller.fxml", "game"); //Game controller?
         gameManager.closeScene(play);
         //gameManager.getGame().loadDefault();
     }
 
-    private void createHero(String player1, String player2) {
-        if(player1 == null) {
-            player1 = "Bot1";
+    private void createHero(String sPlayer1, String sPlayer2) {
+        if(sPlayer1 == null) {
+            sPlayer1 = "Bot1";
         }
 
-        if(player2 == null) {
-            player2 = "Bot2";
+        if(sPlayer2 == null) {
+            sPlayer2 = "Bot2";
         }
 
-        gameManager.setPlayer1(new Player(player1, gameManager.getPlayer1().getBoard()));
-        gameManager.setPlayer2(new Player(player2, gameManager.getPlayer1().getBoard()));
+        Player player1 = new Player(sPlayer1, gameManager.getPlayer1().getBoard());
+        Player player2 = new Player(sPlayer2, gameManager.getPlayer2().getBoard());
+
+        gameManager.setPlayer1(player1);
+        gameManager.setPlayer2(player2);
     }
 }
