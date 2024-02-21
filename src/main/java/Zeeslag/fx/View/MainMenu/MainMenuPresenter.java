@@ -1,7 +1,7 @@
-package Zeeslag.fx.View;
+package Zeeslag.fx.View.MainMenu;
 
 import Zeeslag.fx.Model.MainMenuModel;
-import Zeeslag.fx.View.ViewInterface.Presenter;
+import Zeeslag.fx.Manager.Presenter;
 import javafx.scene.Node;
 
 import java.io.IOException;
@@ -32,6 +32,16 @@ public class MainMenuPresenter implements Presenter {
                 throw new RuntimeException(e);
             }
         });
+
+        view.getLeaderboardButton().setOnAction(event -> {
+            try {
+                model.directToLeaderBoard();
+            }catch (IOException e){
+                throw  new RuntimeException(e);
+            }
+        });
+
+        view.getCloseButton().setOnMouseClicked(event -> handleClose());
     }
 
     private void updateView() {
@@ -43,6 +53,7 @@ public class MainMenuPresenter implements Presenter {
         // Window event handlers (anon. inner klassen)
         // Koppeling via view.getScene().getWindow()
         view.getPlayButton().setOnMouseClicked(event -> handleClose());
+        view.getLeaderboardButton().setOnMouseClicked(event -> handleClose());
     }
 
     private void handleClose() {

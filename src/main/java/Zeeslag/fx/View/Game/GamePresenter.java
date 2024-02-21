@@ -1,7 +1,7 @@
-package Zeeslag.fx.View;
+package Zeeslag.fx.View.Game;
 
 import Zeeslag.fx.Model.GameModel;
-import Zeeslag.fx.View.ViewInterface.Presenter;
+import Zeeslag.fx.Manager.Presenter;
 import javafx.scene.Node;
 
 public class GamePresenter implements Presenter {
