@@ -1,7 +1,6 @@
-package Zeeslag.fx.View;
+package Zeeslag.fx.View.Game;
 
-import Zeeslag.fx.View.ViewInterface.MVPView;
-import com.almasb.fxgl.core.View;
+import Zeeslag.fx.Manager.MVPView;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -13,7 +12,6 @@ public class GameView extends VBox implements MVPView {
         this.initialize();
         this.initializeNodes();
         this.layoutNodes();
-        System.out.println("Game view");
     }
     @Override
     public void initialize() {
@@ -23,7 +21,6 @@ public class GameView extends VBox implements MVPView {
     }
     @Override
     public void initializeNodes(){
-        System.out.println("Has laoded");
         testButton = new Button("Test");
         // Example
         // Button button = new Button()...

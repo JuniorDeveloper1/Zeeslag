@@ -1,54 +1,94 @@
-package Zeeslag.fx.View;
+package Zeeslag.fx.View.MainMenu;
 
+import Zeeslag.fx.Manager.MVPView;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 
-public class MainMenuView extends VBox {
+public class MainMenuView extends VBox implements MVPView {
     private Button playButton;
     private Button leaderboardButton;
+    private Button closeButton;
+    private  VBox zeeslagTextBox;
+    private Text zeeslagText;
 
-    public MainMenuView () {
+    public MainMenuView() {
+        initialize();
         initializeNodes();
         layoutNodes();
     }
 
-    private void initializeNodes(){
+    @Override
+    public void initialize() {
+        Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
+        this.setPrefWidth(screenSize.getWidth());
+        this.setPrefHeight(screenSize.getHeight());
+    }
+
+    @Override
+    public void initializeNodes() {
         // Initialize buttons
         playButton = new Button("Play");
         leaderboardButton = new Button("Leaderboard");
+        closeButton = new Button("Close");
 
-        // Set button styles
-        playButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 20px;");
-        leaderboardButton.setStyle("-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-size: 20px;");
+        zeeslagTextBox= new VBox();
+        zeeslagText = new Text("Zeeslag");
 
-        // Set event handlers if needed
 
-        // Create game name text
-        Text gameName = new Text("Zeeslag");
-        gameName.setFont(Font.font(30));
-
-        // Add buttons and game name to an HBox
-        HBox buttonsBox = new HBox(20, playButton, leaderboardButton);
-        buttonsBox.setAlignment(Pos.CENTER_LEFT);
-
-        // Add buttonsBox and game name to the layout
-        getChildren().addAll(buttonsBox, gameName);
     }
 
-    private void layoutNodes() {
-        // Set alignment
-        setAlignment(Pos.CENTER);
+    private void setButtonStyles(Button button) {
+        button.setStyle("-fx-background-color: #1e90ff; -fx-text-fill: white; -fx-font-size: 20px;");
+        button.setMinWidth(150); // Set button width
+    }
 
-        // Set background color for the layout
-        setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY)));
+    private void setButtonHoverEffects(Button button) {
+        button.setOnMouseEntered(e -> button.setScaleX(1.2)); // Increase scale on hover
+        button.setOnMouseExited(e -> button.setScaleX(1)); // Restore scale on exit
+    }
+
+    @Override
+    public void layoutNodes() {
+        // Set button styles
+        setButtonStyles(playButton);
+        setButtonStyles(leaderboardButton);
+        setButtonStyles(closeButton);
+
+        // Set hover effects
+        setButtonHoverEffects(playButton);
+        setButtonHoverEffects(leaderboardButton);
+        setButtonHoverEffects(closeButton);
+
+        // Set alignment
+        setAlignment(Pos.CENTER_LEFT);
+
+        // Set spacing between nodes
+        setSpacing(20);
+
+        // Set background color
+        setBackground(new Background(new BackgroundFill(Color.rgb(0, 128, 128), CornerRadii.EMPTY, Insets.EMPTY)));
+
+        // Add buttons to the layout
+        getChildren().addAll(playButton, leaderboardButton, closeButton);
+
+        // Set the text to be centered right
+
+        zeeslagTextBox.setAlignment(Pos.CENTER_RIGHT);
+
+        zeeslagText.setFont(Font.font("Arial", 60)); // Increase font size
+        zeeslagText.setFill(Color.WHITE); // Set text color
+        zeeslagTextBox.getChildren().addAll(zeeslagText);
+        getChildren().add(zeeslagTextBox);
     }
 
     public Button getPlayButton() {
@@ -57,5 +97,9 @@ public class MainMenuView extends VBox {
 
     public Button getLeaderboardButton() {
         return leaderboardButton;
+    }
+
+    public Button getCloseButton() {
+        return closeButton;
     }
 }
