@@ -1,4 +1,4 @@
-package Zeeslag.fx.View;
+package Zeeslag.fx.Manager;
 
 public interface MVPView {
     void initialize();

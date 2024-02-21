@@ -1,5 +1,7 @@
 package Zeeslag.fx.Manager;
 
-public interface ModelPresenter {
-     void loadPresenters() ;
+public interface MVPModel {
+     void initialize();
+     void loadPresenters();
+
 }
