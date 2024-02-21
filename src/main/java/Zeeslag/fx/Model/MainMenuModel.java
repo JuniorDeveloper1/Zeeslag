@@ -1,9 +1,11 @@
 package Zeeslag.fx.Model;
 
-import Zeeslag.fx.Manager.LoadPresenter;
+import Zeeslag.fx.Manager.MVPModel;
 import Zeeslag.fx.Manager.SceneUtil;
-import Zeeslag.fx.View.GamePresenter;
-import Zeeslag.fx.View.GameView;
+import Zeeslag.fx.View.Game.GamePresenter;
+import Zeeslag.fx.View.Game.GameView;
+import Zeeslag.fx.View.LeaderBoard.LeaderBoardView;
+import Zeeslag.fx.View.MainMenu.LeaderBoardPresenter;
 import Zeeslag.modulesVerzinBetereNaamXd.Game.GameManager;
 import Zeeslag.modulesVerzinBetereNaamXd.Player.Player;
 import javafx.fxml.FXML;
@@ -11,16 +13,19 @@ import javafx.scene.control.Button;
 
 import java.io.IOException;
 
-public class MainMenuModel implements LoadPresenter {
+public class MainMenuModel implements MVPModel {
     public GameManager gameManager = GameManager.getInstance();
     public Button play;
 
-    public GamePresenter presenter;
+    private GamePresenter gamePresenter;
+    private LeaderBoardPresenter leaderBoardPresenter;
 
+    public MainMenuModel() {
+        initialize();
+    }
     @FXML
     public void initialize(){
         gameManager.startGame();
-
         loadPresenters();
     }
 
@@ -28,15 +33,15 @@ public class MainMenuModel implements LoadPresenter {
         /**
          * Logic for creating names for createHero(String, String);
          */
-
+        SceneUtil.openView(gamePresenter, "Game view");
         createHero(null, null);
-
-        //System.out.println(gameManager.getPlayer1().getName());
-        //System.out.println(gameManager.getPlayer1().getUuid());
-        SceneUtil.openScene("game_controller.fxml", "game", presenter.getModel()); //Game controller?
-        SceneUtil.closeScene(play);
-        //gameManager.getGame().loadDefault();
     }
+
+    public void directToLeaderBoard() throws IOException {
+        SceneUtil.openView(leaderBoardPresenter, "Leaderboard");
+    }
+
+
 
     private void createHero(String sPlayer1, String sPlayer2) {
         if(sPlayer1 == null) {
@@ -54,10 +59,30 @@ public class MainMenuModel implements LoadPresenter {
         gameManager.setPlayer2(player2);
     }
 
+
     @Override
     public void loadPresenters() {
-        GameModel model = new GameModel();
-        GameView view = new GameView();
-        presenter = new GamePresenter(model, view);
+        String RESET = "\u001B[0m";
+        String GREEN = "\u001B[32m";
+        String RED = "\u001B[31m";
+
+        try {
+            GameModel gameModel = new GameModel();
+            GameView gameView = new GameView();
+            gamePresenter = new GamePresenter(gameModel, gameView);
+
+            LeaderBoardModel leaderBoardModel = new LeaderBoardModel();
+            LeaderBoardView leaderBoardView = new LeaderBoardView();
+            leaderBoardPresenter
+                    = new LeaderBoardPresenter(leaderBoardModel, leaderBoardView);
+
+
+            System.out.println(GREEN + " Presenters succesfully loaded " + RESET);
+
+        }catch (NullPointerException e) {
+            System.out.println(RED + "Presenters Failed to load" + RESET);
+            throw new NullPointerException();
+        }
+
     }
 }
