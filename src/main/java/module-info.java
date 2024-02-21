@@ -27,6 +27,5 @@ module Zeeslag {
     opens Zeeslag.modulesVerzinBetereNaamXd.Bomb to javafx.fxml;
     exports Zeeslag.modulesVerzinBetereNaamXd.Board;
     opens Zeeslag.modulesVerzinBetereNaamXd.Board to javafx.fxml;
-    opens Zeeslag.fx to javafx.fxml;
     opens Zeeslag.fx.Manager to javafx.fxml;
 }
