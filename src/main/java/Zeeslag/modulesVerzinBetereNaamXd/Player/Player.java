@@ -1,4 +1,8 @@
-package Zeeslag;
+package Zeeslag.modulesVerzinBetereNaamXd.Player;
+
+import Zeeslag.modulesVerzinBetereNaamXd.Board.Board;
+import Zeeslag.modulesVerzinBetereNaamXd.Bomb.Bomb;
+import Zeeslag.modulesVerzinBetereNaamXd.Piece.Piece;
 
 import java.util.List;
 import java.util.UUID;

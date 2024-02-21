@@ -1,34 +1,40 @@
-package Zeeslag.Controllers;
+package Zeeslag.fx.Model;
 
-import Zeeslag.GameManager;
-import Zeeslag.Player;
+import Zeeslag.fx.Manager.LoadPresenter;
+import Zeeslag.fx.Manager.SceneUtil;
+import Zeeslag.fx.View.GamePresenter;
+import Zeeslag.fx.View.GameView;
+import Zeeslag.modulesVerzinBetereNaamXd.Game.GameManager;
+import Zeeslag.modulesVerzinBetereNaamXd.Player.Player;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 import java.io.IOException;
-import java.util.Scanner;
 
-public class MainMenuController {
+public class MainMenuModel implements LoadPresenter {
     public GameManager gameManager = GameManager.getInstance();
     public Button play;
+
+    public GamePresenter presenter;
 
     @FXML
     public void initialize(){
         gameManager.startGame();
+
+        loadPresenters();
     }
 
     public void play() throws IOException {
         /**
-         * Create hero logic stuff..
+         * Logic for creating names for createHero(String, String);
          */
 
         createHero(null, null);
 
         //System.out.println(gameManager.getPlayer1().getName());
         //System.out.println(gameManager.getPlayer1().getUuid());
-
-        gameManager.openScene("game_controller.fxml", "game"); //Game controller?
-        gameManager.closeScene(play);
+        SceneUtil.openScene("game_controller.fxml", "game", presenter.getModel()); //Game controller?
+        SceneUtil.closeScene(play);
         //gameManager.getGame().loadDefault();
     }
 
@@ -46,5 +52,12 @@ public class MainMenuController {
 
         gameManager.setPlayer1(player1);
         gameManager.setPlayer2(player2);
+    }
+
+    @Override
+    public void loadPresenters() {
+        GameModel model = new GameModel();
+        GameView view = new GameView();
+        presenter = new GamePresenter(model, view);
     }
 }

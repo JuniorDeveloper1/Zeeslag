@@ -6,11 +6,12 @@
 
 <?import javafx.scene.control.Button?>
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="Zeeslag.Controllers.GameController">
+      fx:controller="Zeeslag.fx.Model.MainMenuModel">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
 
     <Button fx:id="play" onAction="#play"/>
 
+    <Label fx:id="welcomeText"/>
 </VBox>

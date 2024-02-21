@@ -1,6 +1,6 @@
-    package Zeeslag;
+    package Zeeslag.modulesVerzinBetereNaamXd.Game;
 
-    import com.almasb.fxgl.entity.GameWorld;
+    import Zeeslag.modulesVerzinBetereNaamXd.Player.Player;
     import javafx.fxml.FXMLLoader;
     import javafx.scene.Parent;
     import javafx.scene.Scene;
@@ -8,6 +8,7 @@
     import javafx.stage.Stage;
 
     import java.io.IOException;
+    import java.util.Objects;
 
     public class GameManager {
         private GameManager(){}
@@ -67,17 +68,4 @@
          * Further game logic
          */
 
-        public void openScene(String fxmlFile, String title) throws IOException {
-            Parent root = FXMLLoader.load(GameManager.class.getClassLoader().getResource(fxmlFile));
-            Stage stage = new Stage();
-            if(title == null) {title = "Default";}
-            stage.setTitle(title);
-            stage.setScene(new Scene(root));
-            stage.show();
-        }
-
-        public void closeScene(Button button){
-            Stage currentStage = (Stage) button.getScene().getWindow();
-            currentStage.close();
-        }
     }
