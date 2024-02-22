@@ -2,8 +2,10 @@ package Zeeslag.modulesVerzinBetereNaamXd.Player;
 
 import Zeeslag.modulesVerzinBetereNaamXd.Board.Board;
 import Zeeslag.modulesVerzinBetereNaamXd.Bomb.Bomb;
+import Zeeslag.modulesVerzinBetereNaamXd.Leaderboard.Leaderboard;
 import Zeeslag.modulesVerzinBetereNaamXd.Piece.Piece;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +21,7 @@ public class Player {
         this.uuid = generateUUID();
     }
 
-    public void attack(Player otherPlayer, int x, int y){
+    public void attack(Player otherPlayer, int x, int y) throws IOException {
         if(otherPlayer.equals(this)){
             throw new IllegalArgumentException("Exception: you can only attack a different player");
         }
@@ -33,8 +35,15 @@ public class Player {
 
         if(hasWon(otherPlayer)){
             //TODO: Stop fighting
-            //GameManager gameManager = GameManager.getInstance();
-            //gameManager.openScene("win.fxml", "win");
+            Leaderboard leaderboard = new Leaderboard();
+            leaderboard.incrementWins(this);
+            /**
+             * Leaderboard leaderboard... moet je laten.
+             * We laden al de player data hiermee.
+             * Om te zien als de speler al gewonnen heeft.
+             */
+
+            //TODO: Add open win screen. Or something else.
 
         }
 

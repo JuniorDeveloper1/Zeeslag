@@ -18,7 +18,7 @@ public class LeaderBoardPresenter implements Presenter {
     }
 
     private void addEventHandlers() {
-
+        view.getLoadScoreBoardToConsole().setOnMouseClicked(mouseEvent -> model.showLeaderboardToConsole());
     }
 
 

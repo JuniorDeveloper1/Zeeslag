@@ -1,7 +1,9 @@
 package Zeeslag.fx.Manager;
 
+import java.io.IOException;
+
 public interface MVPModel {
-     void initialize();
+     void initialize() throws IOException;
      void loadPresenters();
 
 }

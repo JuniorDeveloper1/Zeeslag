@@ -11,6 +11,7 @@ import Zeeslag.modulesVerzinBetereNaamXd.Player.Player;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class MainMenuModel implements MVPModel {
@@ -73,16 +74,14 @@ public class MainMenuModel implements MVPModel {
 
             LeaderBoardModel leaderBoardModel = new LeaderBoardModel();
             LeaderBoardView leaderBoardView = new LeaderBoardView();
-            leaderBoardPresenter
-                    = new LeaderBoardPresenter(leaderBoardModel, leaderBoardView);
+            leaderBoardPresenter = new LeaderBoardPresenter(leaderBoardModel, leaderBoardView);
 
-
-            System.out.println(GREEN + " Presenters succesfully loaded " + RESET);
-
-        }catch (NullPointerException e) {
-            System.out.println(RED + "Presenters Failed to load" + RESET);
-            throw new NullPointerException();
+            System.out.println(GREEN + "Presenters successfully loaded" + RESET);
+        } catch (Exception e) {
+            System.out.println(RED + "Presenters failed to load" + RESET);
+            e.printStackTrace();
+            // Or handle the exception as appropriate for your application
         }
-
     }
+
 }
