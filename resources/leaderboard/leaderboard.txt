@@ -1,2 +1,8 @@
-
-
+Noah;5
+Nick;20
+jongesjonge;25
+test;3
+grest;15
+fe;50
+gra;25
+swa;30
