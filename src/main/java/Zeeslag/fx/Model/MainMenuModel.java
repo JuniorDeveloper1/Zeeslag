@@ -4,8 +4,9 @@ import Zeeslag.fx.Manager.MVPModel;
 import Zeeslag.fx.Manager.SceneUtil;
 import Zeeslag.fx.View.Game.GamePresenter;
 import Zeeslag.fx.View.Game.GameView;
+import Zeeslag.fx.View.LeaderBoard.LeaderBoardPresenter;
 import Zeeslag.fx.View.LeaderBoard.LeaderBoardView;
-import Zeeslag.fx.View.MainMenu.LeaderBoardPresenter;
+
 import Zeeslag.modulesVerzinBetereNaamXd.Game.GameManager;
 import Zeeslag.modulesVerzinBetereNaamXd.Player.Player;
 import javafx.fxml.FXML;
@@ -76,9 +77,9 @@ public class MainMenuModel implements MVPModel {
             LeaderBoardView leaderBoardView = new LeaderBoardView();
             leaderBoardPresenter = new LeaderBoardPresenter(leaderBoardModel, leaderBoardView);
 
-            System.out.println(GREEN + "Presenters successfully loaded" + RESET);
+            System.out.println(GREEN + "Menu Presenters successfully loaded" + RESET);
         } catch (Exception e) {
-            System.out.println(RED + "Presenters failed to load" + RESET);
+            System.out.println(RED + "Menu Presenters failed to load" + RESET);
             e.printStackTrace();
             // Or handle the exception as appropriate for your application
         }

@@ -1,9 +1,12 @@
-package Zeeslag.fx.View.MainMenu;
+package Zeeslag.fx.View.LeaderBoard;
 
 import Zeeslag.fx.Model.LeaderBoardModel;
 import Zeeslag.fx.View.LeaderBoard.LeaderBoardView;
 import Zeeslag.fx.Manager.Presenter;
+import Zeeslag.modulesVerzinBetereNaamXd.Player.PlayerStats;
 import javafx.scene.Node;
+
+import java.util.List;
 
 public class LeaderBoardPresenter implements Presenter {
 
@@ -18,17 +21,32 @@ public class LeaderBoardPresenter implements Presenter {
     }
 
     private void addEventHandlers() {
-        view.getLoadScoreBoardToConsole().setOnMouseClicked(mouseEvent -> model.showLeaderboardToConsole());
+
     }
 
 
     private void updateView() {
         //view.getStatusLabel().setText(model.getStatusText());
-
+        this.updateLeaderboard(model.getLeaderboard().getPlayerStats());
     }
 
     public void addWindowEventHandlers() {
 
+    }
+
+    private void updateLeaderboard(List<PlayerStats> playerStatsList) {
+        String trophyEmoji = "\uD83C\uDFC6";
+        for (int i = 0; i < view.getLeaderboardLabel().length && i < playerStatsList.size(); i++) {
+            PlayerStats stats = playerStatsList.get(i);
+            if(i == 0) {
+                view.getLeaderboardLabel()[i].setText((1+i) + ". "
+                        + stats.getPlayerName() + " - Wins: " + stats.getWins() + trophyEmoji);
+            }else {
+                view.getLeaderboardLabel()[i].setText((1+i) + ". "
+                        + stats.getPlayerName() + " - Wins: " + stats.getWins());
+            }
+
+        }
     }
 
     private void handleClose() {

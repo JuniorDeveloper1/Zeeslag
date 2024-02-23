@@ -5,10 +5,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -20,6 +18,8 @@ public class MainMenuView extends VBox implements MVPView {
     private Button closeButton;
     private  VBox zeeslagTextBox;
     private Text zeeslagText;
+    private Image image;
+    private BackgroundImage backgroundImage;
 
     public MainMenuView() {
         initialize();
@@ -29,66 +29,69 @@ public class MainMenuView extends VBox implements MVPView {
 
     @Override
     public void initialize() {
-        Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
-        this.setPrefWidth(screenSize.getWidth());
-        this.setPrefHeight(screenSize.getHeight());
+        //Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
+        //screenSize.getWidth()
+        //screenSize.getHeight()
+        this.setPrefWidth(1000);
+        this.setPrefHeight(531);
     }
 
     @Override
     public void initializeNodes() {
         // Initialize buttons
+        zeeslagTextBox= new VBox();
+        zeeslagText = new Text("Zeeslag");
         playButton = new Button("Play");
         leaderboardButton = new Button("Leaderboard");
         closeButton = new Button("Close");
 
-        zeeslagTextBox= new VBox();
-        zeeslagText = new Text("Zeeslag");
+        image = new Image("SeaBattleBackground.png");
+        backgroundImage = new BackgroundImage(image,BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT,BackgroundPosition.CENTER,BackgroundSize.DEFAULT);
 
-
-    }
-
-    private void setButtonStyles(Button button) {
-        button.setStyle("-fx-background-color: #1e90ff; -fx-text-fill: white; -fx-font-size: 20px;");
-        button.setMinWidth(150); // Set button width
-    }
-
-    private void setButtonHoverEffects(Button button) {
-        button.setOnMouseEntered(e -> button.setScaleX(1.2)); // Increase scale on hover
-        button.setOnMouseExited(e -> button.setScaleX(1)); // Restore scale on exit
     }
 
     @Override
     public void layoutNodes() {
-        // Set button styles
+        zeeslagText.setFont(Font.font("Arial", 60));
+        zeeslagText.setFill(Color.WHITE);
+
         setButtonStyles(playButton);
         setButtonStyles(leaderboardButton);
         setButtonStyles(closeButton);
 
-        // Set hover effects
         setButtonHoverEffects(playButton);
         setButtonHoverEffects(leaderboardButton);
         setButtonHoverEffects(closeButton);
 
-        // Set alignment
-        setAlignment(Pos.CENTER_LEFT);
+        setButtonCenter(playButton);
+        setButtonCenter(leaderboardButton);
+        setButtonCenter(closeButton);
 
-        // Set spacing between nodes
+        zeeslagTextBox.setAlignment(Pos.CENTER);
+        setAlignment(Pos.TOP_CENTER);
         setSpacing(20);
 
-        // Set background color
-        setBackground(new Background(new BackgroundFill(Color.rgb(0, 128, 128), CornerRadii.EMPTY, Insets.EMPTY)));
+        zeeslagTextBox.setPadding(new Insets(0, 0, 100, 0));
 
-        // Add buttons to the layout
-        getChildren().addAll(playButton, leaderboardButton, closeButton);
+        this.setBackground(new Background(backgroundImage));
 
-        // Set the text to be centered right
-
-        zeeslagTextBox.setAlignment(Pos.CENTER_RIGHT);
-
-        zeeslagText.setFont(Font.font("Arial", 60)); // Increase font size
-        zeeslagText.setFill(Color.WHITE); // Set text color
+        getChildren().addAll(zeeslagTextBox, playButton, leaderboardButton, closeButton);
         zeeslagTextBox.getChildren().addAll(zeeslagText);
-        getChildren().add(zeeslagTextBox);
+    }
+
+
+    private void setButtonCenter(Button button){
+        button.setAlignment(Pos.CENTER);
+    }
+
+    private void setButtonStyles(Button button) {
+        button.setStyle("-fx-background-color: #1e90ff; -fx-text-fill: white; -fx-font-size: 20px; ");
+        button.setMinWidth(150);
+    }
+
+    private void setButtonHoverEffects(Button button) {
+        button.setOnMouseEntered(e -> button.setScaleX(1.2));
+        button.setOnMouseExited(e -> button.setScaleX(1));
     }
 
     public Button getPlayButton() {

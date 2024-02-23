@@ -32,9 +32,9 @@ public class GameModel implements MVPModel {
         try {
             /** TODO: Load all presenter classes here! **/
 
-            System.out.println(GREEN + " Presenters succesfully loaded " + RESET);
+            System.out.println(GREEN + " GamePresenters succesfully loaded " + RESET);
         }catch (NullPointerException e) {
-            System.out.println(RED + "Presenters Failed to load" + RESET);
+            System.out.println(RED + "GamePresenters Failed to load" + RESET);
             throw new NullPointerException();
         }
     }

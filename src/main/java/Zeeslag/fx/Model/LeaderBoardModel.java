@@ -2,15 +2,14 @@ package Zeeslag.fx.Model;
 
 import Zeeslag.fx.Manager.MVPModel;
 import Zeeslag.modulesVerzinBetereNaamXd.Leaderboard.Leaderboard;
-import Zeeslag.modulesVerzinBetereNaamXd.Leaderboard.PlayerStats;
+import Zeeslag.modulesVerzinBetereNaamXd.Player.PlayerStats;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LeaderBoardModel implements MVPModel {
-    Leaderboard leaderboard;
+    private Leaderboard leaderboard;
     /**
      * Leaderboard will update every 2 minutes
      */
@@ -57,9 +56,9 @@ public class LeaderBoardModel implements MVPModel {
         try {
             /** TODO: Load all presenter classes here! **/
 
-            System.out.println(GREEN + " Presenters succesfully loaded " + RESET);
+            System.out.println(GREEN + "Leaderboard Presenters succesfully loaded " + RESET);
         }catch (NullPointerException e) {
-            System.out.println(RED + "Presenters Failed to load" + RESET);
+            System.out.println(RED + "Leaderboard Presenters Failed to load" + RESET);
             throw new NullPointerException();
         }
     }
