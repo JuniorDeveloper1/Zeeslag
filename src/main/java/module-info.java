@@ -9,6 +9,7 @@ module Zeeslag {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires com.almasb.fxgl.all;
+    requires javafx.media;
 
     opens Zeeslag to javafx.fxml;
     opens Zeeslag.fx.Model to javafx.fxml;
