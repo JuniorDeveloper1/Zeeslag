@@ -6,6 +6,8 @@ import Zeeslag.fx.View.Game.player1.Player1Presenter;
 import Zeeslag.fx.View.Game.player1.Player1View;
 import Zeeslag.fx.View.Game.player2.Player2Presenter;
 import Zeeslag.fx.View.Game.player2.Player2View;
+import Zeeslag.fx.View.MainMenu.MainMenuPresenter;
+import Zeeslag.fx.View.MainMenu.MainMenuView;
 import Zeeslag.modulesVerzinBetereNaamXd.Game.GameManager;
 import Zeeslag.modulesVerzinBetereNaamXd.Player.Player;
 import javafx.scene.control.Label;
@@ -13,6 +15,8 @@ import javafx.scene.control.TextField;
 
 public class GameModel implements MVPModel {
     private  GameManager gameManager = GameManager.getInstance();
+
+    private MainMenuPresenter mainMenuPresenter;
     private Player1Presenter player1Presenter;
     private Player2Presenter player2Presenter;
     public GameModel() {
@@ -43,6 +47,10 @@ public class GameModel implements MVPModel {
 
         System.out.println(gameManager.getPlayer2().getName());
         System.out.println(gameManager.getPlayer2().getUuid());
+    }
+
+    public void returnToMainMenu() {
+        SceneUtil.openView(mainMenuPresenter, "Zeeslag");
     }
 
     public void createHero(String sPlayer1, String sPlayer2) {
@@ -101,10 +109,18 @@ public class GameModel implements MVPModel {
             Player2View player2View = new Player2View();
             player2Presenter = new Player2Presenter(player2Model, player2View);
 
+            MainMenuModel mainMenuModel = new MainMenuModel();
+            MainMenuView mainMenuView = new MainMenuView();
+            mainMenuPresenter = new MainMenuPresenter(mainMenuModel, mainMenuView);
+
             System.out.println(GREEN + " GamePresenters succesfully loaded " + RESET);
         }catch (NullPointerException e) {
             System.out.println(RED + "GamePresenters Failed to load" + RESET);
             throw new NullPointerException();
         }
+    }
+
+    public GameManager getGameManager() {
+        return gameManager;
     }
 }

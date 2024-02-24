@@ -27,7 +27,10 @@ public class MainMenuModel implements MVPModel {
     }
     @FXML
     public void initialize(){
-        gameManager.startGame();
+
+            gameManager.startGame();
+
+
         loadPresenters();
     }
 

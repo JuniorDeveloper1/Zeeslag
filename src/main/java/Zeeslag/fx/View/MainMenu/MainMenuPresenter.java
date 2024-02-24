@@ -41,7 +41,7 @@ public class MainMenuPresenter implements Presenter {
             }
         });
 
-        view.getCloseButton().setOnMouseClicked(event -> handleClose());
+        view.getCloseButton().setOnAction(event -> handleClose());
     }
 
     private void updateView() {

@@ -18,6 +18,7 @@
         private Player player1;
 
         private Player player2;
+        private boolean hasStarted = true;
 
         /**
          * We kunnen hier Highscoore, Aantal clicks, ... adden
@@ -35,9 +36,10 @@
         }
 
         public void startGame(){
-            gameManager.setGame(new Game());
-            gameManager.setPlayer1(new Player(null, null));
-            gameManager.setPlayer2(new Player(null, null));
+                gameManager.setGame(new Game());
+                gameManager.setPlayer1(new Player(null, null));
+                gameManager.setPlayer2(new Player(null, null));
+
         }
 
         public Player getPlayer1() {
@@ -56,6 +58,8 @@
             this.player2 = player2;
         }
 
+
+
         public Game getGame() {
             return game;
         }
@@ -63,6 +67,10 @@
         private void setGame(Game game) {
             this.game = game;
         }
+
+
+
+
 
         /**
          * Further game logic

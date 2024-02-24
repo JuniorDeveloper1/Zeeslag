@@ -45,7 +45,6 @@ public class GameView extends VBox implements MVPView {
     public void initializeNodes(){
         title = new Label("Enter your names!");
 
-
         this.errorLabel = new Label("errorLabel");
 
         player1 = new Label("Player 1:");
@@ -60,7 +59,7 @@ public class GameView extends VBox implements MVPView {
         playName2Field = new TextField();
         playName2Field.setPromptText("Enter player 2's name");
 
-        playButton = new Button("Play");
+        playButton = new Button("play");
 
         playBackgroundMusic();
     }
@@ -121,4 +120,5 @@ public class GameView extends VBox implements MVPView {
     public TextField getPlayName2Field() {
         return playName2Field;
     }
+
 }
