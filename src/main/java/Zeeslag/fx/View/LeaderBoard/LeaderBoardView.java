@@ -1,26 +1,27 @@
 package Zeeslag.fx.View.LeaderBoard;
 
 import Zeeslag.fx.Manager.MVPView;
-import Zeeslag.fx.Model.LeaderBoardModel;
+import Zeeslag.fx.Manager.SceneUtil;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.skin.LabeledSkinBase;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Screen;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 
 public class LeaderBoardView extends VBox implements MVPView {
     private VBox titleBox;
     private Text title;
 
     private Label[] leaderboardLabel;
+
+    private String audioFilePath;
+    private MediaPlayer mediaPlayer;
 
 
     public LeaderBoardView()  {
@@ -43,7 +44,7 @@ public class LeaderBoardView extends VBox implements MVPView {
         for (int i = 0; i < leaderboardLabel.length; i++) {
             leaderboardLabel[i] = new Label();
         }
-
+        this.playBackgroundMusic();
     }
 
     @Override
@@ -86,8 +87,14 @@ public class LeaderBoardView extends VBox implements MVPView {
             getLeaderboardLabel()[index].setStyle("-fx-text-fill: " + color +";");
         }
     }
-
-
+    private void playBackgroundMusic() {
+        audioFilePath = "resources/awesomeness.wav";
+        File file = new File(audioFilePath);
+        Media media = new Media(file.toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.play();
+    }
     public Text getTitle() {
         return title;
     }

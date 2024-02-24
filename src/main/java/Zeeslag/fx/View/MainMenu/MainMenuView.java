@@ -1,17 +1,16 @@
 package Zeeslag.fx.View.MainMenu;
 
 import Zeeslag.fx.Manager.MVPView;
+import Zeeslag.fx.Manager.SceneUtil;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Screen;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
@@ -24,8 +23,8 @@ public class MainMenuView extends VBox implements MVPView {
     private Text zeeslagText;
     private Image image;
     private BackgroundImage backgroundImage;
-    private String audioFilePath;
     private MediaPlayer mediaPlayer;
+    private String audioFilePath;
     public MainMenuView() {
         initialize();
         initializeNodes();
@@ -54,12 +53,7 @@ public class MainMenuView extends VBox implements MVPView {
         backgroundImage = new BackgroundImage(image,BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT,BackgroundPosition.CENTER,BackgroundSize.DEFAULT);
 
         //AUDIO
-        audioFilePath = "resources/awesomeness.wav";
-        File file = new File(audioFilePath);
-        Media media = new Media(file.toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.play();
+      this.playBackgroundMusic();
     }
 
     @Override
@@ -104,6 +98,15 @@ public class MainMenuView extends VBox implements MVPView {
     private void setButtonHoverEffects(Button button) {
         button.setOnMouseEntered(e -> button.setScaleX(1.2));
         button.setOnMouseExited(e -> button.setScaleX(1));
+    }
+
+    private void playBackgroundMusic() {
+        audioFilePath = "resources/awesomeness.wav";
+        File file = new File(audioFilePath);
+        Media media = new Media(file.toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.play();
     }
 
     public Button getPlayButton() {

@@ -57,7 +57,6 @@ public class MainMenuPresenter implements Presenter {
     }
 
     private void handleClose() {
-        // Example: Save any unsaved data or perform cleanup before closing the application
         view.getScene().getWindow().hide();
     }
 
