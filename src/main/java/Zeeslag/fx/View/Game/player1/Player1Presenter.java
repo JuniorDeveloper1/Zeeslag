@@ -24,6 +24,7 @@ public class Player1Presenter implements Presenter {
     private void updateView() {
        String name = model.getGameManager().getPlayer1().getName() + "'s screen";
        view.getPlayerName().setText(name);
+
     }
 
     public Player1Model getModel() {

@@ -10,4 +10,9 @@
       </profile>
     </annotationProcessing>
   </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Zeeslag" options="--add-exports jdk.hotspot.agent/sun.jvm.hotspot.oops=Zeeslag" />
+    </option>
+  </component>
 </project>

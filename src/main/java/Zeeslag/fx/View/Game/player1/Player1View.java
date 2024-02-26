@@ -1,20 +1,27 @@
 package Zeeslag.fx.View.Game.player1;
 
 import Zeeslag.fx.Manager.MVPView;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class Player1View extends VBox implements MVPView {
+public class Player1View extends StackPane implements MVPView {
     private Text playerName;
+    private VBox playerBox;
 
+    private GridPane gridPane;
     private HBox horizontal;
-    private ImageView gridImage;
+
+    private final int cellSize = 50;
+    private ImageView[][] gridCells;
     private ImageView ship_battleship;
     private ImageView ship_cruiser;
     private ImageView ship_destroyer;
@@ -36,8 +43,13 @@ public class Player1View extends VBox implements MVPView {
     @Override
     public void initializeNodes() {
         this.playerName = new Text();
-        Image imageLink = new Image("sea_battle_grid.png");
-        this.gridImage = new ImageView(imageLink);
+        this.playerName.setFont(Font.font("Arial", 15));
+        this.playerName.setFill(Color.BLACK);
+
+        this.gridPane = new GridPane();
+        this.gridCells = new ImageView[10][10];
+
+        this.playerBox = new VBox();
 
         Image battleship = new Image("ShipBattleshipHull.png");
         this.ship_battleship = new ImageView(battleship);
@@ -55,27 +67,65 @@ public class Player1View extends VBox implements MVPView {
         this.ship_patrol2 = new ImageView(patrol2);
 
         this.horizontal = new HBox(30);
-
     }
 
     @Override
     public void layoutNodes() {
-        playerName.setFont(Font.font("Arial", 15));
-        setSpacing(10);
-        setAlignment(Pos.TOP_CENTER);
-        getChildren().addAll(playerName,gridImage,
-                horizontal);
+        playerName.setFont(Font.font("Arial",25));
 
-        horizontal.getChildren().addAll(ship_battleship,
-                ship_cruiser,
-                ship_destroyer,
-                ship_patrol1,
-                ship_patrol2);
+        for (int x = 0; x < 10; x++) {
+            for (int y = 0; y < 10; y++) {
+                Rectangle rectangle = new Rectangle(cellSize, cellSize, Color.WHITE);
+                rectangle.setStroke(Color.BLACK);
+                gridPane.add(rectangle, x, y);
+            }
+        }
 
-        horizontal.setAlignment(Pos.CENTER);
+
+        playerBox.setAlignment(Pos.TOP_CENTER);
+        playerBox.getChildren().addAll(playerName, gridPane);
+
+        horizontal.setSpacing(30);
+        horizontal.setAlignment(Pos.BOTTOM_CENTER);
+
+        // Add nodes to the StackPane
+        getChildren().addAll(playerBox, horizontal);
+        horizontal.getChildren().addAll(ship_battleship, ship_cruiser, ship_destroyer, ship_patrol1, ship_patrol2);
+    }
+
+    public GridPane getGridPane() {
+        return gridPane;
+    }
+
+    public ImageView[][] getGridCells() {
+        return gridCells;
     }
 
     public Text getPlayerName() {
         return playerName;
+    }
+
+    public VBox getPlayerBox() {
+        return playerBox;
+    }
+
+    public ImageView getShip_battleship() {
+        return ship_battleship;
+    }
+
+    public ImageView getShip_cruiser() {
+        return ship_cruiser;
+    }
+
+    public ImageView getShip_destroyer() {
+        return ship_destroyer;
+    }
+
+    public ImageView getShip_patrol1() {
+        return ship_patrol1;
+    }
+
+    public ImageView getShip_patrol2() {
+        return ship_patrol2;
     }
 }
