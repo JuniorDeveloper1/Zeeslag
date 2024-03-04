@@ -1,46 +1,22 @@
-package Zeeslag.fx.Model;
+package Zeeslag.Fx.Model;
 
-import Zeeslag.fx.Manager.MVPModel;
-import Zeeslag.fx.Manager.SceneUtil;
-import Zeeslag.fx.View.Game.player1.Player1Presenter;
-import Zeeslag.fx.View.Game.player1.Player1View;
-import Zeeslag.fx.View.Game.player2.Player2Presenter;
-import Zeeslag.fx.View.Game.player2.Player2View;
-import Zeeslag.fx.View.MainMenu.MainMenuPresenter;
-import Zeeslag.fx.View.MainMenu.MainMenuView;
-import Zeeslag.modulesVerzinBetereNaamXd.Game.GameManager;
-import Zeeslag.modulesVerzinBetereNaamXd.Player.Player;
-import javafx.scene.control.Label;
+import Zeeslag.Core.Game.GameManager;
+import Zeeslag.Core.Player.Player;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
-public class GameModel implements MVPModel {
+public class GameModel {
     private  GameManager gameManager = GameManager.getInstance();
 
-    private MainMenuPresenter mainMenuPresenter;
-    private Player1Presenter player1Presenter;
-    private Player2Presenter player2Presenter;
     public GameModel() {
         this.initialize();
     }
 
     public void initialize(){
-
     }
     public void play(String player1, String player2) {
+
         createHero(player1, player2);
-
-        /**
-         * Presenters moeten hier geladen worden,
-         * anders wordt de player niet geregistreerd in Player1/Player2 - Presenters
-         */
-        this.loadPresenters();
-
-        String titlePlayer1 = gameManager.getPlayer1().getName() + "'s Battle";
-        SceneUtil.openView(player1Presenter, titlePlayer1);
-
-        String titlePlayer2 = gameManager.getPlayer2().getName() + "'s Battle";
-        SceneUtil.openView(player2Presenter, titlePlayer2);
-
 
         System.out.println(gameManager.getPlayer1().getName());
         System.out.println(gameManager.getPlayer1().getUuid());
@@ -49,11 +25,7 @@ public class GameModel implements MVPModel {
         System.out.println(gameManager.getPlayer2().getUuid());
     }
 
-    public void returnToMainMenu() {
-        SceneUtil.openView(mainMenuPresenter, "Zeeslag");
-    }
-
-    public void createHero(String sPlayer1, String sPlayer2) {
+    private void createHero(String sPlayer1, String sPlayer2) {
         if(sPlayer1 == null) {
             sPlayer1 = "Bot1";
         }
@@ -69,56 +41,34 @@ public class GameModel implements MVPModel {
         gameManager.setPlayer2(player2);
     }
 
-    public boolean checkIfTextFieldIsCorrect(TextField textField, TextField textField2, Label errorLabel){
+    public boolean checkIfTextFieldIsCorrect(TextField textField, TextField textField2){
         int minLength = 3;
         int maxLength = 15;
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Foute Syntax");
+
+        if(alert.isShowing()){alert.close();}
 
         if(textField.getText().isEmpty() || textField2.getText().isEmpty()) {
-            errorLabel.setText("Both players must enter a name.");
+            alert.setHeaderText("Je moet een naam invullen!");
+            alert.showAndWait();
             return false;
         }
 
         if(textField.getText().equals(textField2.getText())) {
-            errorLabel.setText("Names must be different.");
+            alert.setHeaderText("Namen mogen niet gelijk zijn!");
+            alert.showAndWait();
             return false;
         }
 
         if(textField.getLength() < minLength || textField2.getLength() <  minLength ||
                 textField.getLength() > maxLength || textField2.getLength() > maxLength) {
-            errorLabel.setText("Names must be between 3 and 15 characters long.");
+            alert.setHeaderText("Names must be between 3 and 15 characters long.");
             return false;
         }
-
-
-        errorLabel.setText("");
         return true;
     }
 
-    @Override
-    public void loadPresenters() {
-        String RESET = "\u001B[0m";
-        String GREEN = "\u001B[32m";
-        String RED = "\u001B[31m";
-
-        try {
-            Player1Model player1Model = new Player1Model();
-            Player1View player1View = new Player1View();
-            player1Presenter = new Player1Presenter(player1Model, player1View);
-
-            Player2Model player2Model = new Player2Model();
-            Player2View player2View = new Player2View();
-            player2Presenter = new Player2Presenter(player2Model, player2View);
-
-            MainMenuModel mainMenuModel = new MainMenuModel();
-            MainMenuView mainMenuView = new MainMenuView();
-            mainMenuPresenter = new MainMenuPresenter(mainMenuModel, mainMenuView);
-
-            System.out.println(GREEN + " GamePresenters succesfully loaded " + RESET);
-        }catch (NullPointerException e) {
-            System.out.println(RED + "GamePresenters Failed to load" + RESET);
-            throw new NullPointerException();
-        }
-    }
 
     public GameManager getGameManager() {
         return gameManager;

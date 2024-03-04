@@ -1,10 +1,15 @@
-package Zeeslag.fx.View.Game;
+package Zeeslag.Fx.View.Game;
 
-import Zeeslag.fx.Model.GameModel;
-import Zeeslag.fx.Manager.Presenter;
+import Zeeslag.Fx.Manager.SceneUtil;
+import Zeeslag.Fx.Model.GameModel;
+import Zeeslag.Fx.Manager.Presenter;
+import Zeeslag.Fx.Model.Player1Model;
+import Zeeslag.Fx.Model.Player2Model;
+import Zeeslag.Fx.View.Game.player1.Player1Presenter;
+import Zeeslag.Fx.View.Game.player1.Player1View;
+import Zeeslag.Fx.View.Game.player2.Player2Presenter;
+import Zeeslag.Fx.View.Game.player2.Player2View;
 import javafx.scene.Node;
-
-import java.util.concurrent.atomic.AtomicReference;
 
 public class GamePresenter implements Presenter {
     private GameModel model;
@@ -17,37 +22,42 @@ public class GamePresenter implements Presenter {
         this.updateView();
     }
 
-
     private void addEventHandlers() {
-        AtomicReference<String> player1 = new AtomicReference<>();
-        AtomicReference<String> player2 = new AtomicReference<>();
-
-
         view.getPlayButton().setOnMouseClicked(mouseEvent -> {
-            if (model.checkIfTextFieldIsCorrect(view.getPlayName1Field()
-                    , view.getPlayName2Field()
-                    , view.getErrorLabel())) {
-                player1.set(view.getPlayName1Field().getText());
-                player2.set(view.getPlayName2Field().getText());
+            if (model.checkIfTextFieldIsCorrect(view.getPlayName1Field(),
+                    view.getPlayName2Field())) {
+                view.stopBackgroundMusic();
 
-                model.play(player1.get(), player2.get());
+                String player1Name = view.getPlayName1Field().getText();
+                String player2Name = view.getPlayName2Field().getText();
+
+                model.play(player1Name, player2Name);
+
+                Player1Model player1Model = new Player1Model();
+                Player1View player1View = new Player1View();
+                Player1Presenter player1Presenter = new Player1Presenter(player1Model, player1View);
+                SceneUtil.openView(player1Presenter);
+                player1Presenter.addWindowEventHandler();
+
+
+                Player2Model player2Model = new Player2Model();
+                Player2View player2View = new Player2View();
+                Player2Presenter player2Presenter = new Player2Presenter(player2Model, player2View);
+                SceneUtil.openView(player2Presenter);
+                player2Presenter.addWindowEventHandler();
 
                 handleClose();
             }
         });
-
-
-
     }
 
     private void updateView() {
-
+        // Add logic to update view if needed
     }
 
     private void handleClose() {
         view.getScene().getWindow().hide();
     }
-
 
     @Override
     public Node getView() {

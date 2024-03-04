@@ -1,6 +1,6 @@
-package Zeeslag.fx.View.Game.player1;
+package Zeeslag.Fx.View.Game.player1;
 
-import Zeeslag.fx.Manager.MVPView;
+import Zeeslag.Fx.Manager.MVPView;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

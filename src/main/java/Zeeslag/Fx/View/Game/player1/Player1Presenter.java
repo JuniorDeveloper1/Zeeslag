@@ -1,9 +1,8 @@
-package Zeeslag.fx.View.Game.player1;
+package Zeeslag.Fx.View.Game.player1;
 
-import Zeeslag.fx.Manager.Presenter;
-import Zeeslag.fx.Model.GameModel;
-import Zeeslag.fx.Model.Player1Model;
-import Zeeslag.fx.View.Game.GameView;
+import Zeeslag.Fx.Manager.Presenter;
+import Zeeslag.Fx.Manager.SceneUtil;
+import Zeeslag.Fx.Model.Player1Model;
 import javafx.scene.Node;
 
 public class Player1Presenter implements Presenter {
@@ -20,6 +19,11 @@ public class Player1Presenter implements Presenter {
     private void addEventHandlers() {
 
     }
+
+    public void addWindowEventHandler() {
+        SceneUtil.closeSceneWarning(view.getScene());
+    }
+
 
     private void updateView() {
        String name = model.getGameManager().getPlayer1().getName() + "'s screen";

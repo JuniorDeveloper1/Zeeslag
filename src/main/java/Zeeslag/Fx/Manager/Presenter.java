@@ -1,4 +1,4 @@
-package Zeeslag.fx.Manager;
+package Zeeslag.Fx.Manager;
 
 import javafx.scene.Node;
 

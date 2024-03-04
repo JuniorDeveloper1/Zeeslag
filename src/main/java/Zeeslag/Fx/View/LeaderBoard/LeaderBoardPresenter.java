@@ -1,9 +1,8 @@
-package Zeeslag.fx.View.LeaderBoard;
+package Zeeslag.Fx.View.LeaderBoard;
 
-import Zeeslag.fx.Model.LeaderBoardModel;
-import Zeeslag.fx.View.LeaderBoard.LeaderBoardView;
-import Zeeslag.fx.Manager.Presenter;
-import Zeeslag.modulesVerzinBetereNaamXd.Player.PlayerStats;
+import Zeeslag.Fx.Model.LeaderBoardModel;
+import Zeeslag.Fx.Manager.Presenter;
+import Zeeslag.Core.Player.PlayerStats;
 import javafx.scene.Node;
 
 import java.util.List;

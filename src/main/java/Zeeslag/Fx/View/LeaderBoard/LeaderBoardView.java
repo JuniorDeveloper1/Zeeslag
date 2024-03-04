@@ -1,7 +1,6 @@
-package Zeeslag.fx.View.LeaderBoard;
+package Zeeslag.Fx.View.LeaderBoard;
 
-import Zeeslag.fx.Manager.MVPView;
-import Zeeslag.fx.Manager.SceneUtil;
+import Zeeslag.Fx.Manager.MVPView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;

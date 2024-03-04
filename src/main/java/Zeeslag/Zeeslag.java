@@ -1,10 +1,9 @@
 package Zeeslag;
 
-import Zeeslag.fx.Model.MainMenuModel;
-import Zeeslag.fx.View.MainMenu.MainMenuPresenter;
-import Zeeslag.fx.View.MainMenu.MainMenuView;
+import Zeeslag.Fx.Model.MainMenuModel;
+import Zeeslag.Fx.View.MainMenu.MainMenuPresenter;
+import Zeeslag.Fx.View.MainMenu.MainMenuView;
 import javafx.application.Application;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 

@@ -1,7 +1,6 @@
-package Zeeslag.fx.View.MainMenu;
+package Zeeslag.Fx.View.MainMenu;
 
-import Zeeslag.fx.Manager.MVPView;
-import Zeeslag.fx.Manager.SceneUtil;
+import Zeeslag.Fx.Manager.MVPView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -109,6 +108,11 @@ public class MainMenuView extends VBox implements MVPView {
         mediaPlayer.play();
     }
 
+    public void stopBackgroundMusic() {
+        if(mediaPlayer != null) {
+            mediaPlayer.stop();
+        }
+    }
     public Button getPlayButton() {
         return playButton;
     }

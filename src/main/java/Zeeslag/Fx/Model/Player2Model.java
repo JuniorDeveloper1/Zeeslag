@@ -1,23 +1,23 @@
-package Zeeslag.fx.Model;
+package Zeeslag.Fx.Model;
 
-import Zeeslag.fx.Manager.MVPModel;
-import Zeeslag.modulesVerzinBetereNaamXd.Game.GameManager;
+import Zeeslag.Core.Game.GameManager;
+import javafx.fxml.FXML;
 
-import java.io.IOException;
-
-public class Player2Model  implements MVPModel {
+public class Player2Model {
     private GameManager gameManager = GameManager.getInstance();
-    @Override
-    public void initialize()  {
+
+    @FXML
+    public void initialize(){
 
     }
 
-    @Override
-    public void loadPresenters() {
-
-    }
+    /**
+     * Logic for player..
+     */
 
     public GameManager getGameManager() {
         return gameManager;
     }
+
+
 }

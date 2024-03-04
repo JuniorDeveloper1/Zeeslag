@@ -1,6 +1,6 @@
-package Zeeslag.fx.View.Game;
+package Zeeslag.Fx.View.Game;
 
-import Zeeslag.fx.Manager.MVPView;
+import Zeeslag.Fx.Manager.MVPView;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -8,16 +8,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
 import java.io.File;
 
 public class GameView extends VBox implements MVPView {
     private Label title;
-
-    private Label errorLabel;
 
     private TextField playName1Field;
     private Label player1;
@@ -45,8 +41,6 @@ public class GameView extends VBox implements MVPView {
     public void initializeNodes(){
         title = new Label("Enter your names!");
 
-        this.errorLabel = new Label("errorLabel");
-
         player1 = new Label("Player 1:");
 
 
@@ -70,11 +64,6 @@ public class GameView extends VBox implements MVPView {
         setSpacing(20);
         title.setFont(Font.font("Arial", 60));
 
-        errorLabel.setFont(Font.font("Arial", FontWeight.BOLD,  25));
-        errorLabel.setTextFill(Color.RED);
-
-        errorLabel.setText("");
-
 
         player2.setFont(Font.font("Arial", 40));
 
@@ -88,7 +77,7 @@ public class GameView extends VBox implements MVPView {
 
         setButtonStyles(playButton);
 
-        getChildren().addAll(title, errorLabel, player1, playName1Field, player2, playName2Field, playButton);
+        getChildren().addAll(title,  player1, playName1Field, player2, playName2Field, playButton);
     }
 
     private void setButtonStyles(Button button) {
@@ -105,8 +94,10 @@ public class GameView extends VBox implements MVPView {
         mediaPlayer.play();
     }
 
-    public Label getErrorLabel() {
-        return errorLabel;
+    public void stopBackgroundMusic(){
+        if(mediaPlayer != null) {
+            mediaPlayer.stop();
+        }
     }
 
     public Button getPlayButton() {
