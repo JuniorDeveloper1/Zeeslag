@@ -1,7 +1,7 @@
-package Zeeslag.modulesVerzinBetereNaamXd.Piece;
+package Zeeslag.Core.Piece;
 
-import Zeeslag.modulesVerzinBetereNaamXd.Coord.Coord;
-import Zeeslag.modulesVerzinBetereNaamXd.Dimension.Dimension;
+import Zeeslag.Core.Coord.Coord;
+import Zeeslag.Core.Dimension.Dimension;
 
 public class Piece extends Dimension {
 

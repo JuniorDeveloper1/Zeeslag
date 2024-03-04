@@ -12,21 +12,21 @@ module Zeeslag {
     requires javafx.media;
 
     opens Zeeslag to javafx.fxml;
-    opens Zeeslag.fx.Model to javafx.fxml;
+    opens Zeeslag.Fx.Model to javafx.fxml;
     exports Zeeslag;
-    exports Zeeslag.modulesVerzinBetereNaamXd.Game;
-    opens Zeeslag.modulesVerzinBetereNaamXd.Game to javafx.fxml;
-    exports Zeeslag.modulesVerzinBetereNaamXd.Player;
-    opens Zeeslag.modulesVerzinBetereNaamXd.Player to javafx.fxml;
-    exports Zeeslag.modulesVerzinBetereNaamXd.Piece;
-    opens Zeeslag.modulesVerzinBetereNaamXd.Piece to javafx.fxml;
-    exports Zeeslag.modulesVerzinBetereNaamXd.Dimension;
-    opens Zeeslag.modulesVerzinBetereNaamXd.Dimension to javafx.fxml;
-    exports Zeeslag.modulesVerzinBetereNaamXd.Coord;
-    opens Zeeslag.modulesVerzinBetereNaamXd.Coord to javafx.fxml;
-    exports Zeeslag.modulesVerzinBetereNaamXd.Bomb;
-    opens Zeeslag.modulesVerzinBetereNaamXd.Bomb to javafx.fxml;
-    exports Zeeslag.modulesVerzinBetereNaamXd.Board;
-    opens Zeeslag.modulesVerzinBetereNaamXd.Board to javafx.fxml;
-    opens Zeeslag.fx.Manager to javafx.fxml;
+    exports Zeeslag.Core.Game;
+    opens Zeeslag.Core.Game to javafx.fxml;
+    exports Zeeslag.Core.Player;
+    opens Zeeslag.Core.Player to javafx.fxml;
+    exports Zeeslag.Core.Piece;
+    opens Zeeslag.Core.Piece to javafx.fxml;
+    exports Zeeslag.Core.Dimension;
+    opens Zeeslag.Core.Dimension to javafx.fxml;
+    exports Zeeslag.Core.Coord;
+    opens Zeeslag.Core.Coord to javafx.fxml;
+    exports Zeeslag.Core.Bomb;
+    opens Zeeslag.Core.Bomb to javafx.fxml;
+    exports Zeeslag.Core.Board;
+    opens Zeeslag.Core.Board to javafx.fxml;
+    opens Zeeslag.Fx.Manager to javafx.fxml;
 }

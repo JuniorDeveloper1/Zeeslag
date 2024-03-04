@@ -1,6 +1,6 @@
-    package Zeeslag.modulesVerzinBetereNaamXd.Bomb;
+    package Zeeslag.Core.Bomb;
 
-    import Zeeslag.modulesVerzinBetereNaamXd.Coord.Coord;
+    import Zeeslag.Core.Coord.Coord;
 
     public class Bomb {
 

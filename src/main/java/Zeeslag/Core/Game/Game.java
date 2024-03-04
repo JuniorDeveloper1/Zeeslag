@@ -1,6 +1,6 @@
-package Zeeslag.modulesVerzinBetereNaamXd.Game;
+package Zeeslag.Core.Game;
 
-import Zeeslag.modulesVerzinBetereNaamXd.Board.Board;
+import Zeeslag.Core.Board.Board;
 
 public class Game {
 

@@ -1,8 +1,8 @@
-    package Zeeslag.modulesVerzinBetereNaamXd.Board;
+    package Zeeslag.Core.Board;
 
-    import Zeeslag.modulesVerzinBetereNaamXd.Bomb.Bomb;
-    import Zeeslag.modulesVerzinBetereNaamXd.Dimension.Dimension;
-    import Zeeslag.modulesVerzinBetereNaamXd.Piece.Piece;
+    import Zeeslag.Core.Bomb.Bomb;
+    import Zeeslag.Core.Dimension.Dimension;
+    import Zeeslag.Core.Piece.Piece;
 
     import java.util.ArrayList;
     import java.util.List;

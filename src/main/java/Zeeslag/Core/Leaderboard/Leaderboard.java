@@ -1,8 +1,8 @@
-package Zeeslag.modulesVerzinBetereNaamXd.Leaderboard;
+package Zeeslag.Core.Leaderboard;
 
-import Zeeslag.modulesVerzinBetereNaamXd.Player.Player;
-import Zeeslag.modulesVerzinBetereNaamXd.Player.PlayerStats;
-import Zeeslag.modulesVerzinBetereNaamXd.Player.PlayerWinsComperator;
+import Zeeslag.Core.Player.Player;
+import Zeeslag.Core.Player.PlayerStats;
+import Zeeslag.Core.Player.PlayerWinsComperator;
 
 import java.io.File;
 import java.io.FileNotFoundException;

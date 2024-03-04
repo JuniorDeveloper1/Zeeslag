@@ -1,6 +1,4 @@
-package Zeeslag.modulesVerzinBetereNaamXd.Player;
-
-import Zeeslag.modulesVerzinBetereNaamXd.Player.PlayerStats;
+package Zeeslag.Core.Player;
 
 import java.util.Comparator;
 

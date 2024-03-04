@@ -1,4 +1,4 @@
-package Zeeslag.modulesVerzinBetereNaamXd.Coord;
+package Zeeslag.Core.Coord;
 
 public class Coord {
 

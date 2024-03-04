@@ -1,4 +1,4 @@
-package Zeeslag.modulesVerzinBetereNaamXd.Dimension;
+package Zeeslag.Core.Dimension;
 
 public abstract class Dimension {
 

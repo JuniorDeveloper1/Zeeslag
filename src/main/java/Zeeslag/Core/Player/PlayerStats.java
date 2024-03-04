@@ -1,4 +1,4 @@
-package Zeeslag.modulesVerzinBetereNaamXd.Player;
+package Zeeslag.Core.Player;
 
 public class PlayerStats {
 

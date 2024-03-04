@@ -1,9 +1,9 @@
-package Zeeslag.modulesVerzinBetereNaamXd.Player;
+package Zeeslag.Core.Player;
 
-import Zeeslag.modulesVerzinBetereNaamXd.Board.Board;
-import Zeeslag.modulesVerzinBetereNaamXd.Bomb.Bomb;
-import Zeeslag.modulesVerzinBetereNaamXd.Leaderboard.Leaderboard;
-import Zeeslag.modulesVerzinBetereNaamXd.Piece.Piece;
+import Zeeslag.Core.Board.Board;
+import Zeeslag.Core.Bomb.Bomb;
+import Zeeslag.Core.Leaderboard.Leaderboard;
+import Zeeslag.Core.Piece.Piece;
 
 import java.io.IOException;
 import java.util.List;
