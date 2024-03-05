@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class Player {
-    private String name;
-    private Board board;
+    private final String name;
+    private final Board board;
 
     private final UUID uuid;
 

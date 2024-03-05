@@ -76,6 +76,7 @@ public class GameView extends VBox implements MVPView {
         this.getPlayName2Field().setMaxWidth(300);
 
         setButtonStyles(playButton);
+        setButtonHoverEffects(playButton);
 
         getChildren().addAll(title,  player1, playName1Field, player2, playName2Field, playButton);
     }
@@ -84,6 +85,11 @@ public class GameView extends VBox implements MVPView {
         button.setStyle("-fx-background-color: #1e90ff; -fx-text-fill: white; -fx-font-size: 20px; ");
         button.setMinWidth(150);
     }
+    private void setButtonHoverEffects(Button button) {
+        button.setOnMouseEntered(e -> button.setScaleX(1.2));
+        button.setOnMouseExited(e -> button.setScaleX(1));
+    }
+
 
     private void playBackgroundMusic() {
         audioFilePath = "resources/awesomeness.wav";

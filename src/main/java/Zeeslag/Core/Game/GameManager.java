@@ -1,16 +1,17 @@
     package Zeeslag.Core.Game;
 
+    import Zeeslag.Core.Board.Board;
     import Zeeslag.Core.Player.Player;
 
     public class GameManager {
         private GameManager(){}
 
-        private Game game;
+       // private Game game;
 
         private Player player1;
 
         private Player player2;
-        private boolean hasStarted = true;
+        private boolean hasStarted = false;
 
         /**
          * We kunnen hier Highscoore, Aantal clicks, ... adden
@@ -28,10 +29,10 @@
         }
 
         public void startGame(){
-                gameManager.setGame(new Game());
-                gameManager.setPlayer1(new Player(null, null));
-                gameManager.setPlayer2(new Player(null, null));
-
+                //gameManager.setGame(new Game());
+                gameManager.setPlayer1(new Player("Player1", new Board(10,10)));
+                gameManager.setPlayer2(new Player("Player2", new Board(10 ,10)));
+                setHasStarted(true);
         }
 
         public Player getPlayer1() {
@@ -50,15 +51,21 @@
             this.player2 = player2;
         }
 
-
-
-        public Game getGame() {
-            return game;
+        public boolean isHasStarted() {
+            return hasStarted;
         }
 
-        private void setGame(Game game) {
-            this.game = game;
+        public void setHasStarted(boolean hasStarted) {
+            this.hasStarted = hasStarted;
         }
+
+        //public Game getGame() {
+       //     return game;
+       // }
+
+       // private void setGame(Game game) {
+       //     this.game = game;
+       // }
 
 
 

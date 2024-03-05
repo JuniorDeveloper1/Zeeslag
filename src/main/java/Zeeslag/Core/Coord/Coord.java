@@ -40,6 +40,14 @@ public class Coord {
         this.setY(y);
     }
 
+    @Override
+    public String toString() {
+        return "Coord{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
+
     // Getters and Setters
 
 }

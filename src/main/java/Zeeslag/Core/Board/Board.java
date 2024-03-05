@@ -11,6 +11,7 @@
     public class Board extends Dimension {
         private List<Piece> pieces;
         private List<Bomb> bombs;
+        private boolean start = false;
 
 
         public Board() {
@@ -65,7 +66,7 @@
 
         public boolean canPieceBePlaced(Piece piece) {
             for (int i = 0; i < piece.getWidth(); i++) {
-                for (int j = 0; i < piece.getHeight(); j++) {
+                for (int j = 0; j < piece.getHeight(); j++) {
                     int coordY = piece.getCoord().getY() + i;
                     int coordX = piece.getCoord().getX() + j;
                     if (!this.isCoordOnPiece(coordX, coordY) || !this.isCoordOnBoard(coordX, coordY)) {
@@ -75,6 +76,7 @@
             }
             return true;
         }
+
 
         public void placePieceRandomly(Piece piece) {
             Random random = new Random();
@@ -102,6 +104,16 @@
 
             piece.lock();
         }
+
+        public boolean checkIfPiecesArePlaced() {
+            for (Piece piece : getPieces()){
+                if(!piece.isPlaced()) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
 
         public void placeAllRandomly() {
             for (int i = 0; i < this.getPieces().size(); i++) {
@@ -137,4 +149,16 @@
             this.bombs = bombs;
         }
 
+        public boolean isStart() {
+            return start;
+        }
+
+        public void setStart(boolean start) {
+            this.start = start;
+        }
+
+        @Override
+        public int getWidth() {
+            return super.getWidth();
+        }
     }

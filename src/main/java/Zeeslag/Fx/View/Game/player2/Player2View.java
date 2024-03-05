@@ -1,32 +1,32 @@
-package Zeeslag.Fx.View.Game.player2; // Change package name
+package Zeeslag.Fx.View.Game.player2;
 
 import Zeeslag.Fx.Manager.MVPView;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class Player2View extends StackPane implements MVPView { // Change class name
+public class Player2View extends VBox implements MVPView {
     private Text playerName;
     private VBox playerBox;
-
     private GridPane gridPane;
     private HBox horizontal;
 
-    private final int cellSize = 50;
-    private ImageView[][] gridCells;
+    public static final int CELL_SIZE = 50;
     private ImageView ship_battleship;
     private ImageView ship_cruiser;
     private ImageView ship_destroyer;
     private ImageView ship_patrol1;
     private ImageView ship_patrol2;
+
+    private Button start;
+    public static final int WIDTH = 531;
+    public static final int HEIGHT = 800;
 
     public Player2View() {
         this.initialize();
@@ -47,7 +47,6 @@ public class Player2View extends StackPane implements MVPView { // Change class 
         this.playerName.setFill(Color.BLACK);
 
         this.gridPane = new GridPane();
-        this.gridCells = new ImageView[10][10];
 
         this.playerBox = new VBox();
 
@@ -66,39 +65,52 @@ public class Player2View extends StackPane implements MVPView { // Change class 
         Image patrol2 = new Image("ShipPatrolHull.png");
         this.ship_patrol2 = new ImageView(patrol2);
 
+        this.start = new Button("start");
+
         this.horizontal = new HBox(30);
     }
 
     @Override
     public void layoutNodes() {
-        playerName.setFont(Font.font("Arial",25));
+        playerName.setFont(Font.font("Arial", 25));
 
         for (int x = 0; x < 10; x++) {
             for (int y = 0; y < 10; y++) {
-                Rectangle rectangle = new Rectangle(cellSize, cellSize, Color.WHITE);
+                Rectangle rectangle = new Rectangle(CELL_SIZE, CELL_SIZE, Color.WHITE);
                 rectangle.setStroke(Color.BLACK);
                 gridPane.add(rectangle, x, y);
             }
         }
 
-
+        gridPane.setAlignment(Pos.TOP_CENTER);
         playerBox.setAlignment(Pos.TOP_CENTER);
-        playerBox.getChildren().addAll(playerName, gridPane);
+        playerBox.getChildren().addAll(playerName, gridPane, start);
 
         horizontal.setSpacing(30);
         horizontal.setAlignment(Pos.BOTTOM_CENTER);
 
-        // Add nodes to the StackPane
+        setButtonStyles(start);
+        setButtonHoverEffects(start);
+        start.setAlignment(Pos.CENTER);
+
         getChildren().addAll(playerBox, horizontal);
         horizontal.getChildren().addAll(ship_battleship, ship_cruiser, ship_destroyer, ship_patrol1, ship_patrol2);
+        horizontal.getChildren().add(start);
+        start.toFront();
+    }
+
+    private void setButtonStyles(Button button) {
+        button.setStyle("-fx-background-color: #1e90ff; -fx-text-fill: white; -fx-font-size: 20px; ");
+        button.setMinWidth(150);
     }
 
     public GridPane getGridPane() {
         return gridPane;
     }
 
-    public ImageView[][] getGridCells() {
-        return gridCells;
+    private void setButtonHoverEffects(Button button) {
+        button.setOnMouseEntered(e -> button.setScaleX(1.2));
+        button.setOnMouseExited(e -> button.setScaleX(1));
     }
 
     public Text getPlayerName() {
@@ -127,5 +139,13 @@ public class Player2View extends StackPane implements MVPView { // Change class 
 
     public ImageView getShip_patrol2() {
         return ship_patrol2;
+    }
+
+    public Button getStart() {
+        return start;
+    }
+
+    public HBox getHorizontal() {
+        return horizontal;
     }
 }
