@@ -1,5 +1,7 @@
 package Zeeslag.Fx.View.Game.player1;
 
+import Zeeslag.Core.Board.Board;
+import Zeeslag.Core.Game.GameManager;
 import Zeeslag.Fx.Manager.MVPView;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,7 +15,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class Player1View extends VBox implements MVPView {
+    private GameManager gameManager = GameManager.getInstance();
+    private Board board = gameManager.getPlayer1().getBoard();
     private Text playerName;
+
     private VBox playerBox;
     private Scene scene;
 
@@ -26,7 +31,6 @@ public class Player1View extends VBox implements MVPView {
     private ImageView ship_destroyer;
     private ImageView ship_patrol1;
     private ImageView ship_patrol2;
-
     private Button start;
     public static final int WIDTH = 531;
     public static final int HEIGHT = 800;
@@ -82,8 +86,8 @@ public class Player1View extends VBox implements MVPView {
     public void layoutNodes() {
         playerName.setFont(Font.font("Arial",25));
 
-        for (int x = 0; x < 10; x++) {
-            for (int y = 0; y < 10; y++) {
+        for (int x = 0; x < board.getWidth(); x++) {
+            for (int y = 0; y < board.getHeight() ; y++) {
                 Rectangle rectangle = new Rectangle(CELL_SIZE, CELL_SIZE, Color.WHITE);
                 rectangle.setStroke(Color.BLACK);
                 gridPane.add(rectangle, x, y);

@@ -2,6 +2,7 @@ package Zeeslag.Fx.View.Game.player1;
 
 import Zeeslag.Core.Board.Board;
 import Zeeslag.Core.Coord.Coord;
+import Zeeslag.Core.Piece.Piece;
 import Zeeslag.Core.Player.Player;
 import Zeeslag.Fx.Manager.Presenter;
 import Zeeslag.Fx.Manager.SceneUtil;
@@ -45,22 +46,26 @@ public class Player1Presenter implements Presenter {
 
 
         if(!(playerBoard.isStart())) {
-            model.setShipDragged(view.getShip_destroyer(), 0);
-            model.setShipDragged(view.getShip_battleship(),1);
-            model.setShipDragged(view.getShip_cruiser(),2);
-            model.setShipDragged(view.getShip_patrol1(),3);
-            model.setShipDragged(view.getShip_patrol2(),4);
+            model.setShipDragged(view.getShip_destroyer(), 0, view);
+            model.setShipDragged(view.getShip_battleship(),1, view);
+            model.setShipDragged(view.getShip_cruiser(),2, view);
+            model.setShipDragged(view.getShip_patrol1(),3, view);
+            model.setShipDragged(view.getShip_patrol2(),4, view);
         }
 
 
 
         Platform.runLater(() -> {
-            model.setCoords(0, view.getShip_destroyer());
-            model.setCoords(1, view.getShip_battleship());
-            model.setCoords(2, view.getShip_cruiser());
-            model.setCoords(3, view.getShip_patrol1());
-            model.setCoords(4, view.getShip_patrol2());
-            System.out.println("Cords Presenter: " + view.getShip_destroyer().getLayoutX() +  " " + view.getShip_destroyer().getLayoutY());
+            model.setCoords(0, view.getShip_destroyer(), view);
+            model.setCoords(1, view.getShip_battleship(), view);
+            model.setCoords(2, view.getShip_cruiser(), view);
+            model.setCoords(3, view.getShip_patrol1(), view);
+            model.setCoords(4, view.getShip_patrol2(), view);
+
+            // Output the coordinates for debugging purposes
+            for (Piece piece : model.getGameManager().getPlayer1().getBoard().getPieces()) {
+                System.out.println("Coords: " + piece.getCoord());
+            }
             System.out.println("Coords : " + model.getGameManager().getPlayer1().getBoard().getPieces().get(0).getCoord());
         });
 

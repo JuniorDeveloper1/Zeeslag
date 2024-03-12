@@ -13,6 +13,7 @@ import java.util.List;
 
 public class Player1Model {
     private GameManager gameManager = GameManager.getInstance();
+    private Board board = gameManager.getPlayer1().getBoard();
 
     public Player1Model() {
         gameManager.getPlayer1().getBoard().setPieces(createPieces());
@@ -30,22 +31,14 @@ public class Player1Model {
 
     double initialX = 0;
     double initialY = 0;
-    public void setShipDragged(ImageView ship, int index) {
+    public void setShipDragged(ImageView ship, int index, Player1View view) {
         Piece piece = gameManager.getPlayer1().getBoard().getPieces().get(index);
-        Board board = gameManager.getPlayer1().getBoard();
         piece.setSelected(true);
+
         int cellSize = Player1View.CELL_SIZE;
-        int screenWidht = Player1View.WIDTH;
-        int screenHeight = -20;
+
         Translate translate = new Translate(0, 0);
         ship.getTransforms().add(translate);
-
-
-
-        ship.setOnDragDetected(mouseEvent -> {
-            ship.startFullDrag();
-            System.out.println("Drag detected");
-        });
 
         ship.setOnMousePressed(mouseEvent -> {
             initialX = mouseEvent.getX();
@@ -61,52 +54,58 @@ public class Player1Model {
         });
 
         ship.setOnMouseReleased(mouseEvent -> {
-            double x = mouseEvent.getX() - initialX;
-            double y = mouseEvent.getY() - initialY;
+            double x = translate.getX();
+            double y = translate.getY();
 
-            translate.setX(translate.getX() + x);
-            translate.setY(translate.getY() + y);
+            // Calculate the new position based on cell size
+            double newX = Math.round(x / cellSize) * cellSize;
+            double newY = Math.round(y / cellSize) * cellSize;
 
+            // Check if the new position is within the grid
+            if (newX >= 0 && newX + ship.getBoundsInParent().getWidth() <= Player1View.WIDTH &&
+                    newY >= 0 && newY + ship.getBoundsInParent().getHeight() <= Player1View.HEIGHT) {
+                // Adjust the coordinates to match expected indexing system
+                int xCoord = (int) (newX / cellSize) + 1;
+                int yCoord = (int) (newY / cellSize) + 1;
 
-            double xOffset = (cellSize - ship.getBoundsInLocal().getWidth()) / 2;
-            double yOffset = (cellSize - ship.getBoundsInLocal().getHeight()) / 2;
+                // Update piece coordinates
+                piece.setCoord(new Coord(xCoord, yCoord));
 
-
-            double xCord = Math.round((translate.getX() - xOffset) / cellSize) * cellSize + xOffset;
-            double yCord = Math.round((translate.getY() - yOffset) / cellSize) * cellSize + yOffset;
-
-            if (!(xCord >= screenWidht - ship.getBoundsInLocal().getWidth() ||
-                    yCord >= screenHeight - ship.getBoundsInLocal().getHeight())) {
-                translate.setX(xCord);
-                translate.setY(yCord);
+                // Mark the piece as placed
                 piece.setSelected(false);
                 piece.setPlaced(true);
-            } else {
-                translate.setX(0);
-                translate.setY(0);
-                piece.setSelected(false);
-            }
-            piece.setCoord(new Coord((int) translate.getX(), (int) translate.getY()));
 
-            ship.setMouseTransparent(false);
+                // Output the adjusted coordinates
+                System.out.println("Ship coordinates: (" + xCoord + ", " + yCoord + ")");
+            } else {
+                // Handle the case where the ship is out of bounds
+                System.out.println("Ship coordinates: (OUTOFBOUNDS)");
+            }
         });
     }
-
-
-
 
     // model.getPieceList().get(0).setCoord(
     // new Coord(
     // view.getShip_destroyer().getLayoutX()
     // , view.getShip_destroyer().getLayoutY()));
-    public void setCoords(int index, ImageView imageView){
-        gameManager.getPlayer1().getBoard().getPieces().get(index).setCoord(
-                new Coord(
-                        (int) imageView.getLayoutX(),
-                        (int) imageView.getLayoutY()
-                )
-        );
+    public void setCoords(int index, ImageView imageView, Player1View view) {
+        int cellSize = Player1View.CELL_SIZE;
+
+        // Bereken de coördinaten op basis van de positie van de ImageView binnen het bord
+        int xCoord = (int) (imageView.getLayoutX() / cellSize) + 1;
+        int yCoord = (int) (imageView.getLayoutY() / cellSize) + 1;
+
+        // Controleer of de coördinaten binnen het bereik van het bord vallen
+        if (xCoord >= 1 && xCoord <= board.getWidth() && yCoord >= 1 && yCoord <= board.getHeight()) {
+            // Stel de coördinaten van het schip in op basis van de berekende waarden
+            gameManager.getPlayer1().getBoard().getPieces().get(index).setCoord(new Coord(xCoord, yCoord));
+            System.out.println("Ship coordinates: (" + xCoord + ", " + yCoord + ")");
+        } else {
+            // Geef een foutmelding als de ImageView buiten het bereik van het bord wordt geplaatst
+            System.out.println("Ship coordinates: (OUTOFBOUNDS)");
+        }
     }
+
 
 
     public GameManager getGameManager() {
