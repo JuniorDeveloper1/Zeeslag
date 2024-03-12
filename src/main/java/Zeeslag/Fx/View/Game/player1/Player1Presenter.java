@@ -3,9 +3,7 @@ package Zeeslag.Fx.View.Game.player1;
 import Zeeslag.Fx.Manager.Presenter;
 import Zeeslag.Fx.Model.Player1Model;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
 
 public class Player1Presenter implements Presenter {
@@ -18,35 +16,24 @@ public class Player1Presenter implements Presenter {
         initializeEventHandlers();
     }
 
-        private void initializeEventHandlers() {
-            view.getGridPane().setOnMouseClicked(mouseEvent -> {
-                double cellWidth = view.getGridPane().getWidth() / 10;
-                double cellHeight = view.getGridPane().getHeight() / 10;
+    private void initializeEventHandlers() {
+        view.getGridPane().setOnMouseClicked(mouseEvent -> {
+            double cellWidth = view.getGridPane().getWidth() / 10;
+            double cellHeight = view.getGridPane().getHeight() / 10;
 
-                double mouseX = mouseEvent.getX();
-                double mouseY = mouseEvent.getY();
+            double mouseX = mouseEvent.getX();
+            double mouseY = mouseEvent.getY();
 
-                int x = (int) (mouseX / cellWidth);
-                int y = (int) (mouseY / cellHeight);
+            int x = (int) (mouseX / cellWidth);
+            int y = (int) (mouseY / cellHeight);
 
-                System.out.println("Mouse coordinates: (" + mouseX + ", " + mouseY + ")");
-                System.out.println("Clicked cell coordinates: (" + x + ", " + y + ")");
+            System.out.println("Mouse coordinates: (" + mouseX + ", " + mouseY + ")");
+            System.out.println("Clicked cell coordinates: (" + x + ", " + y + ")");
 
-                boolean placementSuccessful = model.placeShip(x, y);
-                if (placementSuccessful) {
-                    System.out.println("Ship placed successfully");
-                } else {
-                    showAlert("Invalid Placement", "The ship cannot be placed here.");
-                }
-            });
-        }
+            model.placeShip(x, y);
 
-
-
-
-
-
-
+        });
+    }
 
     public void addWindowEventHandler() {
         // Add any window event handlers if needed
