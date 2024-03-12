@@ -8,13 +8,23 @@ import java.util.List;
 
 public class Board {
     private final Cell[][] cells;
-    private final List<Ship> placedShips;
+    private  List<Ship> placedShips;
 
     public Board() {
         this.cells = new Cell[10][10]; // Assuming a 10x10 grid
         this.placedShips = new ArrayList<>();
-
+        this.initializeShips();
         initializeCells();
+    }
+
+    private void initializeShips(){
+        getPlacedShips().clear();
+        getPlacedShips().add(new Ship(4));
+        getPlacedShips().add(new Ship(3));
+        getPlacedShips().add(new Ship(3));
+        getPlacedShips().add(new Ship(2));
+        getPlacedShips().add(new Ship(2));
+
     }
 
     private void initializeCells() {
@@ -24,6 +34,7 @@ public class Board {
             }
         }
     }
+
 
     public boolean placeShip(Ship ship, int x, int y) {
         if (canPlaceShip(ship, x, y)) {
@@ -35,7 +46,6 @@ public class Board {
                     cell.setShip(ship);
                     cell.setFill(Color.WHITE);
                     cell.setStroke(Color.GREEN);
-                    System.out.println("werkt");
                 }
             } else {
                 for (int i = x; i < x + length; i++) {
@@ -43,7 +53,6 @@ public class Board {
                     cell.setShip(ship);
                     cell.setFill(Color.WHITE);
                     cell.setStroke(Color.GREEN);
-                    System.out.println("werkt niet");
                 }
             }
 
@@ -112,4 +121,7 @@ public class Board {
         return placedShips;
     }
 
+    public void setPlacedShips(List<Ship> placedShips) {
+        this.placedShips = placedShips;
+    }
 }
