@@ -34,8 +34,8 @@ public class GameModel {
             sPlayer2 = "Bot2";
         }
 
-        Player player1 = new Player(sPlayer1, gameManager.getPlayer1().getBoard());
-        Player player2 = new Player(sPlayer2, gameManager.getPlayer2().getBoard());
+        Player player1 = new Player(sPlayer1);
+        Player player2 = new Player(sPlayer2);
 
         gameManager.setPlayer1(player1);
         gameManager.setPlayer2(player2);

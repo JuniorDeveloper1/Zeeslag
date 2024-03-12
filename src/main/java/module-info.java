@@ -18,8 +18,8 @@ module Zeeslag {
     opens Zeeslag.Core.Game to javafx.fxml;
     exports Zeeslag.Core.Player;
     opens Zeeslag.Core.Player to javafx.fxml;
-    exports Zeeslag.Core.Piece;
-    opens Zeeslag.Core.Piece to javafx.fxml;
+    exports Zeeslag.Core.Ship;
+    opens Zeeslag.Core.Ship to javafx.fxml;
     exports Zeeslag.Core.Dimension;
     opens Zeeslag.Core.Dimension to javafx.fxml;
     exports Zeeslag.Core.Coord;

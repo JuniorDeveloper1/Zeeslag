@@ -3,7 +3,7 @@ package Zeeslag.Core.Player;
 import Zeeslag.Core.Board.Board;
 import Zeeslag.Core.Bomb.Bomb;
 import Zeeslag.Core.Leaderboard.Leaderboard;
-import Zeeslag.Core.Piece.Piece;
+import Zeeslag.Core.Ship.Ship;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,42 +15,14 @@ public class Player {
 
     private final UUID uuid;
 
-    public Player(String name, Board board){
+    public Player(String name){
         this.name = name;
-        this.board = board;
+        this.board = new Board();
         this.uuid = generateUUID();
     }
 
-    public void attack(Player otherPlayer, int x, int y) throws IOException {
-        if(otherPlayer.equals(this)){
-            throw new IllegalArgumentException("Exception: you can only attack a different player");
-        }
-
-        Bomb bomb = new Bomb(x, y);
-        if (otherPlayer.getBoard().recieveBomb(bomb)) {
-            System.out.println("Je hebt geraakt");
-        } else {
-            System.out.println("Je hebt gemist");
-        }
-
-        if(hasWon(otherPlayer)){
-            //TODO: Stop fighting
-            Leaderboard leaderboard = new Leaderboard();
-            leaderboard.incrementWins(this);
-            /**
-             * Leaderboard leaderboard... moet je laten.
-             * We laden al de player data hiermee.
-             * Om te zien als de speler al gewonnen heeft.
-             */
-
-            //TODO: Add open win screen. Or something else.
-
-        }
-
-    }
-
-    private boolean hasWon(Player otherPlayer) {
-        List<Piece> opponentPieces = otherPlayer.getBoard().getPieces();
+    /**private boolean hasWon(Player otherPlayer) {
+        List<Ship> opponentPieces = otherPlayer.getBoard().getPieces();
 
         int totalPieces = 0;
         for (int i = 0; i < opponentPieces.size(); i++) {
@@ -73,7 +45,7 @@ public class Player {
         }
 
         return false;
-    }
+    }**/
 
     public String getName() {
         return name;

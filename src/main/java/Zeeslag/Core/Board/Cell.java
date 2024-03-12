@@ -1,30 +1,40 @@
 package Zeeslag.Core.Board;
 
 import Zeeslag.Core.Coord.Coord;
-import Zeeslag.Core.Piece.Piece;
+import Zeeslag.Core.Ship.Ship;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Cell extends Rectangle {
-    public Coord coord;
-    public Piece piece = null;
-    public boolean isShot = false;
+    private final Coord coord;
+    private boolean isHit;
+    private Ship ship;
 
-    private Board board;
-
-    public Cell(int x, int y, Board board){
-        super(30,30);
+    public Cell(int x, int y) {
+        super(30, 30);
         this.coord = new Coord(x, y);
-        this.board = board;
-        setFill(Color.WHITE);
+        this.isHit = false;
+        setFill(Color.LIGHTGRAY);
         setStroke(Color.BLACK);
     }
 
-    public boolean shoot(){
-        isShot = true;
-        setFill(Color.BLACK);
+    public boolean isHit() {
+        return isHit;
+    }
 
-        if(board)
+    public void setHit(boolean hit) {
+        isHit = hit;
+    }
 
+    public boolean hasShip() {
+        return ship != null;
+    }
+
+    public Ship getShip() {
+        return ship;
+    }
+
+    public void setShip(Ship ship) {
+        this.ship = ship;
     }
 }

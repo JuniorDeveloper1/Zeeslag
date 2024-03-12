@@ -1,189 +1,115 @@
 package Zeeslag.Core.Board;
 
-import Zeeslag.Core.Bomb.Bomb;
-import Zeeslag.Core.Coord.Coord;
-import Zeeslag.Core.Dimension.Dimension;
-import Zeeslag.Core.Piece.Piece;
+import Zeeslag.Core.Ship.Ship;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-public class Board extends Dimension {
-    private List<Piece> pieces;
-    private List<Bomb> bombs;
-
-    private Coord[][] boardCoords;
-    private boolean start = false;
-
+public class Board {
+    private final Cell[][] cells;
+    private final List<Ship> placedShips;
 
     public Board() {
-        super(10, 10);
-        this.pieces = new ArrayList<>();
-        this.bombs = new ArrayList<>();
-        this.boardCoords = new Coord[getWidth()][getHeight()];
-        this.initializeCoords();
-        this.generateDefaultPieces();
+        this.cells = new Cell[10][10]; // Assuming a 10x10 grid
+        this.placedShips = new ArrayList<>();
+
+        initializeCells();
     }
 
-    public Board(int width, int height) {
-        super(width, height);
-        this.pieces = new ArrayList<>();
-        this.bombs = new ArrayList<>();
-        this.boardCoords = new Coord[getWidth()][getHeight()];
-        this.initializeCoords();
-        this.generateDefaultPieces();
-    }
-
-    public Board(int width, int height, List<Piece> pieces) {
-        super(width, height);
-        this.boardCoords = new Coord[getWidth()][getHeight()];
-        this.initializeCoords();
-        this.pieces = pieces;
-    }
-
-    private void initializeCoords() {
-        for (int x = 0; x < getWidth(); x++) {
-            for (int y = 0; y < getHeight(); y++) {
-                boardCoords[x][y] = new Coord(x+1, y+1);
+    private void initializeCells() {
+        for (int x = 0; x < 10; x++) {
+            for (int y = 0; y < 10; y++) {
+                cells[x][y] = new Cell(x, y);
             }
         }
     }
 
+    public boolean placeShip(Ship ship, int x, int y) {
+        if (canPlaceShip(ship, x, y)) {
+            int length = ship.getSize();
 
-    public void generateDefaultPieces() {
-        this.getPieces().add(new Piece(4));
-        this.getPieces().add(new Piece(3));
-        this.getPieces().add(new Piece(3));
-        this.getPieces().add(new Piece(2));
-        this.getPieces().add(new Piece(2));
-        this.getPieces().add(new Piece(2));
-    }
-
-    private boolean isCoordOnBoard(int coordX, int coordY) {
-        return coordX >= 1 && coordX <= this.getHeight() && coordY >= 1 && coordY <= this.getWidth();
-    }
-
-    private boolean isCoordOnPiece(int coordX, int coordY) {
-        for (int i = 0; i < this.getPieces().size(); i++) {
-            if (this.getPieces().get(i).isPlaced()) {
-                for (int y = 0; y < this.getPieces().get(i).getWidth(); y++) {
-                    for (int x = 0; x < this.getPieces().get(i).getHeight(); x++) {
-                        int pieceY = this.getPieces().get(i).getCoord().getY() + y;
-                        int pieceX = this.getPieces().get(i).getCoord().getX() + x;
-                        if (coordX == pieceX && coordY == pieceY) {
-                            return true;
-                        }
-                    }
+            if (ship.isVertical()) {
+                for (int i = y; i < y + length; i++) {
+                    Cell cell = getCell(x, i);
+                    cell.setShip(ship);
+                    cell.setFill(Color.WHITE);
+                    cell.setStroke(Color.GREEN);
+                    System.out.println("werkt");
+                }
+            } else {
+                for (int i = x; i < x + length; i++) {
+                    Cell cell = getCell(i, y);
+                    cell.setShip(ship);
+                    cell.setFill(Color.WHITE);
+                    cell.setStroke(Color.GREEN);
+                    System.out.println("werkt niet");
                 }
             }
-        }
-        return false;
-    }
 
-    public boolean canPieceBePlaced(Piece piece) {
-        for (int i = 0; i < piece.getWidth(); i++) {
-            for (int j = 0; j < piece.getHeight(); j++) {
-                int coordY = piece.getCoord().getY() + i;
-                int coordX = piece.getCoord().getX() + j;
-                if (!this.isCoordOnPiece(coordX, coordY) || !this.isCoordOnBoard(coordX, coordY)) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-
-    public void placePieceRandomly(Piece piece) {
-        Random random = new Random();
-
-        int randomX = random.nextInt(this.getHeight()) + 1;
-        int randomY = random.nextInt(this.getWidth()) + 1;
-        piece.getCoord().setCoords(randomX, randomY);
-
-        boolean rotate = random.nextBoolean();
-        if (rotate) {
-            piece.rotate();
-        }
-
-        while (!this.canPieceBePlaced(piece)) {
-            randomX = random.nextInt(this.getHeight()) + 1;
-            randomY = random.nextInt(this.getWidth()) + 1;
-
-            piece.getCoord().setCoords(randomX, randomY);
-
-            rotate = random.nextBoolean();
-            if (rotate) {
-                piece.rotate();
-            }
-        }
-
-        piece.lock();
-    }
-
-    public boolean checkIfPiecesArePlaced() {
-        for (Piece piece : getPieces()){
-            if(!piece.isPlaced()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-
-    public void placeAllRandomly() {
-        for (int i = 0; i < this.getPieces().size(); i++) {
-            this.placePieceRandomly(this.getPieces().get(i));
-        }
-    }
-
-    public boolean recieveBomb(Bomb bomb) {
-        this.getBombs().add(bomb);
-
-        if (isCoordOnPiece(bomb.getCoord().getX(), bomb.getCoord().getY())) {
-            bomb.setHit(true);
+            placedShips.add(ship);
             return true;
         }
 
         return false;
     }
 
+    private boolean canPlaceShip(Ship ship, int x, int y) {
+        int length = ship.getSize();
 
+        if (ship.isVertical()) {
+            if (y + length > 10) {
+                return false;
+            }
 
-    // Getters and Setters
-    public List<Piece> getPieces() {
+            for (int i = y; i < y + length; i++) {
+                if (!isValidPoint(x, i) || getCell(x, i).hasShip()) {
+                    return false;
+                }
+            }
+        } else {
+            if (x + length > 10) {
+                return false;
+            }
+
+            for (int i = x; i < x + length; i++) {
+                if (!isValidPoint(i, y) || getCell(i, y).hasShip()) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private boolean isValidPoint(int x, int y) {
+        return x >= 0 && x < 10 && y >= 0 && y < 10;
+    }
+
+    public Cell getCell(int x, int y) {
+        if (isValidPoint(x, y)) {
+            return cells[x][y];
+        } else {
+            return null;
+        }
+    }
+
+    private List<Ship> createPieces() {
+        List<Ship> pieces = new ArrayList<>();
+        pieces.add(new Ship(4));
+        pieces.add(new Ship(3));
+        pieces.add(new Ship(3));
+        pieces.add(new Ship(2));
+        pieces.add(new Ship(2));
         return pieces;
     }
 
-    public void setPieces(List<Piece> pieces) {
-        this.pieces = pieces;
+    public Cell[][] getCells() {
+        return cells;
     }
 
-    public List<Bomb> getBombs() {
-        return bombs;
+    public List<Ship> getPlacedShips() {
+        return placedShips;
     }
 
-    public void setBombs(List<Bomb> bombs) {
-        this.bombs = bombs;
-    }
-
-    public boolean isStart() {
-        return start;
-    }
-
-    public void setStart(boolean start) {
-        this.start = start;
-    }
-
-    public Coord[][] getBoardCoords() {
-        return boardCoords;
-    }
-
-    @Override
-    public int getWidth() {
-        return super.getWidth();
-    }
 }
