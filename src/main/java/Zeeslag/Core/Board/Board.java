@@ -9,9 +9,10 @@ import java.util.List;
 public class Board {
     private final Cell[][] cells;
     private  List<Ship> placedShips;
+    private boolean allShipsPlaced;
 
     public Board() {
-        this.cells = new Cell[10][10]; // Assuming a 10x10 grid
+        this.cells = new Cell[10][10];
         this.placedShips = new ArrayList<>();
         this.initializeShips();
         initializeCells();
@@ -102,17 +103,6 @@ public class Board {
             return null;
         }
     }
-
-    private List<Ship> createPieces() {
-        List<Ship> pieces = new ArrayList<>();
-        pieces.add(new Ship(4));
-        pieces.add(new Ship(3));
-        pieces.add(new Ship(3));
-        pieces.add(new Ship(2));
-        pieces.add(new Ship(2));
-        return pieces;
-    }
-
     public Cell[][] getCells() {
         return cells;
     }
@@ -123,5 +113,13 @@ public class Board {
 
     public void setPlacedShips(List<Ship> placedShips) {
         this.placedShips = placedShips;
+    }
+
+    public boolean isAllShipsPlaced() {
+        return allShipsPlaced;
+    }
+
+    public void setAllShipsPlaced(boolean allShipsPlaced) {
+        this.allShipsPlaced = allShipsPlaced;
     }
 }

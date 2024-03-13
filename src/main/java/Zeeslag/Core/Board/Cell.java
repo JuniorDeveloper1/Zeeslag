@@ -8,7 +8,6 @@ import javafx.scene.shape.Rectangle;
 public class Cell extends Rectangle {
     private final Coord coord;
     private boolean isHit;
-    private boolean isPlaced;
     private Ship ship;
 
     public Cell(int x, int y) {
@@ -35,15 +34,11 @@ public class Cell extends Rectangle {
         return ship;
     }
 
-    public boolean isPlaced() {
-        return isPlaced;
-    }
-
-    public void setPlaced(boolean placed) {
-        isPlaced = placed;
-    }
-
     public void setShip(Ship ship) {
         this.ship = ship;
+    }
+
+    public Coord getCoord() {
+        return coord;
     }
 }

@@ -1,4 +1,4 @@
-package Zeeslag.Fx.View.Game.player1;
+package Zeeslag.Fx.View.Game.player2;
 
 import Zeeslag.Core.Board.Board;
 import Zeeslag.Core.Board.Cell;
@@ -12,10 +12,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class Player1View extends VBox implements MVPView {
+public class Player2View extends VBox implements MVPView {
     private GameManager gameManager = GameManager.getInstance();
-    private Board board = gameManager.getPlayer1().getBoard();
-    private Board opponentBoard = gameManager.getPlayer1().getOpponentBoard();
+    private Board board = gameManager.getPlayer2().getBoard();
+    private Board opponentBoard = gameManager.getPlayer2().getOpponentBoard();
 
     private Text playerName;
     private Text waitingForOtherPlayer;
@@ -27,7 +27,7 @@ public class Player1View extends VBox implements MVPView {
     public static final int WIDTH = 531;
     public static final int HEIGHT = 800;
 
-    public Player1View() {
+    public Player2View() {
         this.initialize();
         this.initializeNodes();
         this.layoutNodes();
@@ -69,6 +69,7 @@ public class Player1View extends VBox implements MVPView {
             }
         }
 
+
         for (int y = 0; y < 10; y++) {
             for (int x = 0; x < 10; x++) {
                 Cell cell = board.getCells()[x][y];
@@ -80,8 +81,8 @@ public class Player1View extends VBox implements MVPView {
         gridPane.setMaxWidth(Region.USE_PREF_SIZE);
 
         playerBox.setAlignment(Pos.TOP_CENTER);
-        playerBox.setSpacing(20); // Add spacing between the children of playerBox
-        playerBox.setPadding(new Insets(20)); // Add padding to playerBox
+        playerBox.setSpacing(20);
+        playerBox.setPadding(new Insets(20));
 
         playerBox.getChildren().addAll(playerName, waitingForOtherPlayer, opponentGridPane, gridPane, start);
 

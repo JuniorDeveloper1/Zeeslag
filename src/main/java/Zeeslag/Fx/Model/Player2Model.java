@@ -4,18 +4,18 @@ import Zeeslag.Core.Board.Board;
 import Zeeslag.Core.Game.GameManager;
 import Zeeslag.Core.Ship.Ship;
 
-public class Player1Model {
+public class Player2Model {
 
     public GameManager gameManager = GameManager.getInstance();
-    public Board playerBoard = gameManager.getPlayer1().getBoard();
+    public Board playerBoard = gameManager.getPlayer2().getBoard();
     private int currentIndex = 0;
 
-    public Player1Model() {
+    public Player2Model() {
         for (int i = 0; i < playerBoard.getPlacedShips().size(); i++) {
             Ship ship = playerBoard.getPlacedShips().get(i);
             System.out.println( "i :"+ i +" size: " + ship.getSize());
         }
-        gameManager.getPlayer1().getBoard().setAllShipsPlaced(false);
+        gameManager.getPlayer2().getBoard().setAllShipsPlaced(false);
     }
 
     public boolean placeHorizontalShip(int x, int y) {
@@ -98,7 +98,7 @@ public class Player1Model {
         }
 
         if(currentIndex >= 5) {
-            gameManager.getPlayer1().getBoard().setAllShipsPlaced(true);
+            gameManager.getPlayer2().getBoard().setAllShipsPlaced(true);
         }
         this.currentIndex = currentIndex;
     }

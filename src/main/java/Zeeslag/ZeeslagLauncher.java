@@ -7,7 +7,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Zeeslag extends Application {
+public class ZeeslagLauncher extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         MainMenuView view = new MainMenuView();

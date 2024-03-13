@@ -8,21 +8,9 @@ import javafx.scene.control.TextField;
 public class GameModel {
     private  GameManager gameManager = GameManager.getInstance();
 
-    public GameModel() {
-        this.initialize();
-    }
-
-    public void initialize(){
-    }
     public void play(String player1, String player2) {
-
         createHero(player1, player2);
-
         System.out.println(gameManager.getPlayer1().getName());
-        System.out.println(gameManager.getPlayer1().getUuid());
-
-        System.out.println(gameManager.getPlayer2().getName());
-        System.out.println(gameManager.getPlayer2().getUuid());
     }
 
     private void createHero(String sPlayer1, String sPlayer2) {
