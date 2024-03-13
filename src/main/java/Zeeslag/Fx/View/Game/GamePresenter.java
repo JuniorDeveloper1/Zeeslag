@@ -7,9 +7,11 @@ import Zeeslag.Fx.Model.Player1Model;
 import Zeeslag.Fx.Model.Player2Model;
 import Zeeslag.Fx.View.Game.player1.Player1Presenter;
 import Zeeslag.Fx.View.Game.player1.Player1View;
-import Zeeslag.Fx.View.Game.player2.Player2View;
 import Zeeslag.Fx.View.Game.player2.Player2Presenter;
+import Zeeslag.Fx.View.Game.player2.Player2View;
 import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.SplitPane;
 import javafx.stage.Stage;
 
 public class GamePresenter implements Presenter {
@@ -37,15 +39,21 @@ public class GamePresenter implements Presenter {
                 Player2Model player2Model = new Player2Model();
                 Player2View player2View = new Player2View();
                 Player2Presenter player2Presenter = new Player2Presenter(player2Model, player2View);
-                SceneUtil.openView(player2Presenter);
-                //player2Presenter.addWindowEventHandler();
 
                 Player1Model player1Model = new Player1Model();
                 Player1View player1View = new Player1View();
                 Player1Presenter player1Presenter = new Player1Presenter(player1Model, player1View);
-                SceneUtil.openView( player1Presenter);
-                // player1Presenter.addWindowEventHandler();
 
+                // Create SplitPane and add Player1View and Player2View
+                SplitPane splitPane = new SplitPane(player1View, player2View);
+                splitPane.setDividerPositions(0.5); // Set the initial divider position to divide the screen equally
+
+                // Open the SplitPane in a new stage
+                Stage stage = new Stage();
+                stage.setScene(new Scene(splitPane));
+                stage.show();
+
+                // Close the current window
                 handleClose();
             }
         });
@@ -63,5 +71,4 @@ public class GamePresenter implements Presenter {
     public Node getView() {
         return view;
     }
-    
 }

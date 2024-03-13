@@ -40,6 +40,7 @@ public class Player {
             cell.setFill(Color.BLACK);
             opponentCell.setFill(Color.BLACK);
         }
+        return true;
     }
 
 
