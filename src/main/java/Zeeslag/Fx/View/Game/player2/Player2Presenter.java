@@ -6,16 +6,11 @@
     import Zeeslag.Fx.Manager.SceneUtil;
     import Zeeslag.Fx.Model.Player1Model;
     import Zeeslag.Fx.Model.Player2Model;
-    import Zeeslag.Fx.View.Game.GamePresenter;
-    import Zeeslag.Fx.View.Game.player2.Player2View;
     import javafx.scene.Node;
-    import javafx.scene.Scene;
-    import javafx.scene.control.Alert;
     import javafx.scene.control.Button;
     import javafx.scene.input.MouseButton;
     import javafx.scene.input.MouseEvent;
     import javafx.scene.layout.GridPane;
-    import org.controlsfx.control.spreadsheet.Grid;
 
     public class Player2Presenter implements Presenter {
         private final Player2Model model;
@@ -32,8 +27,6 @@
             view.getOpponentGridPane().setVisible(false);
             view.getWaitingForOtherPlayer().setVisible(false);
             System.out.println("P2: CURRENT PLAYER" + model.gameManager.getTurn().getCurrentPlayer().getName());
-
-
         }
 
         private void initializeEventHandlers() {

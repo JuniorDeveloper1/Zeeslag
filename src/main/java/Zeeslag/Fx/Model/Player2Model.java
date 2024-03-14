@@ -43,8 +43,13 @@ public class Player2Model {
             }
         }
 
+        Ship ship = playerBoard.getPlacedShips().get(currentIndex);
+
         for (int j = 0; j < size; j++) {
-            playerBoard.placeShip(new Ship(1), x + j, y);
+            playerBoard.placeShip(ship, x + j, y);
+            /**
+             * The size 1 is for the auto completion.
+             */
         }
 
 
@@ -57,13 +62,16 @@ public class Player2Model {
         final int totalShips = playerBoard.getPlacedShips().size();
         final int maxShips = 5;
 
+        Ship currentShip = playerBoard.getPlacedShips().get(currentIndex);
+        int size = currentShip.getSize();
+
+        currentShip.setVertical(true);
+
         if (currentIndex >= totalShips || currentIndex >= maxShips) {
             if(!(maxShips == 5)) {this.setCurrentIndex(currentIndex - 1);}
             return false;
         }
 
-        Ship currentShip = playerBoard.getPlacedShips().get(currentIndex);
-        int size = currentShip.getSize();
 
         if (y + size > 10) {
             if(!(maxShips == 5)) {this.setCurrentIndex(currentIndex - 1);}
@@ -76,9 +84,10 @@ public class Player2Model {
                 return false;
             }
         }
+        Ship ship = playerBoard.getPlacedShips().get(currentIndex);
 
         for (int j = 0; j < size; j++) {
-            playerBoard.placeShip(new Ship(1), x, y+j);
+            playerBoard.placeShip(ship, x, y+j);
         }
 
         setCurrentIndex(getCurrentIndex() + 1);

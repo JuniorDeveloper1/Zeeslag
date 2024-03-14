@@ -1,6 +1,5 @@
 package Zeeslag.Fx.View.Game;
 
-import Zeeslag.Fx.Manager.SceneUtil;
 import Zeeslag.Fx.Model.GameModel;
 import Zeeslag.Fx.Manager.Presenter;
 import Zeeslag.Fx.Model.Player1Model;

@@ -43,11 +43,10 @@ public class Player1Model {
             }
         }
 
+        Ship ship = playerBoard.getPlacedShips().get(currentIndex);
+
         for (int j = 0; j < size; j++) {
-            playerBoard.placeShip(new Ship(1), x + j, y);
-            /**
-             * The size 1 is for the auto completion.
-             */
+            playerBoard.placeShip(ship, x + j, y);
         }
 
 
@@ -59,29 +58,40 @@ public class Player1Model {
     public boolean placeVerticalShip(int x, int y) {
         final int totalShips = playerBoard.getPlacedShips().size();
         final int maxShips = 5;
-
-        if (currentIndex >= totalShips || currentIndex >= maxShips) {
-            if(!(maxShips == 5)) {this.setCurrentIndex(currentIndex - 1);}
-            return false;
-        }
-
         Ship currentShip = playerBoard.getPlacedShips().get(currentIndex);
         int size = currentShip.getSize();
+        currentShip.setVertical(true);
 
-        if (y + size > 10) {
-            if(!(maxShips == 5)) {this.setCurrentIndex(currentIndex - 1);}
+
+        if (currentIndex >= totalShips || currentIndex >= maxShips) {
+            if (!(maxShips == 5)) {
+                this.setCurrentIndex(currentIndex - 1);
+            }
             return false;
         }
 
-        for (int j = 0; j < size; j++) {
-            if (playerBoard.getCell(x, y+j).hasShip()) {
-                if(!(maxShips == 5)) {this.setCurrentIndex(currentIndex - 1);}
+
+
+        if (y + size > 10) {
+            if (!(maxShips == 5)) {
+                this.setCurrentIndex(currentIndex - 1);
+            }
+            return false;
+        }
+
+        // Check if any cell in the ship's vertical placement already has a ship
+        for (int i = 0; i < size; i++) {
+            if (playerBoard.getCell(x, y + i).hasShip()) {
+                if (!(maxShips == 5)) {
+                    this.setCurrentIndex(currentIndex - 1);
+                }
                 return false;
             }
         }
 
-        for (int j = 0; j < size; j++) {
-            playerBoard.placeShip(new Ship(1), x, y+j);
+        // Place the ship vertically
+        for (int i = 0; i < size; i++) {
+            playerBoard.placeShip(currentShip, x, y + i);
         }
 
         setCurrentIndex(getCurrentIndex() + 1);

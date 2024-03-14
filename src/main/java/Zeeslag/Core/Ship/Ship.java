@@ -4,18 +4,23 @@ import Zeeslag.Core.Dimension.Dimension;
 
 public class Ship extends Dimension {
     private int size;
+    private int hits; // New field to keep track of hits
     private boolean vertical;
-
     private boolean isSunk;
 
     public Ship(int size) {
         this.size = size;
+        this.hits = 0; // Initialize hits to 0
         setSunk(false);
     }
 
     public void hit() {
-        setSunk(true);
+        hits++; // Increment hits when the ship is hit
+        if (hits >= size) {
+            setSunk(true); // Mark ship as sunk if all its cells are hit
+        }
     }
+
     public int getSize() {
         return size;
     }

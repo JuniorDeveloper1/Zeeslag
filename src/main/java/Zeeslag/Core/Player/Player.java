@@ -4,6 +4,8 @@ import Zeeslag.Core.Board.Board;
 import Zeeslag.Core.Board.Cell;
 import Zeeslag.Core.Game.GameManager;
 import Zeeslag.Core.Ship.Ship;
+import Zeeslag.Fx.Manager.SceneUtil;
+import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 
 import java.util.UUID;
@@ -30,23 +32,21 @@ public class Player {
                 Ship ship = opponentCell.getShip();
                 cell.setFill(Color.RED);
                 opponentCell.setFill(Color.RED);
-                //otherplayer.getBoard().getPlacedShips().remove(ship);
                 ship.hit();
+                if (ship.isSunk()) {
+                    SceneUtil.showAlert(otherplayer.getName() +" schip is gezonken!",
+                            "Schip met grootte " + ship.getSize() + " is gezonken!!");
+                }
                 gameManager.getTurn().setPlayerTurn(this);
             } else {
                 cell.setFill(Color.BLACK);
                 opponentCell.setFill(Color.BLACK);
                 gameManager.getTurn().setPlayerTurn(otherplayer);
             }
-
             System.out.println("SIZE: " + otherplayer.getBoard().getPlacedShips().size());
         } else {
-            for (int i = 0; i < 100; i++) {
-                System.out.println("JE HEBT GEWONNEN!");
-            }
-
+            SceneUtil.showAlert(getName() + "WON!", getName() + " Heeft het spel gewonnen!" );
         }
-
         return true;
     }
 
@@ -55,10 +55,6 @@ public class Player {
             if (!ship.isSunk()) {
                 return false;
             }
-        }
-
-        if(otherPlayer.getBoard().getPlacedShips().size() >= 1) {
-
         }
         return true;
     }
