@@ -45,6 +45,9 @@ public class Player1Model {
 
         for (int j = 0; j < size; j++) {
             playerBoard.placeShip(new Ship(1), x + j, y);
+            /**
+             * The size 1 is for the auto completion.
+             */
         }
 
 

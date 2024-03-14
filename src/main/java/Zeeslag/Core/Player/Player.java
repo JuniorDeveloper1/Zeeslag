@@ -2,14 +2,10 @@ package Zeeslag.Core.Player;
 
 import Zeeslag.Core.Board.Board;
 import Zeeslag.Core.Board.Cell;
-import Zeeslag.Core.Bomb.Bomb;
 import Zeeslag.Core.Game.GameManager;
-import Zeeslag.Core.Leaderboard.Leaderboard;
 import Zeeslag.Core.Ship.Ship;
 import javafx.scene.paint.Color;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 public class Player {
@@ -25,28 +21,48 @@ public class Player {
         this.opponentBoard = new Board();
         this.uuid = generateUUID();
     }
-    public boolean attack(Player otherplayer, int x, int y){
-        Cell cell = opponentBoard.getCell(x,y);
-        Cell opponentCell = otherplayer.getBoard().getCell(x, y);
-        if(opponentCell.hasShip()) {
-            Ship ship = opponentCell.getShip();
-            if(ship.isAlive()) {
+
+    public boolean attack(Player otherplayer, int x, int y) {
+        if (!hasWon(otherplayer)) {
+            Cell cell = opponentBoard.getCell(x, y);
+            Cell opponentCell = otherplayer.getBoard().getCell(x, y);
+            if (opponentCell.hasShip()) {
+                Ship ship = opponentCell.getShip();
                 cell.setFill(Color.RED);
                 opponentCell.setFill(Color.RED);
+                //otherplayer.getBoard().getPlacedShips().remove(ship);
                 ship.hit();
                 gameManager.getTurn().setPlayerTurn(this);
-                System.out.println("Heeft geraakt");
-            }else {
-                opponentBoard.getPlacedShips().remove(ship);
-                System.out.println("Ship destroyed");
+            } else {
+                cell.setFill(Color.BLACK);
+                opponentCell.setFill(Color.BLACK);
+                gameManager.getTurn().setPlayerTurn(otherplayer);
             }
-        }else {
-            cell.setFill(Color.BLACK);
-            opponentCell.setFill(Color.BLACK);
-            gameManager.getTurn().setPlayerTurn(otherplayer);
+
+            System.out.println("SIZE: " + otherplayer.getBoard().getPlacedShips().size());
+        } else {
+            for (int i = 0; i < 100; i++) {
+                System.out.println("JE HEBT GEWONNEN!");
+            }
+
+        }
+
+        return true;
+    }
+
+    public boolean hasWon(Player otherPlayer) {
+        for (Ship ship : otherPlayer.getBoard().getPlacedShips()) {
+            if (!ship.isSunk()) {
+                return false;
+            }
+        }
+
+        if(otherPlayer.getBoard().getPlacedShips().size() >= 1) {
+
         }
         return true;
     }
+
 
 
 

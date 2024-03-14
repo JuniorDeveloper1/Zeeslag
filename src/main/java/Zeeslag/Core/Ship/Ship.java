@@ -4,25 +4,18 @@ import Zeeslag.Core.Dimension.Dimension;
 
 public class Ship extends Dimension {
     private int size;
-    private int health;
     private boolean vertical;
 
     private boolean isSunk;
 
     public Ship(int size) {
         this.size = size;
-        this.health = size;
+        setSunk(false);
     }
 
     public void hit() {
         setSunk(true);
     }
-
-
-    public boolean isAlive() {
-        return health > 0;
-    }
-
     public int getSize() {
         return size;
     }

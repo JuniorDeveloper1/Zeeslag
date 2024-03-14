@@ -130,15 +130,6 @@
 
                 getCurrentPlayer().attack(model.gameManager.getPlayer1(), x, y);
 
-                if (model.gameManager.getPlayer1().getBoard().allShipsSunk()) {
-                    SceneUtil.showAlert("Game Over", "Player 2 wins!");
-                }
-
-//                if (!model.getGameManager().getTurn().hasHitTarget()) {
-//                    model.gameManager.getTurn().setPlayerTurn(model.gameManager.getPlayer1());
-//                }
-
-
             } else {
                 SceneUtil.showAlert("Not your turn!", "It is the turn of "
                         + model.getGameManager().getPlayer1().getName());

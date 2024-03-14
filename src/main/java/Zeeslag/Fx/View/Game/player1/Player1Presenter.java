@@ -116,17 +116,6 @@ public class Player1Presenter implements Presenter {
         if (model.gameManager.getTurn().getCurrentPlayer() == getCurrentPlayer()) {
             System.out.println("Player 1 has attacked!");
             getCurrentPlayer().attack(model.gameManager.getPlayer2(), x, y);
-
-            if (model.gameManager.getPlayer2().getBoard().allShipsSunk()) {
-                SceneUtil.showAlert("Game Over", "Player 1 wins!");
-            }
-
-
-            //if(!model.getGameManager().getTurn().hasHitTarget()) {
-            //    model.gameManager.getTurn().setPlayerTurn(model.gameManager.getPlayer1());
-            //}
-
-
         } else {
             SceneUtil.showAlert("Not your turn!", "It is the turn of "
                     + model.getGameManager().getPlayer2().getName());
