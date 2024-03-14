@@ -10,6 +10,7 @@ public class GameModel {
 
     public void play(String player1, String player2) {
         createHero(player1, player2);
+        gameManager.startGame(player1, player2);
         System.out.println(gameManager.getPlayer1().getName());
     }
 

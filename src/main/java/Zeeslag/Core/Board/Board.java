@@ -103,6 +103,15 @@ public class Board {
             return null;
         }
     }
+
+    public boolean allShipsSunk() {
+        for (Ship ship : getPlacedShips()) {
+            if (!ship.isSunk()) {
+                return false; // If any ship is not sunk, return false
+            }
+        }
+        return true; // If all ships are sunk, return true
+    }
     public Cell[][] getCells() {
         return cells;
     }

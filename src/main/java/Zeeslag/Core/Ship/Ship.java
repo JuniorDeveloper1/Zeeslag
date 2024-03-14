@@ -7,13 +7,15 @@ public class Ship extends Dimension {
     private int health;
     private boolean vertical;
 
+    private boolean isSunk;
+
     public Ship(int size) {
         this.size = size;
         this.health = size;
     }
 
     public void hit() {
-        health--;
+        setSunk(true);
     }
 
 
@@ -31,5 +33,13 @@ public class Ship extends Dimension {
 
     public void setVertical(boolean vertical) {
         this.vertical = vertical;
+    }
+
+    public boolean isSunk() {
+        return isSunk;
+    }
+
+    public void setSunk(boolean sunk) {
+        isSunk = sunk;
     }
 }

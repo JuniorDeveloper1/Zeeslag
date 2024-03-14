@@ -3,6 +3,7 @@ package Zeeslag.Core.Player;
 import Zeeslag.Core.Board.Board;
 import Zeeslag.Core.Board.Cell;
 import Zeeslag.Core.Bomb.Bomb;
+import Zeeslag.Core.Game.GameManager;
 import Zeeslag.Core.Leaderboard.Leaderboard;
 import Zeeslag.Core.Ship.Ship;
 import javafx.scene.paint.Color;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class Player {
+    private GameManager gameManager = GameManager.getInstance();
     private final String name;
     private  Board board, opponentBoard;
 
@@ -32,6 +34,8 @@ public class Player {
                 cell.setFill(Color.RED);
                 opponentCell.setFill(Color.RED);
                 ship.hit();
+                gameManager.getTurn().setPlayerTurn(this);
+                System.out.println("Heeft geraakt");
             }else {
                 opponentBoard.getPlacedShips().remove(ship);
                 System.out.println("Ship destroyed");
@@ -39,6 +43,7 @@ public class Player {
         }else {
             cell.setFill(Color.BLACK);
             opponentCell.setFill(Color.BLACK);
+            gameManager.getTurn().setPlayerTurn(otherplayer);
         }
         return true;
     }

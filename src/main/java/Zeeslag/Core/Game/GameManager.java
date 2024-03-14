@@ -2,6 +2,7 @@ package Zeeslag.Core.Game;
 
 import Zeeslag.Core.Game.GameManager;
 import Zeeslag.Core.Player.Player;
+import Zeeslag.Fx.Manager.SceneUtil;
 
 public class GameManager {
     private Player player1, player2;
@@ -19,10 +20,10 @@ public class GameManager {
         return gameManager;
     }
 
-    public void startGame() {
-        player1 = new Player("Player1");
-        player2 = new Player("Player2");
-        turn = new Turn(player2);
+    public void startGame(String player1Name, String player2Name) {
+        player1 = new Player(player1Name);
+        player2 = new Player(player2Name);
+        turn = new Turn(player1);
         setHasStarted(false);
     }
 
@@ -56,9 +57,5 @@ public class GameManager {
 
     public Turn getTurn() {
         return turn;
-    }
-
-    public Player getCurrentPlayer() {
-        return turn.getCurrentPlayer();
     }
 }

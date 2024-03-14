@@ -11,6 +11,6 @@ public class MainMenuModel  {
     }
     @FXML
     public void initialize(){
-            gameManager.startGame();
+
     }
 }

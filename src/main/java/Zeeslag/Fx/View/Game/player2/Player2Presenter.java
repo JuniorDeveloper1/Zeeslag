@@ -1,10 +1,12 @@
     package Zeeslag.Fx.View.Game.player2;
 
+    import Zeeslag.Core.Game.GameManager;
     import Zeeslag.Core.Player.Player;
     import Zeeslag.Fx.Manager.Presenter;
     import Zeeslag.Fx.Manager.SceneUtil;
     import Zeeslag.Fx.Model.Player1Model;
     import Zeeslag.Fx.Model.Player2Model;
+    import Zeeslag.Fx.View.Game.GamePresenter;
     import Zeeslag.Fx.View.Game.player2.Player2View;
     import javafx.scene.Node;
     import javafx.scene.Scene;
@@ -19,6 +21,7 @@
         private final Player2Model model;
         private final Player2View view;
         private  Player currentPlayer;
+        private GameManager gameManager;
 
         public Player2Presenter(Player2Model model, Player2View view) {
             this.model = model;
@@ -28,6 +31,7 @@
             this.updateView();
             view.getOpponentGridPane().setVisible(false);
             view.getWaitingForOtherPlayer().setVisible(false);
+            System.out.println("P2: CURRENT PLAYER" + model.gameManager.getTurn().getCurrentPlayer().getName());
 
 
         }
@@ -53,7 +57,6 @@
             opponentBoard.setOnMouseClicked(mouseEvent -> {
                 if(model.gameManager.bothPlayersReady()) {
                     handleAttack(mouseEvent);
-                    model.gameManager.getTurn().switchTurn();
                 }
             });
         }
@@ -116,34 +119,29 @@
         private void handleAttack(MouseEvent mouseEvent) {
             double cellWidth = view.getOpponentGridPane().getWidth() / 10;
             double cellHeight = view.getOpponentGridPane().getHeight() / 10;
-            MouseButton button = mouseEvent.getButton();
             double mouseX = mouseEvent.getX();
             double mouseY = mouseEvent.getY();
             int x = (int) (mouseX / cellWidth);
             int y = (int) (mouseY / cellHeight);
-            System.out.println("Mouse coordinates: (" + mouseX + ", " + mouseY + ")");
-            System.out.println("Clicked cell coordinates: (" + x + ", " + y + ")");
 
-            if (button == MouseButton.PRIMARY && model.gameManager.hasStarted()) {
-                if (model.gameManager.getTurn().getCurrentPlayer() == getCurrentPlayer()) {
-                    getCurrentPlayer().attack(model.gameManager.getPlayer1(),x, y);
-                    model.gameManager.getTurn().switchTurn();
-                } else {
-                    SceneUtil.showAlert("Niet jou beurt!", "Het is de beurt van"
-                            + getCurrentPlayer().getName());
-                }
-            } else if (button == MouseButton.SECONDARY && model.gameManager.hasStarted()) {
-                if (model.gameManager.getTurn().getCurrentPlayer() == getCurrentPlayer()) {
-                    getCurrentPlayer().attack(model.gameManager.getPlayer1(),x, y);
 
-                    model.gameManager.getTurn().switchTurn();
-                } else {
-                    SceneUtil.showAlert("Niet jou beurt!", "Het is de beurt van"
-                            + getCurrentPlayer().getName());
+            if (model.gameManager.getTurn().getCurrentPlayer() == getCurrentPlayer()) {
+                System.out.println("PLAYER 2 have attacked!");
+
+                getCurrentPlayer().attack(model.gameManager.getPlayer1(), x, y);
+
+                if (model.gameManager.getPlayer1().getBoard().allShipsSunk()) {
+                    SceneUtil.showAlert("Game Over", "Player 2 wins!");
                 }
+
+//                if (!model.getGameManager().getTurn().hasHitTarget()) {
+//                    model.gameManager.getTurn().setPlayerTurn(model.gameManager.getPlayer1());
+//                }
+
+
             } else {
-                SceneUtil.showAlert("Spel start niet!", "Het spel is nog niet begonnen."
-                        +getCurrentPlayer().getName());
+                SceneUtil.showAlert("Not your turn!", "It is the turn of "
+                        + model.getGameManager().getPlayer1().getName());
             }
         }
 

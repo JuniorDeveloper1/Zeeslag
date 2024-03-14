@@ -4,6 +4,7 @@ import Zeeslag.Core.Player.Player;
 
 public class Turn {
     private Player currentPlayer;
+    private boolean hasHitTarget;
 
     public Turn(Player startingPlayer) {
         this.currentPlayer = startingPlayer;
@@ -13,7 +14,15 @@ public class Turn {
         return currentPlayer;
     }
 
-    public void switchTurn() {
-        currentPlayer = (currentPlayer == GameManager.getInstance().getPlayer1()) ? GameManager.getInstance().getPlayer2() : GameManager.getInstance().getPlayer1();
+    public void setPlayerTurn(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public boolean hasHitTarget() {
+        return hasHitTarget;
+    }
+
+    public void setHasHitTarget(boolean hasHitTarget) {
+        this.hasHitTarget = hasHitTarget;
     }
 }

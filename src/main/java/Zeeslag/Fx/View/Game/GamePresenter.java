@@ -44,16 +44,13 @@ public class GamePresenter implements Presenter {
                 Player1View player1View = new Player1View();
                 Player1Presenter player1Presenter = new Player1Presenter(player1Model, player1View);
 
-                // Create SplitPane and add Player1View and Player2View
                 SplitPane splitPane = new SplitPane(player1View, player2View);
-                splitPane.setDividerPositions(0.5); // Set the initial divider position to divide the screen equally
+                splitPane.setDividerPositions(0.5);
 
-                // Open the SplitPane in a new stage
                 Stage stage = new Stage();
                 stage.setScene(new Scene(splitPane));
                 stage.show();
 
-                // Close the current window
                 handleClose();
             }
         });
