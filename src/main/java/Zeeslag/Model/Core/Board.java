@@ -4,6 +4,7 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Board {
     private final Cell[][] cells;
@@ -19,10 +20,10 @@ public class Board {
 
     private void initializeShips(){
         getPlacedShips().clear();
+        getPlacedShips().add(new Ship(5));
         getPlacedShips().add(new Ship(4));
         getPlacedShips().add(new Ship(3));
         getPlacedShips().add(new Ship(3));
-        getPlacedShips().add(new Ship(2));
         getPlacedShips().add(new Ship(2));
 
     }
@@ -34,6 +35,25 @@ public class Board {
             }
         }
     }
+
+    // Plaats de schepen willekeurig op het bord
+    public void placeRandomShips() {
+        Random rand = new Random();
+        List<Ship> tempShips = new ArrayList<>(getPlacedShips()); // Maak een kopie van de lijst
+        for (Ship ship : tempShips) {
+            boolean vertical = rand.nextBoolean();
+            int x = rand.nextInt(10);
+            int y = rand.nextInt(10);
+            while (!canPlaceShip(ship, x, y)) {
+                x = rand.nextInt(10);
+                y = rand.nextInt(10);
+                vertical = rand.nextBoolean();
+                ship.setVertical(vertical);
+            }
+            placeShip(ship, x, y);
+        }
+    }
+
 
 
     public boolean placeShip(Ship ship, int x, int y) {
@@ -91,7 +111,7 @@ public class Board {
         return true;
     }
 
-    private boolean isValidPoint(int x, int y) {
+    public boolean isValidPoint(int x, int y) {
         return x >= 0 && x < 10 && y >= 0 && y < 10;
     }
 

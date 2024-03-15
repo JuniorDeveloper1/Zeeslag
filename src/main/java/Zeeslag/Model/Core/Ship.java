@@ -1,6 +1,6 @@
 package Zeeslag.Model.Core;
 
-public class Ship extends Dimension {
+public class Ship extends Coord {
     private int size;
     private int hits; // New field to keep track of hits
     private boolean vertical;
@@ -37,5 +37,14 @@ public class Ship extends Dimension {
 
     public void setSunk(boolean sunk) {
         isSunk = sunk;
+    }
+
+    public boolean isHit(int x, int y) {
+        // Check if the ship is vertical or horizontal and if the position matches
+        if (vertical) {
+            return getX() == x && y >= getY() && y < getY() + size;
+        } else {
+            return getY() == y && x >= getX() && x < getX() + size;
+        }
     }
 }

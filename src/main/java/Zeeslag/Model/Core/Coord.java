@@ -1,5 +1,8 @@
 package Zeeslag.Model.Core;
 
+import java.util.Objects;
+import java.util.Random;
+
 public class Coord {
 
 
@@ -39,6 +42,21 @@ public class Coord {
         this.setX(x);
         this.setY(y);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Coord coord = (Coord) o;
+        return x == coord.x && y == coord.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
+    }
+
+
 
     @Override
     public String toString() {

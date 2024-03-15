@@ -1,12 +1,13 @@
 package Zeeslag.View.Game;
 
+import Zeeslag.Model.Core.NPC;
 import Zeeslag.Model.GameManager;
 import Zeeslag.Model.PlayerManager;
 import Zeeslag.Model.helper.Presenter;
-import Zeeslag.View.Game.player1.Player1Presenter;
-import Zeeslag.View.Game.player1.Player1View;
+import Zeeslag.Model.helper.SceneUtil;
+import Zeeslag.View.Game.player1.PlayerPresenter;
+import Zeeslag.View.Game.player1.PlayerView;
 import Zeeslag.View.Game.player2.Player2Presenter;
-
 import Zeeslag.View.Game.player2.Player2View;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -18,6 +19,8 @@ import java.io.FileNotFoundException;
 public class GamePresenter implements Presenter {
     private GameManager model;
     private GameView view;
+
+    private GameManager gameManager = GameManager.getInstance();
 
     public GamePresenter(GameManager model, GameView view) {
         this.model = model;
@@ -42,18 +45,22 @@ public class GamePresenter implements Presenter {
                 }
 
                 PlayerManager playerManager = new PlayerManager(player1Name, player2Name);
-                Player2View player2View = new Player2View();
-                Player2Presenter player2Presenter = new Player2Presenter(playerManager, player2View);
+                PlayerView player1View = new PlayerView();
+                PlayerPresenter player1Presenter = new PlayerPresenter(playerManager, player1View);
 
-                Player1View player1View = new Player1View();
-                Player1Presenter player1Presenter = new Player1Presenter(playerManager, player1View);
+                if(gameManager.isPlayingAgainstBot()){
+                    SceneUtil.openView(player1Presenter);
+                }else {
+                    Player2View player2View = new Player2View();
+                    Player2Presenter player2Presenter = new Player2Presenter(playerManager, player2View);
 
-                SplitPane splitPane = new SplitPane(player1View, player2View);
-                splitPane.setDividerPositions(0.5);
+                    SplitPane splitPane = new SplitPane(player1View, player2View);
+                    splitPane.setDividerPositions(0.5);
 
-                Stage stage = new Stage();
-                stage.setScene(new Scene(splitPane));
-                stage.show();
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(splitPane));
+                    stage.show();
+                }
 
                 handleClose();
             }

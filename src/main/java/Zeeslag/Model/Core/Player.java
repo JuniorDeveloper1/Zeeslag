@@ -6,24 +6,27 @@ import javafx.scene.paint.Color;
 
 import java.util.UUID;
 
-public class Player {
+public  class Player {
     private GameManager gameManager = GameManager.getInstance();
-    private final String name;
+    private String name;
     private final Board board, opponentBoard;
     private final UUID uuid;
     private int currentIndex = 0;
+    private int amountOfAttacks = 0;
 
     public Player(String name) {
         this.name = name;
         this.board = new Board();
         this.opponentBoard = new Board();
         this.uuid = generateUUID();
+        this.amountOfAttacks = 0;
     }
 
     public boolean attack(Player otherplayer, int x, int y) {
         if (!hasWon(otherplayer)) {
             Cell cell = opponentBoard.getCell(x, y);
             Cell opponentCell = otherplayer.getBoard().getCell(x, y);
+            this.setAmountOfAttacks(getAmountOfAttacks() + 1);
             if (opponentCell.hasShip()) {
                 Ship ship = opponentCell.getShip();
                 cell.setFill(Color.RED);
@@ -33,13 +36,12 @@ public class Player {
                     SceneUtil.showAlert(otherplayer.getName() + " schip is gezonken!",
                             "Schip met grootte " + ship.getSize() + " is gezonken!!");
                 }
-                gameManager.getTurn().setPlayerTurn(this);
+                getGameManager().getTurn().setPlayerTurn(this);
             } else {
                 cell.setFill(Color.BLACK);
                 opponentCell.setFill(Color.BLACK);
-                gameManager.getTurn().setPlayerTurn(otherplayer);
+                getGameManager().getTurn().setPlayerTurn(otherplayer);
             }
-            System.out.println("SIZE: " + otherplayer.getBoard().getPlacedShips().size());
         } else {
             SceneUtil.showAlert(getName() + "WON!", getName() + " Heeft het spel gewonnen!");
         }
@@ -88,5 +90,22 @@ public class Player {
 
     private UUID generateUUID() {
         return UUID.randomUUID();
+    }
+
+    public int getAmountOfAttacks() {
+        return amountOfAttacks;
+    }
+
+
+    public void setAmountOfAttacks(int amountOfAttacks) {
+        this.amountOfAttacks = amountOfAttacks;
+    }
+
+    public GameManager getGameManager() {
+        return gameManager;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

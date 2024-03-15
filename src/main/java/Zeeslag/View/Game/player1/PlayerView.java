@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class Player1View extends VBox implements MVPView {
+public class PlayerView extends VBox implements MVPView {
     private GameManager gameManager = GameManager.getInstance();
     private Board board = gameManager.getPlayer1().getBoard();
     private Board opponentBoard = gameManager.getPlayer1().getOpponentBoard();
@@ -27,7 +27,7 @@ public class Player1View extends VBox implements MVPView {
     public static final int WIDTH = 531;
     public static final int HEIGHT = 800;
 
-    public Player1View() {
+    public PlayerView() {
         this.initialize();
         this.initializeNodes();
         this.layoutNodes();

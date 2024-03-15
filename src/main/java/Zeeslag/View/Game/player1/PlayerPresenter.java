@@ -1,32 +1,40 @@
 package Zeeslag.View.Game.player1;
 
-import Zeeslag.Model.GameManager;
+import Zeeslag.Model.Core.NPC;
 import Zeeslag.Model.Core.Player;
+import Zeeslag.Model.GameManager;
 import Zeeslag.Model.PlayerManager;
 import Zeeslag.Model.helper.Presenter;
 import Zeeslag.Model.helper.SceneUtil;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.util.Duration;
 
-public class Player1Presenter implements Presenter {
+public class PlayerPresenter implements Presenter {
     private final PlayerManager model;
-    private final Player1View view;
+    private final PlayerView view;
 
     private final Player currentPlayer;
+    private final Player bot;
+    private final GameManager gameManager = GameManager.getInstance();
+    private Timeline botAttackTimer;
 
-    public Player1Presenter(PlayerManager model, Player1View view) {
+    public PlayerPresenter(PlayerManager model, PlayerView view) {
         this.model = model;
         this.view = view;
         initializeEventHandlers();
         this.currentPlayer = model.getGameManager().getPlayer1();
+        this.bot = gameManager.getBot();
         this.updateView();
         view.getOpponentGridPane().setVisible(false);
         view.getWaitingForOtherPlayer().setVisible(false);
         System.out.println("P1: CURRENT PLAYER" + model.getGameManager().getTurn().getCurrentPlayer().getName());
-
     }
 
     private void initializeEventHandlers() {
@@ -45,8 +53,11 @@ public class Player1Presenter implements Presenter {
 
         GridPane opponentBoard = view.getOpponentGridPane();
         opponentBoard.setOnMouseClicked(mouseEvent -> {
-            if (model.getGameManager().bothPlayersReady()) {
-                handleAttack(mouseEvent);
+            if (model.getGameManager().isPlayerReady()) {
+                Platform.runLater(() -> {
+                    handleAttack(mouseEvent);
+                });
+
             }
         });
     }
@@ -68,7 +79,7 @@ public class Player1Presenter implements Presenter {
     }
 
     private void handlePrimaryClick(int x, int y) {
-        boolean successfulPlaced = model.placeShipHorizontal(getCurrentPlayer(),x,y);
+        boolean successfulPlaced = model.placeShipHorizontal(getCurrentPlayer(), x, y);
         if (model.getGameManager().getPlayer1().getBoard().isAllShipsPlaced()) {
             SceneUtil.showAlert("Ships placed", "All ships are placed");
         } else if (!successfulPlaced) {
@@ -77,7 +88,7 @@ public class Player1Presenter implements Presenter {
     }
 
     private void handleSecondaryClick(int x, int y) {
-        boolean successfulPlaced = model.placeShipVertical(getCurrentPlayer(),x,y);
+        boolean successfulPlaced = model.placeShipVertical(getCurrentPlayer(), x, y);
         if (model.getGameManager().getPlayer1().getBoard().isAllShipsPlaced()) {
             SceneUtil.showAlert("Ships placed", "All ships are placed");
         } else if (!successfulPlaced) {
@@ -93,11 +104,14 @@ public class Player1Presenter implements Presenter {
     }
 
     private void handleStartButtonClick() {
-        if (model.getGameManager().bothPlayersReady()) {
+        if (model.getGameManager().isPlayerReady()) {
             model.getGameManager().setHasStarted(true);
             view.getStart().setVisible(false);
             view.getOpponentGridPane().setVisible(true);
             view.getWaitingForOtherPlayer().setVisible(false);
+
+            // Start the bot attack timeline when the game starts
+            startBotAttack();
         } else {
             view.getWaitingForOtherPlayer().setVisible(true);
             SceneUtil.showAlert("Players not ready", "Both players must place their ships before starting.");
@@ -112,13 +126,67 @@ public class Player1Presenter implements Presenter {
         int x = (int) (mouseX / cellWidth);
         int y = (int) (mouseY / cellHeight);
 
+        boolean isPlayingAgainstBot = model.getGameManager().isPlayingAgainstBot();
+
+        if (isPlayingAgainstBot) {
+            handleAttackAgainstBot(x, y);
+        } else {
+            handleAttackAgainstPlayer(x, y);
+        }
+    }
+
+    private void handleAttackAgainstBot(int x, int y) {
         if (model.getGameManager().getTurn().getCurrentPlayer() == getCurrentPlayer()) {
-            System.out.println("Player 1 has attacked!");
+            if (!getCurrentPlayer().hasWon(getBot())) {
+                boolean successfulAttack = getCurrentPlayer().attack(getBot(), x, y);
+                if (!getBot().hasWon(getCurrentPlayer())) {
+                    if (successfulAttack) {
+                        Platform.runLater(this::startBotAttack);
+                    } else {
+                        Platform.runLater(() -> SceneUtil.showAlert("Invalid Attack", "You cannot attack this cell."));
+                    }
+                } else {
+                    Platform.runLater(() -> SceneUtil.showAlert("Game Over", "You have lost the game."));
+                }
+            } else {
+                Platform.runLater(() -> SceneUtil.showAlert("Game Over", "You have already won the game."));
+            }
+        } else {
+            Platform.runLater(() -> SceneUtil.showAlert("Not your turn!", "It is the turn of " + model.getGameManager().getTurn().getCurrentPlayer().getName()));
+        }
+    }
+
+    private void handleAttackAgainstPlayer(int x, int y) {
+        if (model.getGameManager().getTurn().getCurrentPlayer() == getCurrentPlayer()) {
+            System.out.println("PLAYER 2 have attacked!");
             getCurrentPlayer().attack(model.getGameManager().getPlayer2(), x, y);
         } else {
-            SceneUtil.showAlert("Not your turn!", "It is the turn of "
-                    + model.getGameManager().getPlayer2().getName());
+            SceneUtil.showAlert("Not your turn!", "It is the turn of " + model.getGameManager().getPlayer1().getName());
         }
+    }
+
+    private void startBotAttack() {
+        botAttackTimer = new Timeline(
+                new KeyFrame(Duration.seconds(1), event -> {
+                    Platform.runLater(() -> {
+                        if (model.getGameManager().getTurn().getCurrentPlayer() == getBot()) {
+                            if (!getBot().hasWon(getCurrentPlayer())) {
+                                if (getBot() instanceof NPC) {
+                                    boolean hit = ((NPC) getBot()).attackPlayer(getCurrentPlayer());
+                                    if (!hit) {
+                                        botAttackTimer.stop();
+                                    }
+                                }
+                            }
+                        } else {
+                            botAttackTimer.stop();
+                        }
+                    });
+                })
+        );
+
+        botAttackTimer.setCycleCount(Timeline.INDEFINITE);
+        botAttackTimer.play();
     }
 
     @Override
@@ -128,5 +196,9 @@ public class Player1Presenter implements Presenter {
 
     public Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public Player getBot() {
+        return bot;
     }
 }
