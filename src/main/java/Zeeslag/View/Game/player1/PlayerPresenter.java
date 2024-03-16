@@ -63,8 +63,9 @@ public class PlayerPresenter implements Presenter {
     }
 
     private void handleGridPaneClick(MouseEvent mouseEvent) {
-        double cellWidth = view.getGridPane().getWidth() / 10;
-        double cellHeight = view.getGridPane().getHeight() / 10;
+        int size = model.getGameManager().getPlayer1().getBoard().getSizeBoard();
+        double cellWidth = view.getGridPane().getWidth() / size;
+        double cellHeight = view.getGridPane().getHeight() / size;
         MouseButton button = mouseEvent.getButton();
         double mouseX = mouseEvent.getX();
         double mouseY = mouseEvent.getY();
@@ -119,8 +120,9 @@ public class PlayerPresenter implements Presenter {
     }
 
     private void handleAttack(MouseEvent mouseEvent) {
-        double cellWidth = view.getOpponentGridPane().getWidth() / 10;
-        double cellHeight = view.getOpponentGridPane().getHeight() / 10;
+        int size = model.getGameManager().getPlayer1().getBoard().getSizeBoard();
+        double cellWidth = view.getGridPane().getWidth() / size;
+        double cellHeight = view.getGridPane().getHeight() / size;
         double mouseX = mouseEvent.getX();
         double mouseY = mouseEvent.getY();
         int x = (int) (mouseX / cellWidth);
@@ -158,7 +160,6 @@ public class PlayerPresenter implements Presenter {
 
     private void handleAttackAgainstPlayer(int x, int y) {
         if (model.getGameManager().getTurn().getCurrentPlayer() == getCurrentPlayer()) {
-            System.out.println("PLAYER 2 have attacked!");
             getCurrentPlayer().attack(model.getGameManager().getPlayer2(), x, y);
         } else {
             SceneUtil.showAlert("Not your turn!", "It is the turn of " + model.getGameManager().getPlayer1().getName());

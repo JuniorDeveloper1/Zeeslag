@@ -62,16 +62,16 @@ public class Player2View extends VBox implements MVPView {
         setAlignment(Pos.TOP_CENTER);
         playerName.setFont(Font.font("Arial", 25));
 
-        for (int y = 0; y < 10; y++) {
-            for (int x = 0; x < 10; x++) {
+        for (int y = 0; y < opponentBoard.getSizeBoard(); y++) {
+            for (int x = 0; x < opponentBoard.getSizeBoard(); x++) {
                 Cell cell = opponentBoard.getCells()[x][y];
                 opponentGridPane.add(cell, x, y);
             }
         }
 
 
-        for (int y = 0; y < 10; y++) {
-            for (int x = 0; x < 10; x++) {
+        for (int y = 0; y < opponentBoard.getSizeBoard(); y++) {
+            for (int x = 0; x < opponentBoard.getSizeBoard(); x++) {
                 Cell cell = board.getCells()[x][y];
                 gridPane.add(cell, x, y);
             }

@@ -25,7 +25,6 @@ public class LeaderBoardPresenter implements Presenter {
 
 
     private void updateView() {
-        //view.getStatusLabel().setText(model.getStatusText());
         this.updateLeaderboard(model.getPlayerStats());
     }
 

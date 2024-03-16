@@ -1,10 +1,8 @@
 package Zeeslag.Model;
 
-import Zeeslag.Model.Core.Leaderboard;
-import Zeeslag.Model.Core.NPC;
-import Zeeslag.Model.Core.Player;
-import Zeeslag.Model.Core.Turn;
+import Zeeslag.Model.Core.*;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 import java.io.FileNotFoundException;
@@ -28,7 +26,15 @@ public class GameManager {
         return gameManager;
     }
 
-    public void startGame(String player1Name, String player2Name) throws FileNotFoundException {
+    public void startGame(String player1Name, String player2Name, ComboBox comboBox) throws FileNotFoundException {
+        Board player1Board = new Board((Integer) comboBox.getValue());
+        Board player1OppBoard = new Board((Integer) comboBox.getValue());
+
+        Board player2Board = new Board((Integer) comboBox.getValue());
+        Board player2OppBoard = new Board((Integer) comboBox.getValue());
+
+
+
         player1 = new Player(player1Name);
         turn = new Turn(player1);
         leaderboard = new Leaderboard();
@@ -42,15 +48,24 @@ public class GameManager {
             setPlayingAgainstBot(false);
         }
 
+        player1.setBoard(player1Board);
+        player1.setOpponentBoard(player1OppBoard);
+
+        player2.setBoard(player2Board);
+        player2.setOpponentBoard(player2OppBoard);
+
+
     }
 
-    public void play(String player1, String player2) throws FileNotFoundException {
+    public void play(String player1, String player2, ComboBox boardSize) throws FileNotFoundException {
+
         /**
          * Maak het zo als je op play klikt dat er een button onder is dat erop staat:
          * add Player:
          */
+
         createHero(player1, player2);
-        gameManager.startGame(player1, player2);
+        gameManager.startGame(player1, player2, boardSize);
         System.out.println(gameManager.getPlayer1().getName());
     }
 
@@ -99,8 +114,6 @@ public class GameManager {
             alert.setHeaderText("Names must be between 3 and 15 characters long.");
             return false;
         }
-
-
         return true;
     }
 

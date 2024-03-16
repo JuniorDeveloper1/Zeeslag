@@ -11,8 +11,18 @@ public class Board {
     private  List<Ship> placedShips;
     private boolean allShipsPlaced;
 
+    private int sizeBoard = 10;
+
     public Board() {
-        this.cells = new Cell[10][10];
+        this.cells = new Cell[sizeBoard][sizeBoard];
+        this.placedShips = new ArrayList<>();
+        this.initializeShips();
+        initializeCells();
+    }
+
+    public Board(int sizeBoard) {
+        this.sizeBoard = sizeBoard;
+        this.cells = new Cell[sizeBoard][sizeBoard];
         this.placedShips = new ArrayList<>();
         this.initializeShips();
         initializeCells();
@@ -29,9 +39,15 @@ public class Board {
     }
 
     private void initializeCells() {
-        for (int x = 0; x < 10; x++) {
-            for (int y = 0; y < 10; y++) {
-                cells[x][y] = new Cell(x, y);
+        for (int x = 0; x < sizeBoard; x++) {
+            for (int y = 0; y < sizeBoard; y++) {
+                if(sizeBoard > 10){
+                    int size = (int) (sizeBoard /0.5);
+                    cells[x][y] = new Cell(x, y, size);
+                }else {
+                    cells[x][y] = new Cell(x, y);
+                }
+
             }
         }
     }
@@ -42,11 +58,11 @@ public class Board {
         List<Ship> tempShips = new ArrayList<>(getPlacedShips()); // Maak een kopie van de lijst
         for (Ship ship : tempShips) {
             boolean vertical = rand.nextBoolean();
-            int x = rand.nextInt(10);
-            int y = rand.nextInt(10);
+            int x = rand.nextInt(getSizeBoard());
+            int y = rand.nextInt(getSizeBoard());
             while (!canPlaceShip(ship, x, y)) {
-                x = rand.nextInt(10);
-                y = rand.nextInt(10);
+                x = rand.nextInt(getSizeBoard());
+                y = rand.nextInt(getSizeBoard());
                 vertical = rand.nextBoolean();
                 ship.setVertical(vertical);
             }
@@ -87,7 +103,7 @@ public class Board {
         int length = ship.getSize();
 
         if (ship.isVertical()) {
-            if (y + length > 10) {
+            if (y + length > getSizeBoard()) {
                 return false;
             }
 
@@ -97,7 +113,7 @@ public class Board {
                 }
             }
         } else {
-            if (x + length > 10) {
+            if (x + length > getSizeBoard()) {
                 return false;
             }
 
@@ -112,7 +128,7 @@ public class Board {
     }
 
     public boolean isValidPoint(int x, int y) {
-        return x >= 0 && x < 10 && y >= 0 && y < 10;
+        return x >= 0 && x < getSizeBoard() && y >= 0 && y < getSizeBoard();
     }
 
     public Cell getCell(int x, int y) {
@@ -122,9 +138,11 @@ public class Board {
             return null;
         }
     }
+
     public Cell[][] getCells() {
         return cells;
     }
+
 
     public List<Ship> getPlacedShips() {
         return placedShips;
@@ -140,5 +158,9 @@ public class Board {
 
     public void setAllShipsPlaced(boolean allShipsPlaced) {
         this.allShipsPlaced = allShipsPlaced;
+    }
+
+    public int getSizeBoard() {
+        return sizeBoard;
     }
 }

@@ -39,7 +39,7 @@ public class GamePresenter implements Presenter {
                 String player2Name = view.getPlayName2Field().getText();
 
                 try {
-                    model.play(player1Name, player2Name);
+                    model.play(player1Name, player2Name, view.getBoardSizes());
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }

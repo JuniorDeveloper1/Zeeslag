@@ -9,10 +9,12 @@ import java.util.UUID;
 public  class Player {
     private GameManager gameManager = GameManager.getInstance();
     private String name;
-    private final Board board, opponentBoard;
+    private  Board board, opponentBoard;
     private final UUID uuid;
     private int currentIndex = 0;
     private int amountOfAttacks = 0;
+
+    private int amountLeaderBoardUpdates = 0;
 
     public Player(String name) {
         this.name = name;
@@ -20,6 +22,7 @@ public  class Player {
         this.opponentBoard = new Board();
         this.uuid = generateUUID();
         this.amountOfAttacks = 0;
+        this.amountLeaderBoardUpdates = 0;
     }
 
     public boolean attack(Player otherplayer, int x, int y) {
@@ -53,6 +56,16 @@ public  class Player {
             if (!ship.isSunk()) {
                 return false;
             }
+        }
+
+        if(getAmountLeaderBoardUpdates() == 0){
+            PlayerGameData.save(this.getName(), this.getAmountOfAttacks());
+            getGameManager().getLeaderboard().updateLeaderboard(this.getName());
+            this.setAmountLeaderBoardUpdates(1);
+            /**
+             * We gebruiken de setAmountLeaderBoardUpdates
+             * zodat de speler niet oneindig kan klikken zodat hij oneindig in de playergamedata.txt file komt.
+             */
         }
         return true;
     }
@@ -107,5 +120,21 @@ public  class Player {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    public void setOpponentBoard(Board opponentBoard) {
+        this.opponentBoard = opponentBoard;
+    }
+
+    public int getAmountLeaderBoardUpdates() {
+        return amountLeaderBoardUpdates;
+    }
+
+    public void setAmountLeaderBoardUpdates(int amountLeaderBoardUpdates) {
+        this.amountLeaderBoardUpdates = amountLeaderBoardUpdates;
     }
 }

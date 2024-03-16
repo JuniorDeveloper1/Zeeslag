@@ -1,14 +1,21 @@
 package Zeeslag.View.Game;
 
 import Zeeslag.Model.helper.MVPView;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.shape.Box;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.io.File;
 
@@ -23,6 +30,14 @@ public class GameView extends VBox implements MVPView {
 
     private Button playButton;
     private String audioFilePath;
+    private VBox configurationBox;
+
+    private  Label boardSizeLabel;
+    private ObservableList<Integer> options;
+
+    private ComboBox boardSizes;
+
+    private Text configurationText;
     private MediaPlayer mediaPlayer;
 
     public GameView () {
@@ -38,20 +53,26 @@ public class GameView extends VBox implements MVPView {
     }
 
     @Override
-    public void initializeNodes(){
+    public void initializeNodes() {
         title = new Label("Enter your names!");
 
         player1 = new Label("Player 1:");
-
-
         playName1Field = new TextField();
         playName1Field.setPromptText("Enter player 1's name");
 
         player2 = new Label("Player 2:");
-
-
         playName2Field = new TextField();
         playName2Field.setPromptText("Enter player 2's name");
+
+        configurationText = new Text("Configuration");
+        configurationBox = new VBox();
+
+
+         boardSizeLabel= new Label("Board Size:");
+
+        // Dropdown menu for board sizes
+        options = FXCollections.observableArrayList(10, 8, 5, 12);
+        boardSizes = new ComboBox<>(options);
 
         playButton = new Button("play");
 
@@ -64,21 +85,30 @@ public class GameView extends VBox implements MVPView {
         setSpacing(20);
         title.setFont(Font.font("Arial", 60));
 
-
         player2.setFont(Font.font("Arial", 40));
-
         player1.setFont(Font.font("Arial", 40));
+        configurationText.setFont(Font.font("Arial", 20));
 
-        this.getPlayName1Field().setPrefWidth(300);
-        this.getPlayName1Field().setMaxWidth(300);
+        configurationBox.setAlignment(Pos.TOP_CENTER);
 
-        this.getPlayName2Field().setPrefWidth(300);
-        this.getPlayName2Field().setMaxWidth(300);
+        playName1Field.setPrefWidth(300);
+        playName1Field.setMaxWidth(300);
+
+        playName2Field.setPrefWidth(300);
+        playName2Field.setMaxWidth(300);
+
+        boardSizeLabel.setPadding(new Insets(0, 10, 0, 0));
+        boardSizes.setValue(options.get(0));
+
+
+        configurationBox.getChildren().addAll(boardSizeLabel, boardSizes);
 
         setButtonStyles(playButton);
         setButtonHoverEffects(playButton);
 
-        getChildren().addAll(title,  player1, playName1Field, player2, playName2Field, playButton);
+        // Add all nodes to the VBox
+        getChildren().addAll(title, player1, playName1Field, player2, playName2Field,
+                configurationText, configurationBox, playButton);
     }
 
     private void setButtonStyles(Button button) {
@@ -118,4 +148,7 @@ public class GameView extends VBox implements MVPView {
         return playName2Field;
     }
 
+    public ComboBox getBoardSizes() {
+        return boardSizes;
+    }
 }

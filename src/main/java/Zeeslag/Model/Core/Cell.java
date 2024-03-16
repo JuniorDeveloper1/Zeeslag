@@ -8,8 +8,17 @@ public class Cell extends Rectangle {
     private boolean isHit;
     private Ship ship;
 
+
     public Cell(int x, int y) {
         super(30, 30);
+        this.coord = new Coord(x, y);
+        this.isHit = false;
+        setFill(Color.LIGHTGRAY);
+        setStroke(Color.BLACK);
+    }
+
+    public Cell(int x, int y, int size) {
+        super(size, size);
         this.coord = new Coord(x, y);
         this.isHit = false;
         setFill(Color.LIGHTGRAY);
@@ -39,4 +48,5 @@ public class Cell extends Rectangle {
     public Coord getCoord() {
         return coord;
     }
+
 }

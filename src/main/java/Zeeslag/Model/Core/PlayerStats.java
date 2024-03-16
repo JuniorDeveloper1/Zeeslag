@@ -14,13 +14,6 @@ public class PlayerStats {
         this.setWins(this.getWins() + 1);
     }
 
-    public void decrement() {
-        if(getWins() > 0) {
-            this.setWins(this.getWins()+1);
-        }
-    }
-
-
     public String getPlayerName() {
         return playerName;
     }

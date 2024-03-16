@@ -38,6 +38,11 @@ public class NPC extends Player {
     // Random attack method
     private boolean randomAttack(Player otherPlayer) {
         attackCoord = generateRandomAttackCoord();
+
+        do {
+            attackCoord = generateRandomAttackCoord();
+        }while (getAttackedCoordinates().contains(attackCoord));
+
         if (getAttackedCoordinates() != null && !getAttackedCoordinates().contains(getAttackCoord())) {
             boolean hit = super.attack(otherPlayer, getAttackCoord().getX(), getAttackCoord().getY());
             if (hit) {
@@ -50,12 +55,16 @@ public class NPC extends Player {
             }
             getAttackedCoordinates().add(getAttackCoord());
         }
+
+
+
+
         return false;
     }
 
     private boolean searchForNeighbor(Player otherPlayer) {
-        attackCoord = null; // Reset attackCoord
-        // Get the last attacked coordinate
+        attackCoord = null;
+
         Coord lastAttackCoord = (!getAttackedCoordinates().isEmpty()) ? getAttackedCoordinates().get(getAttackedCoordinates().size() - 1) : null;
 
         // Get the last hit ship coordinate
@@ -120,9 +129,10 @@ public class NPC extends Player {
 
     // Method to generate a random attack coordinate
     private Coord generateRandomAttackCoord() {
+        int size = getBoard().getSizeBoard();
         while (true) {
-            int x = (int) (Math.random() * 10);
-            int y = (int) (Math.random() * 10);
+            int x = (int) (Math.random() * size);
+            int y = (int) (Math.random() * size);
             Coord attackCoord = new Coord(x, y);
             if (!getAttackedCoordinates().contains(attackCoord)) {
                 return attackCoord;

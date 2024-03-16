@@ -62,15 +62,16 @@ public class PlayerView extends VBox implements MVPView {
         setAlignment(Pos.TOP_CENTER);
         playerName.setFont(Font.font("Arial", 25));
 
-        for (int y = 0; y < 10; y++) {
-            for (int x = 0; x < 10; x++) {
+
+        for (int y = 0; y < opponentBoard.getSizeBoard(); y++) {
+            for (int x = 0; x < opponentBoard.getSizeBoard(); x++) {
                 Cell cell = opponentBoard.getCells()[x][y];
                 opponentGridPane.add(cell, x, y);
             }
         }
 
-        for (int y = 0; y < 10; y++) {
-            for (int x = 0; x < 10; x++) {
+        for (int y = 0; y < board.getSizeBoard(); y++) {
+            for (int x = 0; x < board.getSizeBoard(); x++) {
                 Cell cell = board.getCells()[x][y];
                 gridPane.add(cell, x, y);
             }
@@ -79,9 +80,12 @@ public class PlayerView extends VBox implements MVPView {
         opponentGridPane.setMaxWidth(Region.USE_PREF_SIZE);
         gridPane.setMaxWidth(Region.USE_PREF_SIZE);
 
+        opponentGridPane.setMinWidth(Region.USE_PREF_SIZE);
+        gridPane.setMinWidth(Region.USE_PREF_SIZE);
+
         playerBox.setAlignment(Pos.TOP_CENTER);
-        playerBox.setSpacing(20); // Add spacing between the children of playerBox
-        playerBox.setPadding(new Insets(20)); // Add padding to playerBox
+        playerBox.setSpacing(20);
+        playerBox.setPadding(new Insets(20));
 
         playerBox.getChildren().addAll(playerName, waitingForOtherPlayer, opponentGridPane, gridPane, start);
 
