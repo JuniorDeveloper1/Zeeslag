@@ -48,15 +48,19 @@ public class GameManager {
         Board player2Board = new Board((Integer) comboBox.getValue());
         Board player2OppBoard = new Board((Integer) comboBox.getValue());
 
-
+        Board botBoard = new Board((Integer) comboBox.getValue());
+        Board botOppBoard = new Board((Integer) comboBox.getValue());
 
         player1 = new Player(player1Name);
         turn = new Turn(player1);
         leaderboard = new Leaderboard();
         setHasStarted(false);
         if(player2Name == null || player2Name.equals("") || player2Name.equals(" ")){
+            System.out.println("PLAYING AGAINST A BOT");
             bot = new NPC("bot");
             gameManager.setPlayer2(bot);
+
+
             setPlayingAgainstBot(true);
         }else {
             player2 = new Player(player2Name);
@@ -69,7 +73,9 @@ public class GameManager {
         player2.setBoard(player2Board);
         player2.setOpponentBoard(player2OppBoard);
 
-
+        if(getPlayer2() instanceof NPC) {
+            player2.getBoard().placeRandomShips();
+        }
     }
 
     /**

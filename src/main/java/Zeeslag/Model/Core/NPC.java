@@ -51,25 +51,18 @@ public class NPC extends Player {
     private boolean randomAttack(Player otherPlayer) {
         attackCoord = generateRandomAttackCoord();
 
-        do {
-            attackCoord = generateRandomAttackCoord();
-        }while (getAttackedCoordinates().contains(attackCoord));
-
         if (getAttackedCoordinates() != null && !getAttackedCoordinates().contains(getAttackCoord())) {
             boolean hit = super.attack(otherPlayer, getAttackCoord().getX(), getAttackCoord().getY());
             if (hit) {
                 Cell cell = getOpponentBoard().getCell(getAttackCoord().getX(), getAttackCoord().getY());
                 if(cell.hasShip()){
                     getHitShipCoords().add(getAttackCoord());
+                    getAttackedCoordinates().add(getAttackCoord());
                 }
-
                 return true;
             }
             getAttackedCoordinates().add(getAttackCoord());
         }
-
-
-
 
         return false;
     }
@@ -151,14 +144,17 @@ public class NPC extends Player {
      */
     private Coord generateRandomAttackCoord() {
         int size = getBoard().getSizeBoard();
-        while (true) {
+
             int x = (int) (Math.random() * size);
             int y = (int) (Math.random() * size);
-            Coord attackCoord = new Coord(x, y);
-            if (!getAttackedCoordinates().contains(attackCoord)) {
-                return attackCoord;
-            }
-        }
+             attackCoord = new Coord(x, y);
+            do {
+                x = (int) (Math.random() * size);
+                y = (int) (Math.random() * size);
+                attackCoord = new Coord(x, y);
+            }while (getAttackedCoordinates().contains(attackCoord));
+
+            return attackCoord;
     }
 
     public List<Coord> getAttackedCoordinates() {

@@ -5,3 +5,5 @@ Jonas;2
 zefzefzef;1
 zeze;1
 zfezeffze;1
+bot;1
+fzezef;1

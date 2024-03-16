@@ -70,6 +70,7 @@ public class Board {
         Random rand = new Random();
         List<Ship> tempShips = new ArrayList<>(getPlacedShips()); // Maak een kopie van de lijst
         for (Ship ship : tempShips) {
+            System.out.println(getSizeBoard() + " <SIZE");
             boolean vertical = rand.nextBoolean();
             int x = rand.nextInt(getSizeBoard());
             int y = rand.nextInt(getSizeBoard());
