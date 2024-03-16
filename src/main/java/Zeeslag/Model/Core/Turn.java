@@ -1,6 +1,12 @@
 package Zeeslag.Model.Core;
 
 public class Turn {
+    /**
+     * Represents the turn system in the game.
+     * Provides the logic who can hit in the next turn
+     *
+     * hasHitTarget logic if the player can keep hitting if he has hitted.
+     */
     private Player currentPlayer;
     private boolean hasHitTarget;
 

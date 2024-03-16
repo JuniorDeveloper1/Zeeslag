@@ -4,6 +4,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Cell extends Rectangle {
+    /**
+     * This presents a cell on the board class.
+     * With attributes to check if the cell has a ship or has been hit.
+     */
     private final Coord coord;
     private boolean isHit;
     private Ship ship;

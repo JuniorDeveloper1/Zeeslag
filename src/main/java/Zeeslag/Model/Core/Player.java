@@ -11,10 +11,10 @@ public  class Player {
     private String name;
     private  Board board, opponentBoard;
     private final UUID uuid;
-    private int currentIndex = 0;
-    private int amountOfAttacks = 0;
+    private int currentIndex = 0; //Calculating the index of the placed ships
+    private int amountOfAttacks = 0; //Total attacks count
 
-    private int amountLeaderBoardUpdates = 0;
+    private int amountLeaderBoardUpdates = 0; //A check if the leaderboard already has been updated.
 
     public Player(String name) {
         this.name = name;
@@ -25,6 +25,14 @@ public  class Player {
         this.amountLeaderBoardUpdates = 0;
     }
 
+    /**
+     * Attacking the player only if the player hasn't won yet.
+     * Making the Cell color appear different if hit or didn't hit a ship.
+     * @param otherplayer
+     * @param x
+     * @param y
+     * @return
+     */
     public boolean attack(Player otherplayer, int x, int y) {
         if (!hasWon(otherplayer)) {
             Cell cell = opponentBoard.getCell(x, y);
@@ -51,6 +59,14 @@ public  class Player {
         return true;
     }
 
+    /**
+     * A check if all the other player ships have been sunk
+     *
+     * Making a check if the leaderBoard already has been updated
+     * If not the player can keep clicking and adding him self to the win file.
+     * @param otherPlayer
+     * @return
+     */
     public boolean hasWon(Player otherPlayer) {
         for (Ship ship : otherPlayer.getBoard().getPlacedShips()) {
             if (!ship.isSunk()) {
@@ -74,6 +90,11 @@ public  class Player {
         return currentIndex;
     }
 
+    /**
+     * Making sure that the current index cannot be higher then 5
+     * 5 = totalShip that can be placed.
+     * @param currentIndex
+     */
     public void setCurrentIndex(int currentIndex) {
         if (currentIndex < 0) {
             currentIndex = 0;

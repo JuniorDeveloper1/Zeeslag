@@ -1,6 +1,10 @@
 package Zeeslag.Model.Core;
 
 public class PlayerStats {
+    /**
+     * Making the player stats to store the player stats.
+     * Amount of wins and the player name.
+     */
 
     private String playerName;
     private int wins;

@@ -1,6 +1,10 @@
 package Zeeslag.Model.Core;
 
 public class Ship extends Coord {
+    /**
+     * Represents a ship in the game. It extends a coord.
+     * Provides methods to handle hits, check if a ship is hit, and manage its state.
+     */
     private int size;
     private int hits; // New field to keep track of hits
     private boolean vertical;

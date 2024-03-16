@@ -5,11 +5,14 @@ import Zeeslag.Model.GameManager;
 import java.util.*;
 
 public class NPC extends Player {
+    /**
+     * Computer part of the seabattle game.
+     */
 
-    private boolean isIntelligent = false;
-    private List<Coord> attackedCoordinates;
-    private List<Coord> hitShipCoords;
-    private Coord attackCoord; // Private variable to store the attack coordinate
+
+    private List<Coord> attackedCoordinates; //A list with all the attack coord to prevent double hits.
+    private List<Coord> hitShipCoords; //A List with the hitted coords to make a smart calculation
+    private Coord attackCoord; // A variable to store the coord that is being attacked.
 
 
     public NPC(String name) {
@@ -23,19 +26,28 @@ public class NPC extends Player {
     }
 
 
+    /**
+     * Checks for if the hit list is empty so that it can shoot randomly
+     * @param otherPlayer
+     * @return
+     */
     public boolean attackPlayer(Player otherPlayer) {
-        System.out.println("SIZE HITSHIPS: " + getHitShipCoords().size());
+        //System.out.println("SIZE HITSHIPS: " + getHitShipCoords().size());
         if (getHitShipCoords().isEmpty()) {
-            System.out.println("RANDOM ATTACK");
             return randomAttack(otherPlayer);
         } else {
-            System.out.println("INTELLIGENT ATTACK");
             return searchForNeighbor(otherPlayer);
         }
     }
 
 
-    // Random attack method
+    /**
+     * Calculation a random method.
+     * This method will never attack a coord that already has been attacked
+     * If it is a hit it will add the ship to the hitShip list.
+     * @param otherPlayer
+     * @return false if the attack has failed
+     */
     private boolean randomAttack(Player otherPlayer) {
         attackCoord = generateRandomAttackCoord();
 
@@ -62,6 +74,12 @@ public class NPC extends Player {
         return false;
     }
 
+    /**
+     * Smart computer tactic
+     * If the Hit list isn't empty it is going to search for a neighbor cell.
+     * @param otherPlayer
+     * @return null if the attackCoord has failed.
+     */
     private boolean searchForNeighbor(Player otherPlayer) {
         attackCoord = null;
 
@@ -127,7 +145,10 @@ public class NPC extends Player {
     }
 
 
-    // Method to generate a random attack coordinate
+    /**
+     * Generating a random coord between the board sizes.
+     * @return
+     */
     private Coord generateRandomAttackCoord() {
         int size = getBoard().getSizeBoard();
         while (true) {

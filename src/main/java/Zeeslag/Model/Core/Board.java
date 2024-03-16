@@ -28,6 +28,10 @@ public class Board {
         initializeCells();
     }
 
+    /**
+     * Clearing the ship list first
+     * Initializing the ships
+     */
     private void initializeShips(){
         getPlacedShips().clear();
         getPlacedShips().add(new Ship(5));
@@ -38,6 +42,9 @@ public class Board {
 
     }
 
+    /**
+     * Making a board x board with cells of a certain size.
+     */
     private void initializeCells() {
         for (int x = 0; x < sizeBoard; x++) {
             for (int y = 0; y < sizeBoard; y++) {
@@ -52,7 +59,13 @@ public class Board {
         }
     }
 
-    // Plaats de schepen willekeurig op het bord
+    /**
+     * Making a temp list otherwise we will get an error
+     * Then choosing the coords of the ships with the Coord class.
+     * Choosing if it is vertical or not
+     *
+     * This process is for the bots
+     */
     public void placeRandomShips() {
         Random rand = new Random();
         List<Ship> tempShips = new ArrayList<>(getPlacedShips()); // Maak een kopie van de lijst
@@ -71,7 +84,17 @@ public class Board {
     }
 
 
-
+    /**
+     *
+     * Checking if the ship should be placed vertical or not.
+     * If we can place the ship on the desired coord then it will return true
+     * We will get the cell and place a ship there.
+     * Ship gets added to the list
+     * @param ship The ship
+     * @param x x-coord
+     * @param y y-coord
+     * @return the preffered coord
+     */
     public boolean placeShip(Ship ship, int x, int y) {
         if (canPlaceShip(ship, x, y)) {
             int length = ship.getSize();
@@ -99,6 +122,14 @@ public class Board {
         return false;
     }
 
+
+    /**
+     * Making a check if the ship is between the X - Y coords of the board
+     * @param ship user ship
+     * @param x x-coord
+     * @param y y-coord
+     * @return Ship can be placed.
+     */
     private boolean canPlaceShip(Ship ship, int x, int y) {
         int length = ship.getSize();
 
@@ -127,10 +158,18 @@ public class Board {
         return true;
     }
 
+    /**
+     * Checking if the ship is between the board sizes
+     * @return passes the check
+     */
+
     public boolean isValidPoint(int x, int y) {
         return x >= 0 && x < getSizeBoard() && y >= 0 && y < getSizeBoard();
     }
 
+    /**
+     * Getting the cell that is on that specific coord
+     */
     public Cell getCell(int x, int y) {
         if (isValidPoint(x, y)) {
             return cells[x][y];

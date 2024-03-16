@@ -4,6 +4,9 @@ import java.util.Objects;
 import java.util.Random;
 
 public class Coord {
+    /**
+     * Represents the Coord on a board.
+     */
 
 
     private int x;

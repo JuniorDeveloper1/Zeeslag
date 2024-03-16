@@ -9,6 +9,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class PlayerGameData {
+    /**
+     * Saving a player in the playergamedata.txt.
+     * With the format name;turns;date
+     * turns == attacks
+     * @param playerName
+     * @param numberOfTurns
+     */
     public static void save(String playerName, int numberOfTurns){
         String currentDate = String.valueOf(LocalDate.now());
 

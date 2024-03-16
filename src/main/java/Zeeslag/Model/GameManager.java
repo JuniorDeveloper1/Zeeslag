@@ -1,6 +1,7 @@
 package Zeeslag.Model;
 
 import Zeeslag.Model.Core.*;
+import Zeeslag.Model.helper.SceneUtil;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -8,6 +9,12 @@ import javafx.scene.control.TextField;
 import java.io.FileNotFoundException;
 
 public class GameManager {
+    /**
+     * GameManger is a singleton class
+     * GameManager manages the game state, including players, boards, turns, and leaderboard.
+     * It is a singleton class, so it doesn't risk any overriding or risking memory loss.
+     * This class acts as a central hub for game data, preventing data loss
+     */
     private Player player1, player2, bot;
     private boolean hasStarted = false;
     private Turn turn;
@@ -26,6 +33,14 @@ public class GameManager {
         return gameManager;
     }
 
+
+    /**
+     * Starts a new game with the specified player names and board size.
+     * @param player1Name Name of the first player
+     * @param player2Name Name of the second player (null for bot)
+     * @param comboBox ComboBox containing board size options
+     * @throws FileNotFoundException if leaderboard data file is not found
+     */
     public void startGame(String player1Name, String player2Name, ComboBox comboBox) throws FileNotFoundException {
         Board player1Board = new Board((Integer) comboBox.getValue());
         Board player1OppBoard = new Board((Integer) comboBox.getValue());
@@ -57,6 +72,13 @@ public class GameManager {
 
     }
 
+    /**
+     * Plays the game with the provided player names and board size.
+     * @param player1 Name of the first player
+     * @param player2 Name of the second player (null for bot)
+     * @param boardSize ComboBox containing board size options
+     * @throws FileNotFoundException if leaderboard data file is not found
+     */
     public void play(String player1, String player2, ComboBox boardSize) throws FileNotFoundException {
 
         /**
@@ -84,34 +106,39 @@ public class GameManager {
 
     }
 
+    /**
+     * A check if the text field has the right regex.
+     * @param textField Player 1 name
+     * @param textField2 Player 2 name
+     * @return true if it is correct
+     */
     public boolean checkIfTextFieldIsCorrect(TextField textField, TextField textField2){
         int minLength = 3;
         int maxLength = 15;
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Foute Syntax");
 
-        if(alert.isShowing()){alert.close();}
+
 
 
         if(textField.getText().isEmpty()) {
-            alert.setHeaderText("Je moet een naam invullen!");
-            alert.showAndWait();
+            SceneUtil.showAlert("Wrong syntax","Je moet een naam invullen!");
             return false;
         }
 
         if(textField.getText().equals(textField2.getText())) {
-            alert.setHeaderText("Namen mogen niet gelijk zijn!");
-            alert.showAndWait();
+            SceneUtil.showAlert("Wrong syntax","Namen mogen niet gelijk zijn!");
             return false;
         }
 
         if(textField2.getText().isEmpty()){
+            /**
+             * If it return true it means the player wants to play against the bot
+             */
             return true;
         }
 
         if(textField.getLength() < minLength || textField2.getLength() <  minLength ||
                 textField.getLength() > maxLength || textField2.getLength() > maxLength) {
-            alert.setHeaderText("Names must be between 3 and 15 characters long.");
+            SceneUtil.showAlert("Wrong syntax","Names must be between 3 and 15 characters long.");
             return false;
         }
         return true;

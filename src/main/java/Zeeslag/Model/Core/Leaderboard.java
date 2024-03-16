@@ -17,6 +17,12 @@ public class Leaderboard {
         this.sortLeaderboard();
     }
 
+    /**
+     * Updating the leaderboard after a user has won.
+     * With an increment of 1
+     * @param playerName, the player that has won
+     */
+
     public void updateLeaderboard(String playerName) {
         boolean found = false;
         for (PlayerStats stats : getPlayerStats()) {
@@ -34,6 +40,13 @@ public class Leaderboard {
         saveLeaderBoard();
     }
 
+    /**
+     * Checking every user in the playergamedata.txt file.
+     We are splitting the parts because of the name;attacks;date format
+     We only need the name parts[0]. We then update the leaderboard,
+      if the player is already found in the list
+     * @throws FileNotFoundException
+     */
     private void loadLeaderBoardFromFile() throws FileNotFoundException {
         try (BufferedReader reader = new BufferedReader(new FileReader(ORIGIN_PATH))) {
             String line;
@@ -41,8 +54,6 @@ public class Leaderboard {
                 String[] parts = line.split(";");
                 if (parts.length == 3) {
                     String playerName = parts[0];
-                    // We only need to increment wins, so we skip the second part
-                    // and date part for now
                     updateLeaderboard(playerName);
                 }
             }
@@ -51,6 +62,10 @@ public class Leaderboard {
         }
     }
 
+    /**
+     * Saving the leaderboard where we write all the users from the list
+     * into the leaderboard.txt.
+     */
     private void saveLeaderBoard() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
             for (PlayerStats stats : getPlayerStats()) {
@@ -63,6 +78,9 @@ public class Leaderboard {
         }
     }
 
+    /**
+     * Sorting the leaderboard from most wins to least.
+     */
     public void sortLeaderboard(){
         getPlayerStats().sort(new PlayerWinsComperator());
     }
