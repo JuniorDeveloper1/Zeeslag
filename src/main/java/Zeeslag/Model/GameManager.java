@@ -48,19 +48,13 @@ public class GameManager {
         Board player2Board = new Board((Integer) comboBox.getValue());
         Board player2OppBoard = new Board((Integer) comboBox.getValue());
 
-        Board botBoard = new Board((Integer) comboBox.getValue());
-        Board botOppBoard = new Board((Integer) comboBox.getValue());
-
         player1 = new Player(player1Name);
         turn = new Turn(player1);
         leaderboard = new Leaderboard();
         setHasStarted(false);
-        if(player2Name == null || player2Name.equals("") || player2Name.equals(" ")){
-            System.out.println("PLAYING AGAINST A BOT");
+        if(isPlayer2Bot(player2Name)){
             bot = new NPC("bot");
             gameManager.setPlayer2(bot);
-
-
             setPlayingAgainstBot(true);
         }else {
             player2 = new Player(player2Name);
@@ -91,10 +85,8 @@ public class GameManager {
          * Maak het zo als je op play klikt dat er een button onder is dat erop staat:
          * add Player:
          */
-
         createHero(player1, player2);
         gameManager.startGame(player1, player2, boardSize);
-        System.out.println(gameManager.getPlayer1().getName());
     }
 
     public void createHero(String sPlayer1, String sPlayer2) {
@@ -109,7 +101,6 @@ public class GameManager {
         Player player2 = new Player(sPlayer2);
         gameManager.setPlayer1(player1);
         gameManager.setPlayer2(player2);
-
     }
 
     /**
@@ -121,9 +112,6 @@ public class GameManager {
     public boolean checkIfTextFieldIsCorrect(TextField textField, TextField textField2){
         int minLength = 3;
         int maxLength = 15;
-
-
-
 
         if(textField.getText().isEmpty()) {
             SceneUtil.showAlert("Wrong syntax","Je moet een naam invullen!");
@@ -148,6 +136,10 @@ public class GameManager {
             return false;
         }
         return true;
+    }
+
+    public boolean isPlayer2Bot(String player2Name) {
+        return player2Name == null || player2Name.isEmpty() || player2Name.equals(" ") || player2Name.equals("bot");
     }
 
     public Player getPlayer1() {

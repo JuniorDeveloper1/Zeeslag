@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -31,6 +32,24 @@ public abstract class SceneUtil {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public static void setButtonStyles(Button button) {
+        button.setStyle("-fx-background-color: #1e90ff; -fx-text-fill: white; -fx-font-size: 20px; ");
+        button.setMinWidth(150);
+    }
+
+    public static void setButtonHoverEffects(Button button) {
+        button.setOnMouseEntered(e -> button.setScaleX(1.2));
+        button.setOnMouseExited(e -> button.setScaleX(1));
+    }
+
+
+
+    public static void stopBackgroundMusic(MediaPlayer mediaPlayer) {
+        if(mediaPlayer != null) {
+            mediaPlayer.stop();
+        }
     }
 
 }

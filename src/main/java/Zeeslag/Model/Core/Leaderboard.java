@@ -49,18 +49,20 @@ public class Leaderboard {
      */
     private void loadLeaderBoardFromFile() throws FileNotFoundException {
         try (BufferedReader reader = new BufferedReader(new FileReader(ORIGIN_PATH))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
+            String line = reader.readLine();
+            while (line != null) {
                 String[] parts = line.split(";");
                 if (parts.length == 3) {
                     String playerName = parts[0];
                     updateLeaderboard(playerName);
                 }
+                line = reader.readLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     /**
      * Saving the leaderboard where we write all the users from the list

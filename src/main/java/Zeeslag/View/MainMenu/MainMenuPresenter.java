@@ -11,6 +11,8 @@ import Zeeslag.View.LeaderBoard.LeaderBoardView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.media.MediaPlayer;
 
 import java.io.FileNotFoundException;
 
@@ -18,7 +20,6 @@ public class MainMenuPresenter implements Presenter {
 
    // private MainMenuModel model;
     private MainMenuView view;
-    private MainMenuPresenter presenter;
     private GameManager gameManager = GameManager.getInstance();
 
     public MainMenuPresenter(MainMenuView view) {
@@ -34,30 +35,26 @@ public class MainMenuPresenter implements Presenter {
         // Event handlers: roepen methodes aan uit het
         // model en zorgen voor een update van de view.
         //SceneUtil.openView(gamePresenter, "Game view");
-        view.getPlayButton().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                view.stopBackgroundMusic();
-                GameView gameView = new GameView();
-                GamePresenter gamePresenter = new GamePresenter(gameManager, gameView);
-                SceneUtil.openView(gamePresenter);
-            }
+        view.getPlayButton().setOnAction(actionEvent -> {
+            SceneUtil.stopBackgroundMusic(view.getMediaPlayer());
+            handleClose();
+            GameView gameView = new GameView();
+            GamePresenter gamePresenter = new GamePresenter(gameManager, gameView);
+            SceneUtil.openView(gamePresenter);
         });
 
-        view.getLeaderboardButton().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                view.stopBackgroundMusic();
-                LeaderBoardView leaderBoardView = new LeaderBoardView();
-                Leaderboard leaderBoardModel;
-                try {
-                     leaderBoardModel = new Leaderboard();
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-                LeaderBoardPresenter leaderBoardPresenter = new LeaderBoardPresenter(leaderBoardModel, leaderBoardView);
-                SceneUtil.openView(leaderBoardPresenter);
+        view.getLeaderboardButton().setOnAction(actionEvent -> {
+            SceneUtil.stopBackgroundMusic(view.getMediaPlayer());
+            handleClose();
+            LeaderBoardView leaderBoardView = new LeaderBoardView();
+            Leaderboard leaderBoardModel;
+            try {
+                leaderBoardModel = new Leaderboard();
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
             }
+            LeaderBoardPresenter leaderBoardPresenter = new LeaderBoardPresenter(leaderBoardModel, leaderBoardView);
+            SceneUtil.openView(leaderBoardPresenter);
         });
         view.getCloseButton().setOnAction(event -> handleClose());
     }

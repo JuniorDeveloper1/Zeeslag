@@ -34,7 +34,6 @@ public class PlayerPresenter implements Presenter {
         this.updateView();
         view.getOpponentGridPane().setVisible(false);
         view.getWaitingForOtherPlayer().setVisible(false);
-        System.out.println("P1: CURRENT PLAYER" + model.getGameManager().getTurn().getCurrentPlayer().getName());
     }
 
     private void initializeEventHandlers() {
@@ -118,6 +117,8 @@ public class PlayerPresenter implements Presenter {
             SceneUtil.showAlert("Players not ready", "Both players must place their ships before starting.");
         }
     }
+
+
 
     private void handleAttack(MouseEvent mouseEvent) {
         int size = model.getGameManager().getPlayer1().getBoard().getSizeBoard();

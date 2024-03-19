@@ -1,6 +1,7 @@
 package Zeeslag.View.MainMenu;
 
 import Zeeslag.Model.helper.MVPView;
+import Zeeslag.Model.helper.SceneUtil;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -60,13 +61,13 @@ public class MainMenuView extends VBox implements MVPView {
         zeeslagText.setFont(Font.font("Arial", 60));
         zeeslagText.setFill(Color.WHITE);
 
-        setButtonStyles(playButton);
-        setButtonStyles(leaderboardButton);
-        setButtonStyles(closeButton);
+        SceneUtil.setButtonStyles(playButton);
+        SceneUtil.setButtonStyles(leaderboardButton);
+        SceneUtil.setButtonStyles(closeButton);
 
-        setButtonHoverEffects(playButton);
-        setButtonHoverEffects(leaderboardButton);
-        setButtonHoverEffects(closeButton);
+        SceneUtil.setButtonHoverEffects(playButton);
+        SceneUtil.setButtonHoverEffects(leaderboardButton);
+        SceneUtil.setButtonHoverEffects(closeButton);
 
         setButtonCenter(playButton);
         setButtonCenter(leaderboardButton);
@@ -89,16 +90,6 @@ public class MainMenuView extends VBox implements MVPView {
         button.setAlignment(Pos.CENTER);
     }
 
-    private void setButtonStyles(Button button) {
-        button.setStyle("-fx-background-color: #1e90ff; -fx-text-fill: white; -fx-font-size: 20px; ");
-        button.setMinWidth(150);
-    }
-
-    private void setButtonHoverEffects(Button button) {
-        button.setOnMouseEntered(e -> button.setScaleX(1.2));
-        button.setOnMouseExited(e -> button.setScaleX(1));
-    }
-
     private void playBackgroundMusic() {
         audioFilePath = "resources/awesomeness.wav";
         File file = new File(audioFilePath);
@@ -108,11 +99,6 @@ public class MainMenuView extends VBox implements MVPView {
         mediaPlayer.play();
     }
 
-    public void stopBackgroundMusic() {
-        if(mediaPlayer != null) {
-            mediaPlayer.stop();
-        }
-    }
     public Button getPlayButton() {
         return playButton;
     }
@@ -123,5 +109,9 @@ public class MainMenuView extends VBox implements MVPView {
 
     public Button getCloseButton() {
         return closeButton;
+    }
+
+    public MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
     }
 }

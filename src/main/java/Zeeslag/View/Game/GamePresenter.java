@@ -9,6 +9,8 @@ import Zeeslag.View.Game.player1.PlayerPresenter;
 import Zeeslag.View.Game.player1.PlayerView;
 import Zeeslag.View.Game.player2.Player2Presenter;
 import Zeeslag.View.Game.player2.Player2View;
+import Zeeslag.View.MainMenu.MainMenuPresenter;
+import Zeeslag.View.MainMenu.MainMenuView;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
@@ -33,7 +35,7 @@ public class GamePresenter implements Presenter {
         view.getPlayButton().setOnMouseClicked(mouseEvent -> {
             if (model.checkIfTextFieldIsCorrect(view.getPlayName1Field(),
                     view.getPlayName2Field())) {
-                view.stopBackgroundMusic();
+                SceneUtil.stopBackgroundMusic(view.getMediaPlayer());
 
                 String player1Name = view.getPlayName1Field().getText();
                 String player2Name = view.getPlayName2Field().getText();
@@ -64,6 +66,15 @@ public class GamePresenter implements Presenter {
 
                 handleClose();
             }
+        });
+
+        view.getReturnButton().setOnMouseClicked(mouseEvent -> {
+            handleClose();
+
+            MainMenuView mainMenuView = new MainMenuView();
+            MainMenuPresenter mainMenuPresenter = new MainMenuPresenter(mainMenuView);
+
+            SceneUtil.openView(mainMenuPresenter);
         });
     }
 

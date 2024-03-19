@@ -3,7 +3,11 @@ package Zeeslag.View.LeaderBoard;
 import Zeeslag.Model.Core.Leaderboard;
 import Zeeslag.Model.helper.Presenter;
 import Zeeslag.Model.Core.PlayerStats;
+import Zeeslag.Model.helper.SceneUtil;
+import Zeeslag.View.MainMenu.MainMenuPresenter;
+import Zeeslag.View.MainMenu.MainMenuView;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 
 import java.util.List;
 
@@ -20,6 +24,13 @@ public class LeaderBoardPresenter implements Presenter {
     }
 
     private void addEventHandlers() {
+        view.getReturnButton().setOnMouseClicked(mouseEvent -> {
+            handleClose();
+            SceneUtil.stopBackgroundMusic(view.getMediaPlayer());
+            MainMenuView mainMenuView = new MainMenuView();
+            MainMenuPresenter mainMenuPresenter = new MainMenuPresenter(mainMenuView);
+            SceneUtil.openView(mainMenuPresenter);
+        });
 
     }
 

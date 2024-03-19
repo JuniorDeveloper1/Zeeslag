@@ -4,6 +4,7 @@ import Zeeslag.Model.Core.Board;
 import Zeeslag.Model.Core.Cell;
 import Zeeslag.Model.GameManager;
 import Zeeslag.Model.helper.MVPView;
+import Zeeslag.Model.helper.SceneUtil;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -92,8 +93,8 @@ public class PlayerView extends VBox implements MVPView {
         horizontal.setSpacing(30);
         horizontal.setAlignment(Pos.BOTTOM_CENTER);
 
-        setButtonStyles(start);
-        setButtonHoverEffects(start);
+        SceneUtil.setButtonStyles(start);
+        SceneUtil.setButtonHoverEffects(start);
         start.setAlignment(Pos.CENTER);
 
         getChildren().addAll(playerBox, horizontal);
@@ -101,15 +102,6 @@ public class PlayerView extends VBox implements MVPView {
         start.toFront();
     }
 
-    private void setButtonStyles(Button button) {
-        button.setStyle("-fx-background-color: #1e90ff; -fx-text-fill: white; -fx-font-size: 20px; ");
-        button.setMinWidth(150);
-    }
-
-    private void setButtonHoverEffects(Button button) {
-        button.setOnMouseEntered(e -> button.setScaleX(1.2));
-        button.setOnMouseExited(e -> button.setScaleX(1));
-    }
 
     public Text getPlayerName() {
         return playerName;

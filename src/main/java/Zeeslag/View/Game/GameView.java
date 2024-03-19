@@ -1,6 +1,7 @@
 package Zeeslag.View.Game;
 
 import Zeeslag.Model.helper.MVPView;
+import Zeeslag.Model.helper.SceneUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -39,6 +40,7 @@ public class GameView extends VBox implements MVPView {
 
     private Text configurationText;
     private MediaPlayer mediaPlayer;
+    private Button returnButton;
 
     public GameView () {
         this.initialize();
@@ -71,10 +73,11 @@ public class GameView extends VBox implements MVPView {
          boardSizeLabel= new Label("Board Size:");
 
         // Dropdown menu for board sizes
-        options = FXCollections.observableArrayList(10, 8, 5, 12);
+        options = FXCollections.observableArrayList(10, 5, 8, 12);
         boardSizes = new ComboBox<>(options);
 
         playButton = new Button("play");
+        returnButton = new Button("return");
 
         playBackgroundMusic();
     }
@@ -103,21 +106,16 @@ public class GameView extends VBox implements MVPView {
 
         configurationBox.getChildren().addAll(boardSizeLabel, boardSizes);
 
-        setButtonStyles(playButton);
-        setButtonHoverEffects(playButton);
+        SceneUtil.setButtonStyles(playButton);
+        SceneUtil.setButtonHoverEffects(playButton);
+
+        SceneUtil.setButtonStyles(returnButton);
+        SceneUtil.setButtonHoverEffects(returnButton);
+
 
         // Add all nodes to the VBox
         getChildren().addAll(title, player1, playName1Field, player2, playName2Field,
-                configurationText, configurationBox, playButton);
-    }
-
-    private void setButtonStyles(Button button) {
-        button.setStyle("-fx-background-color: #1e90ff; -fx-text-fill: white; -fx-font-size: 20px; ");
-        button.setMinWidth(150);
-    }
-    private void setButtonHoverEffects(Button button) {
-        button.setOnMouseEntered(e -> button.setScaleX(1.2));
-        button.setOnMouseExited(e -> button.setScaleX(1));
+                configurationText, configurationBox, playButton, returnButton);
     }
 
 
@@ -130,11 +128,6 @@ public class GameView extends VBox implements MVPView {
         mediaPlayer.play();
     }
 
-    public void stopBackgroundMusic(){
-        if(mediaPlayer != null) {
-            mediaPlayer.stop();
-        }
-    }
 
     public Button getPlayButton() {
         return playButton;
@@ -150,5 +143,13 @@ public class GameView extends VBox implements MVPView {
 
     public ComboBox getBoardSizes() {
         return boardSizes;
+    }
+
+    public Button getReturnButton() {
+        return returnButton;
+    }
+
+    public MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
     }
 }
