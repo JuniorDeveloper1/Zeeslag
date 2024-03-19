@@ -1,14 +1,13 @@
 package Zeeslag.View.Game;
 
-import Zeeslag.Model.Core.NPC;
 import Zeeslag.Model.GameManager;
 import Zeeslag.Model.PlayerManager;
 import Zeeslag.Model.helper.Presenter;
 import Zeeslag.Model.helper.SceneUtil;
-import Zeeslag.View.Game.player1.PlayerPresenter;
-import Zeeslag.View.Game.player1.PlayerView;
-import Zeeslag.View.Game.player2.Player2Presenter;
-import Zeeslag.View.Game.player2.Player2View;
+import Zeeslag.View.Player1.PlayerPresenter;
+import Zeeslag.View.Player1.PlayerView;
+import Zeeslag.View.Player2.Player2Presenter;
+import Zeeslag.View.Player2.Player2View;
 import Zeeslag.View.MainMenu.MainMenuPresenter;
 import Zeeslag.View.MainMenu.MainMenuView;
 import javafx.scene.Node;
@@ -33,15 +32,13 @@ public class GamePresenter implements Presenter {
 
     private void addEventHandlers() {
         view.getPlayButton().setOnMouseClicked(mouseEvent -> {
-            if (model.checkIfTextFieldIsCorrect(view.getPlayName1Field(),
+            if (model.validateTextFieldInput(view.getPlayName1Field(),
                     view.getPlayName2Field())) {
-                SceneUtil.stopBackgroundMusic(view.getMediaPlayer());
-
                 String player1Name = view.getPlayName1Field().getText();
                 String player2Name = view.getPlayName2Field().getText();
 
                 try {
-                    model.play(player1Name, player2Name, view.getBoardSizes());
+                    model.playGame(player1Name, player2Name, view.getBoardSizes());
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }
@@ -64,12 +61,12 @@ public class GamePresenter implements Presenter {
                     stage.show();
                 }
 
-                handleClose();
+                SceneUtil.closeScene(view.getScene());
             }
         });
 
         view.getReturnButton().setOnMouseClicked(mouseEvent -> {
-            handleClose();
+            SceneUtil.closeScene(view.getScene());
 
             MainMenuView mainMenuView = new MainMenuView();
             MainMenuPresenter mainMenuPresenter = new MainMenuPresenter(mainMenuView);
@@ -82,9 +79,6 @@ public class GamePresenter implements Presenter {
         // Add logic to update view if needed
     }
 
-    private void handleClose() {
-        view.getScene().getWindow().hide();
-    }
 
     @Override
     public Node getView() {

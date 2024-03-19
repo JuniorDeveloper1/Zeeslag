@@ -1,5 +1,7 @@
 package Zeeslag.View.Game;
 
+import Zeeslag.Model.Core.MusicPlayer;
+import Zeeslag.Model.GameManager;
 import Zeeslag.Model.helper.MVPView;
 import Zeeslag.Model.helper.SceneUtil;
 import javafx.collections.FXCollections;
@@ -30,7 +32,6 @@ public class GameView extends VBox implements MVPView {
     private Label player2;
 
     private Button playButton;
-    private String audioFilePath;
     private VBox configurationBox;
 
     private  Label boardSizeLabel;
@@ -39,7 +40,7 @@ public class GameView extends VBox implements MVPView {
     private ComboBox boardSizes;
 
     private Text configurationText;
-    private MediaPlayer mediaPlayer;
+    private GameManager gameManager = GameManager.getInstance();
     private Button returnButton;
 
     public GameView () {
@@ -79,7 +80,7 @@ public class GameView extends VBox implements MVPView {
         playButton = new Button("play");
         returnButton = new Button("return");
 
-        playBackgroundMusic();
+
     }
 
     @Override
@@ -117,18 +118,6 @@ public class GameView extends VBox implements MVPView {
         getChildren().addAll(title, player1, playName1Field, player2, playName2Field,
                 configurationText, configurationBox, playButton, returnButton);
     }
-
-
-    private void playBackgroundMusic() {
-        audioFilePath = "resources/awesomeness.wav";
-        File file = new File(audioFilePath);
-        Media media = new Media(file.toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.play();
-    }
-
-
     public Button getPlayButton() {
         return playButton;
     }
@@ -149,7 +138,7 @@ public class GameView extends VBox implements MVPView {
         return returnButton;
     }
 
-    public MediaPlayer getMediaPlayer() {
-        return mediaPlayer;
+    public MusicPlayer getMusicPlayer() {
+        return gameManager.getMusicPlayer();
     }
 }

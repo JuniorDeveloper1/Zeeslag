@@ -8,8 +8,8 @@ import java.util.List;
 public class Leaderboard {
 
     private List<PlayerStats> playerStats;
-    private final String FILE_PATH = "resources/leaderboard/leaderboard.txt";
-    private final String ORIGIN_PATH = "resources/gamedata/playergamedata.txt";
+    private final String LEADERBOARD_PATH = "resources/leaderboard/leaderboard.txt";
+    private final String GAMEDATA_PATH = "resources/gamedata/playergamedata.txt";
 
     public Leaderboard() throws FileNotFoundException {
         this.playerStats = new ArrayList<>();
@@ -23,7 +23,7 @@ public class Leaderboard {
      * @param playerName, the player that has won
      */
 
-    public void updateLeaderboard(String playerName) {
+    public void updateLeaderboardForPlayer(String playerName) {
         boolean found = false;
         for (PlayerStats stats : getPlayerStats()) {
             if (stats.getPlayerName().equals(playerName)) {
@@ -37,7 +37,7 @@ public class Leaderboard {
             PlayerStats newPlayer = new PlayerStats(playerName, 1);
             playerStats.add(newPlayer);
         }
-        saveLeaderBoard();
+        writeLeaderboardFile();
     }
 
     /**
@@ -48,13 +48,13 @@ public class Leaderboard {
      * @throws FileNotFoundException
      */
     private void loadLeaderBoardFromFile() throws FileNotFoundException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(ORIGIN_PATH))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(getGameDataPath()))) {
             String line = reader.readLine();
             while (line != null) {
                 String[] parts = line.split(";");
                 if (parts.length == 3) {
                     String playerName = parts[0];
-                    updateLeaderboard(playerName);
+                    updateLeaderboardForPlayer(playerName);
                 }
                 line = reader.readLine();
             }
@@ -63,13 +63,12 @@ public class Leaderboard {
         }
     }
 
-
     /**
      * Saving the leaderboard where we write all the users from the list
      * into the leaderboard.txt.
      */
-    private void saveLeaderBoard() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
+    private void writeLeaderboardFile() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(getLeaderboardpath()))) {
             for (PlayerStats stats : getPlayerStats()) {
                 String format = stats.getPlayerName() + ";" + stats.getWins();
                 writer.write(format);
@@ -91,11 +90,11 @@ public class Leaderboard {
         return playerStats;
     }
 
-    public String getFilePath() {
-        return FILE_PATH;
+    public String getGameDataPath() {
+        return GAMEDATA_PATH;
     }
 
-    public String getOriginPath() {
-        return ORIGIN_PATH;
+    public String getLeaderboardpath() {
+        return LEADERBOARD_PATH;
     }
 }

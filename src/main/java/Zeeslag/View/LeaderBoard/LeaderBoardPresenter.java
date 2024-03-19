@@ -25,8 +25,7 @@ public class LeaderBoardPresenter implements Presenter {
 
     private void addEventHandlers() {
         view.getReturnButton().setOnMouseClicked(mouseEvent -> {
-            handleClose();
-            SceneUtil.stopBackgroundMusic(view.getMediaPlayer());
+            SceneUtil.closeScene(view.getScene());
             MainMenuView mainMenuView = new MainMenuView();
             MainMenuPresenter mainMenuPresenter = new MainMenuPresenter(mainMenuView);
             SceneUtil.openView(mainMenuPresenter);
@@ -36,14 +35,14 @@ public class LeaderBoardPresenter implements Presenter {
 
 
     private void updateView() {
-        this.updateLeaderboard(model.getPlayerStats());
+        this.makeLeaderboard(model.getPlayerStats());
     }
 
     public void addWindowEventHandlers() {
 
     }
 
-    private void updateLeaderboard(List<PlayerStats> playerStatsList) {
+    private void makeLeaderboard(List<PlayerStats> playerStatsList) {
         String trophyEmoji = "\uD83C\uDFC6";
         for (int i = 0; i < view.getLeaderboardLabel().length && i < playerStatsList.size(); i++) {
             PlayerStats stats = playerStatsList.get(i);
@@ -54,12 +53,7 @@ public class LeaderBoardPresenter implements Presenter {
                 view.getLeaderboardLabel()[i].setText((1+i) + ". "
                         + stats.getPlayerName() + " - Wins: " + stats.getWins());
             }
-
         }
-    }
-
-    private void handleClose() {
-        view.getScene().getWindow().hide();
     }
 
 

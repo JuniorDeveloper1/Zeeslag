@@ -76,7 +76,7 @@ public  class Player {
 
         if(getAmountLeaderBoardUpdates() == 0){
             PlayerGameData.save(this.getName(), this.getAmountOfAttacks());
-            getGameManager().getLeaderboard().updateLeaderboard(this.getName());
+            getGameManager().getLeaderboard().updateLeaderboardForPlayer(this.getName());
             this.setAmountLeaderBoardUpdates(1);
             /**
              * We gebruiken de setAmountLeaderBoardUpdates

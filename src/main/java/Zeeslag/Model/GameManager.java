@@ -21,11 +21,11 @@ public class GameManager {
     private Leaderboard leaderboard;
 
     private boolean isPlayingAgainstBot = false;
+    private MusicPlayer musicPlayer;
 
     private static GameManager gameManager;
 
     private GameManager() {}
-
     public static GameManager getInstance() {
         if (gameManager == null) {
             gameManager = new GameManager();
@@ -33,6 +33,10 @@ public class GameManager {
         return gameManager;
     }
 
+    public void startMusic() {
+        this.musicPlayer = new MusicPlayer();
+        musicPlayer.playBackgroundMusic();
+    }
 
     /**
      * Starts a new game with the specified player names and board size.
@@ -41,7 +45,7 @@ public class GameManager {
      * @param comboBox ComboBox containing board size options
      * @throws FileNotFoundException if leaderboard data file is not found
      */
-    public void startGame(String player1Name, String player2Name, ComboBox comboBox) throws FileNotFoundException {
+    public void startNewGame(String player1Name, String player2Name, ComboBox comboBox) throws FileNotFoundException {
         Board player1Board = new Board((Integer) comboBox.getValue());
         Board player1OppBoard = new Board((Integer) comboBox.getValue());
 
@@ -79,17 +83,12 @@ public class GameManager {
      * @param boardSize ComboBox containing board size options
      * @throws FileNotFoundException if leaderboard data file is not found
      */
-    public void play(String player1, String player2, ComboBox boardSize) throws FileNotFoundException {
-
-        /**
-         * Maak het zo als je op play klikt dat er een button onder is dat erop staat:
-         * add Player:
-         */
-        createHero(player1, player2);
-        gameManager.startGame(player1, player2, boardSize);
+    public void playGame(String player1, String player2, ComboBox boardSize) throws FileNotFoundException {
+        createPlayers(player1, player2);
+        gameManager.startNewGame(player1, player2, boardSize);
     }
 
-    public void createHero(String sPlayer1, String sPlayer2) {
+    public void createPlayers(String sPlayer1, String sPlayer2) {
         if(sPlayer1 == null) {
             sPlayer1 = "ERROR";
         }
@@ -109,7 +108,7 @@ public class GameManager {
      * @param textField2 Player 2 name
      * @return true if it is correct
      */
-    public boolean checkIfTextFieldIsCorrect(TextField textField, TextField textField2){
+    public boolean validateTextFieldInput(TextField textField, TextField textField2){
         int minLength = 3;
         int maxLength = 15;
 
@@ -191,5 +190,9 @@ public class GameManager {
 
     public void setPlayingAgainstBot(boolean playingAgainstBot) {
         isPlayingAgainstBot = playingAgainstBot;
+    }
+
+    public MusicPlayer getMusicPlayer() {
+        return musicPlayer;
     }
 }

@@ -1,5 +1,7 @@
 package Zeeslag.View.MainMenu;
 
+import Zeeslag.Model.Core.MusicPlayer;
+import Zeeslag.Model.GameManager;
 import Zeeslag.Model.helper.MVPView;
 import Zeeslag.Model.helper.SceneUtil;
 import javafx.geometry.Insets;
@@ -23,12 +25,13 @@ public class MainMenuView extends VBox implements MVPView {
     private Text zeeslagText;
     private Image image;
     private BackgroundImage backgroundImage;
-    private MediaPlayer mediaPlayer;
-    private String audioFilePath;
+    private GameManager gameManager = GameManager.getInstance();
     public MainMenuView() {
         initialize();
         initializeNodes();
         layoutNodes();
+
+
     }
 
     @Override
@@ -53,7 +56,7 @@ public class MainMenuView extends VBox implements MVPView {
         backgroundImage = new BackgroundImage(image,BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT,BackgroundPosition.CENTER,BackgroundSize.DEFAULT);
 
         //AUDIO
-      this.playBackgroundMusic();
+
     }
 
     @Override
@@ -90,14 +93,6 @@ public class MainMenuView extends VBox implements MVPView {
         button.setAlignment(Pos.CENTER);
     }
 
-    private void playBackgroundMusic() {
-        audioFilePath = "resources/awesomeness.wav";
-        File file = new File(audioFilePath);
-        Media media = new Media(file.toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.play();
-    }
 
     public Button getPlayButton() {
         return playButton;
@@ -111,7 +106,7 @@ public class MainMenuView extends VBox implements MVPView {
         return closeButton;
     }
 
-    public MediaPlayer getMediaPlayer() {
-        return mediaPlayer;
+    public MusicPlayer getMusicPlayer() {
+        return gameManager.getMusicPlayer();
     }
 }

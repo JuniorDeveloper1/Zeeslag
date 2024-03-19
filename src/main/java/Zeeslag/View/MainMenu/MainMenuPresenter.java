@@ -36,16 +36,14 @@ public class MainMenuPresenter implements Presenter {
         // model en zorgen voor een update van de view.
         //SceneUtil.openView(gamePresenter, "Game view");
         view.getPlayButton().setOnAction(actionEvent -> {
-            SceneUtil.stopBackgroundMusic(view.getMediaPlayer());
-            handleClose();
+            SceneUtil.closeScene(view.getScene());
             GameView gameView = new GameView();
             GamePresenter gamePresenter = new GamePresenter(gameManager, gameView);
             SceneUtil.openView(gamePresenter);
         });
 
         view.getLeaderboardButton().setOnAction(actionEvent -> {
-            SceneUtil.stopBackgroundMusic(view.getMediaPlayer());
-            handleClose();
+            SceneUtil.closeScene(view.getScene());
             LeaderBoardView leaderBoardView = new LeaderBoardView();
             Leaderboard leaderBoardModel;
             try {
@@ -56,7 +54,7 @@ public class MainMenuPresenter implements Presenter {
             LeaderBoardPresenter leaderBoardPresenter = new LeaderBoardPresenter(leaderBoardModel, leaderBoardView);
             SceneUtil.openView(leaderBoardPresenter);
         });
-        view.getCloseButton().setOnAction(event -> handleClose());
+        view.getCloseButton().setOnAction(event -> SceneUtil.closeScene(view.getScene()));
     }
 
     private void updateView() {
@@ -66,13 +64,11 @@ public class MainMenuPresenter implements Presenter {
     public void addWindowEventHandlers() {
         // Window event handlers (anon. inner klassen)
         // Koppeling via view.getScene().getWindow()
-        view.getPlayButton().setOnMouseClicked(event -> handleClose());
-        view.getLeaderboardButton().setOnMouseClicked(event -> handleClose());
+        view.getPlayButton().setOnMouseClicked(event -> SceneUtil.closeScene(view.getScene()));
+        view.getLeaderboardButton().setOnMouseClicked(event -> SceneUtil.closeScene(view.getScene()));
     }
 
-    private void handleClose() {
-        view.getScene().getWindow().hide();
-    }
+
     public Node getView() {
         return view;
     }

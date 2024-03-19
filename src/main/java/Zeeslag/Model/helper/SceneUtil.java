@@ -44,12 +44,9 @@ public abstract class SceneUtil {
         button.setOnMouseExited(e -> button.setScaleX(1));
     }
 
-
-
-    public static void stopBackgroundMusic(MediaPlayer mediaPlayer) {
-        if(mediaPlayer != null) {
-            mediaPlayer.stop();
-        }
+    public static void closeScene(Scene scene) {
+        scene.getWindow().hide();
     }
+
 
 }

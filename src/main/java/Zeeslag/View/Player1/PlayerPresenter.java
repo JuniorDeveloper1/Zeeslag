@@ -1,4 +1,4 @@
-package Zeeslag.View.Game.player1;
+package Zeeslag.View.Player1;
 
 import Zeeslag.Model.Core.NPC;
 import Zeeslag.Model.Core.Player;
@@ -6,6 +6,8 @@ import Zeeslag.Model.GameManager;
 import Zeeslag.Model.PlayerManager;
 import Zeeslag.Model.helper.Presenter;
 import Zeeslag.Model.helper.SceneUtil;
+import Zeeslag.View.Win.WinPresenter;
+import Zeeslag.View.Win.WinView;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -79,23 +81,30 @@ public class PlayerPresenter implements Presenter {
     }
 
     private void handlePrimaryClick(int x, int y) {
-        boolean successfulPlaced = model.placeShipHorizontal(getCurrentPlayer(), x, y);
-        if (model.getGameManager().getPlayer1().getBoard().isAllShipsPlaced()) {
-            SceneUtil.showAlert("Ships placed", "All ships are placed");
-        } else if (!successfulPlaced) {
+        if (getCurrentPlayer().getBoard().isValidPoint(x, y)) {
+            boolean successfulPlaced = model.placeShipHorizontal(getCurrentPlayer(), x, y);
+            if (getCurrentPlayer().getBoard().isAllShipsPlaced()) {
+                SceneUtil.showAlert("Ships placed", "All ships are placed");
+            } else if (!successfulPlaced) {
+                SceneUtil.showAlert("Ship misplaced", "You cannot add a ship there!");
+            }
+        } else {
             SceneUtil.showAlert("Ship misplaced", "You cannot add a ship there!");
         }
     }
 
     private void handleSecondaryClick(int x, int y) {
-        boolean successfulPlaced = model.placeShipVertical(getCurrentPlayer(), x, y);
-        if (model.getGameManager().getPlayer1().getBoard().isAllShipsPlaced()) {
-            SceneUtil.showAlert("Ships placed", "All ships are placed");
-        } else if (!successfulPlaced) {
+        if (getCurrentPlayer().getBoard().isValidPoint(x, y)) {
+            boolean successfulPlaced = model.placeShipVertical(getCurrentPlayer(), x, y);
+            if (getCurrentPlayer().getBoard().isAllShipsPlaced()) {
+                SceneUtil.showAlert("Ships placed", "All ships are placed");
+            } else if (!successfulPlaced) {
+                SceneUtil.showAlert("Ship misplaced", "You cannot add a ship there!");
+            }
+        } else {
             SceneUtil.showAlert("Ship misplaced", "You cannot add a ship there!");
         }
     }
-
     private void initializeStartButtonClickHandler() {
         Button startButton = view.getStart();
         startButton.setOnMouseClicked(mouseEvent -> {
@@ -149,10 +158,19 @@ public class PlayerPresenter implements Presenter {
                         Platform.runLater(() -> SceneUtil.showAlert("Invalid Attack", "You cannot attack this cell."));
                     }
                 } else {
-                    Platform.runLater(() -> SceneUtil.showAlert("Game Over", "You have lost the game."));
+                    Platform.runLater(() -> {
+                        SceneUtil.showAlert("Game Over", "You have lost the game.");
+                        if(gameManager.getPlayer2() instanceof NPC) {
+                            openWinView();
+                        }
+
+                    });
                 }
             } else {
-                Platform.runLater(() -> SceneUtil.showAlert("Game Over", "You have already won the game."));
+                Platform.runLater(() -> {
+                    SceneUtil.showAlert("Game Over", "You have already won the game.");
+                    openWinView();
+                });
             }
         } else {
             Platform.runLater(() -> SceneUtil.showAlert("Not your turn!", "It is the turn of " + model.getGameManager().getTurn().getCurrentPlayer().getName()));
@@ -161,7 +179,15 @@ public class PlayerPresenter implements Presenter {
 
     private void handleAttackAgainstPlayer(int x, int y) {
         if (model.getGameManager().getTurn().getCurrentPlayer() == getCurrentPlayer()) {
-            getCurrentPlayer().attack(model.getGameManager().getPlayer2(), x, y);
+            if(!getCurrentPlayer().hasWon(gameManager.getPlayer2())) {
+                getCurrentPlayer().attack(model.getGameManager().getPlayer2(), x, y);
+            } else {
+                Platform.runLater(() -> {
+                    SceneUtil.showAlert("Game Over", getCurrentPlayer().getName()
+                            +"'s has already won the game.");
+                    openWinView();
+                });
+            }
         } else {
             SceneUtil.showAlert("Not your turn!", "It is the turn of " + model.getGameManager().getPlayer1().getName());
         }
@@ -189,6 +215,14 @@ public class PlayerPresenter implements Presenter {
 
         botAttackTimer.setCycleCount(Timeline.INDEFINITE);
         botAttackTimer.play();
+    }
+
+    private void openWinView() {
+        WinView winView = new WinView();
+        WinPresenter winPresenter = new WinPresenter(winView);
+        SceneUtil.closeScene(view.getScene());
+
+        SceneUtil.openView(winPresenter);
     }
 
     @Override

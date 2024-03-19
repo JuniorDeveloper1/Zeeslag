@@ -1,5 +1,7 @@
 package Zeeslag.View.LeaderBoard;
 
+import Zeeslag.Model.Core.MusicPlayer;
+import Zeeslag.Model.GameManager;
 import Zeeslag.Model.helper.MVPView;
 import Zeeslag.Model.helper.SceneUtil;
 import javafx.geometry.Insets;
@@ -23,14 +25,14 @@ public class LeaderBoardView extends VBox implements MVPView {
 
     private Button returnButton;
 
-    private String audioFilePath;
-    private MediaPlayer mediaPlayer;
+    private GameManager gameManager = GameManager.getInstance();
 
 
     public LeaderBoardView()  {
         this.initialize();
         this.initializeNodes();
         this.layoutNodes();
+
 
     }
     @Override
@@ -47,7 +49,7 @@ public class LeaderBoardView extends VBox implements MVPView {
         for (int i = 0; i < leaderboardLabel.length; i++) {
             leaderboardLabel[i] = new Label();
         }
-        this.playBackgroundMusic();
+
         this.returnButton = new Button("return");
 
     }
@@ -97,15 +99,6 @@ public class LeaderBoardView extends VBox implements MVPView {
             getLeaderboardLabel()[index].setStyle("-fx-text-fill: " + color +";");
         }
     }
-    private void playBackgroundMusic() {
-        audioFilePath = "resources/awesomeness.wav";
-        File file = new File(audioFilePath);
-        Media media = new Media(file.toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.play();
-    }
-
     public Text getTitle() {
         return title;
     }
@@ -118,7 +111,7 @@ public class LeaderBoardView extends VBox implements MVPView {
         return returnButton;
     }
 
-    public MediaPlayer getMediaPlayer() {
-        return mediaPlayer;
+    public MusicPlayer getMusicPlayer() {
+        return gameManager.getMusicPlayer();
     }
 }
