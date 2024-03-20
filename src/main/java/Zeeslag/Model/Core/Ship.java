@@ -11,6 +11,7 @@ public class Ship extends Coord {
     private boolean isSunk;
 
     public Ship(int size) {
+        super();
         this.size = size;
         this.hits = 0; // Initialize hits to 0
         setSunk(false);

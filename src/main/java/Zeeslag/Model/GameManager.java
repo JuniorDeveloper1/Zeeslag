@@ -66,10 +66,10 @@ public class GameManager {
         }
 
         player1.setBoard(player1Board);
-        player1.setOpponentBoard(player1OppBoard);
+        player1.setOpponentBoard(player2OppBoard);
 
         player2.setBoard(player2Board);
-        player2.setOpponentBoard(player2OppBoard);
+        player2.setOpponentBoard(player1OppBoard);
 
         if(getPlayer2() instanceof NPC) {
             player2.getBoard().placeRandomShips();

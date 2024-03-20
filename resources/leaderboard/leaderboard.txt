@@ -1,11 +1,12 @@
-feze;1
-fzeezf;6
-Nick;16
+Nick;18
 Jonas;11
+fzeezf;6
+bot;4
+Test;3
+feze;1
 zefzefzef;1
 zeze;1
 zfezeffze;1
-bot;1
 fzezef;1
 Debut;1
 Jfz;1

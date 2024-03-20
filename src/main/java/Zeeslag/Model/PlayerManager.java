@@ -27,20 +27,21 @@ public class PlayerManager {
         int currentIndex = player.getCurrentIndex();
         Ship currentShip = board.getPlacedShips().get(currentIndex);
         int size = currentShip.getSize();
+        int boardSize = board.getSizeBoard();
         currentShip.setVertical(false);
 
-        if (x + size > 10 || currentIndex >= 5) {
+        if (x + size > boardSize || currentIndex >= 5) {
             return false;
         }
 
         for (int j = 0; j < size; j++) {
-            if (board.getCell(x + j, y).hasShip()) {
+            if (board.getCell(x, y).hasShip()) {
                 return false;
             }
         }
 
         for (int j = 0; j < size; j++) {
-            board.placeShip(currentShip, x + j, y);
+            board.placeShip(currentShip, x, y);
         }
 
         player.setCurrentIndex(currentIndex + 1);
@@ -52,20 +53,21 @@ public class PlayerManager {
         int currentIndex = player.getCurrentIndex();
         Ship currentShip = board.getPlacedShips().get(currentIndex);
         int size = currentShip.getSize();
+        int boardSize = board.getSizeBoard();
         currentShip.setVertical(true);
 
-        if (y + size > 10 || currentIndex >= 5) {
+        if (y + size > boardSize || currentIndex >= 5) {
             return false;
         }
 
         for (int j = 0; j < size; j++) {
-            if (board.getCell(x, y + j).hasShip()) {
+            if (board.getCell(x, y).hasShip()) {
                 return false;
             }
         }
 
         for (int j = 0; j < size; j++) {
-            board.placeShip(currentShip, x, y + j);
+            board.placeShip(currentShip, x, y);
         }
 
         currentShip.setVertical(false);

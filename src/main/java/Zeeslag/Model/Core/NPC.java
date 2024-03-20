@@ -20,10 +20,8 @@ public class NPC extends Player {
         super.getBoard().placeRandomShips();
         this.attackedCoordinates = new ArrayList<>();
         this.hitShipCoords = new ArrayList<>();
-        attackedCoordinates.clear();
-        hitShipCoords.clear();
-
     }
+
 
 
     /**
@@ -32,12 +30,7 @@ public class NPC extends Player {
      * @return
      */
     public boolean attackPlayer(Player otherPlayer) {
-        //System.out.println("SIZE HITSHIPS: " + getHitShipCoords().size());
-        if (getHitShipCoords().isEmpty()) {
             return randomAttack(otherPlayer);
-        } else {
-            return searchForNeighbor(otherPlayer);
-        }
     }
 
 
@@ -49,23 +42,26 @@ public class NPC extends Player {
      * @return false if the attack has failed
      */
     private boolean randomAttack(Player otherPlayer) {
-        attackCoord = generateRandomAttackCoord();
+        Coord attackCoord;
+        do {
+            attackCoord = generateRandomAttackCoord();
+        } while (getAttackedCoordinates().contains(attackCoord));
 
-        if (getAttackedCoordinates() != null && !getAttackedCoordinates().contains(getAttackCoord())) {
-            boolean hit = super.attack(otherPlayer, getAttackCoord().getX(), getAttackCoord().getY());
+        if (attackCoord != null) {
+            boolean hit = super.attack(otherPlayer, attackCoord.getX(), attackCoord.getY());
             if (hit) {
-                Cell cell = getOpponentBoard().getCell(getAttackCoord().getX(), getAttackCoord().getY());
-                if(cell.hasShip()){
-                    getHitShipCoords().add(getAttackCoord());
-                    getAttackedCoordinates().add(getAttackCoord());
+                Cell cell = getOpponentBoard().getCell(attackCoord.getX(), attackCoord.getY());
+                if (cell.hasShip()) {
+                    getHitShipCoords().add(attackCoord);
                 }
+                // Add the attacked coordinate to the list
+                getAttackedCoordinates().add(attackCoord);
                 return true;
             }
-            getAttackedCoordinates().add(getAttackCoord());
         }
-
         return false;
     }
+
 
     /**
      * Smart computer tactic
@@ -142,20 +138,26 @@ public class NPC extends Player {
      * Generating a random coord between the board sizes.
      * @return
      */
+    // Method to generate a random attack coordinate
+// Method to generate a random attack coordinate
     private Coord generateRandomAttackCoord() {
-        int size = getBoard().getSizeBoard();
-
-            int x = (int) (Math.random() * size);
-            int y = (int) (Math.random() * size);
-             attackCoord = new Coord(x, y);
-            do {
-                x = (int) (Math.random() * size);
-                y = (int) (Math.random() * size);
-                attackCoord = new Coord(x, y);
-            }while (getAttackedCoordinates().contains(attackCoord));
-
-            return attackCoord;
+        int boardSize = getBoard().getSizeBoard();
+        while (true) {
+            int x = (int) (Math.random() * boardSize);
+            int y = (int) (Math.random() * boardSize);
+            Coord attackCoord = new Coord(x, y);
+            this.setAttackCoord(attackCoord); // Update attackCoord immediately after generating the random coordinate
+            if (!getAttackedCoordinates().contains(attackCoord)) {
+                return attackCoord;
+            } else {
+                System.out.println("Already attacked: (" + x + ", " + y + ")");
+            }
+        }
     }
+
+
+
+
 
     public List<Coord> getAttackedCoordinates() {
         return attackedCoordinates;
@@ -167,5 +169,9 @@ public class NPC extends Player {
 
     public Coord getAttackCoord() {
         return attackCoord;
+    }
+
+    public void setAttackCoord(Coord attackCoord) {
+        this.attackCoord = attackCoord;
     }
 }

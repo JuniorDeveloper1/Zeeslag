@@ -160,11 +160,10 @@ public class PlayerPresenter implements Presenter {
                 } else {
                     Platform.runLater(() -> {
                         SceneUtil.showAlert("Game Over", "You have lost the game.");
-                        if(gameManager.getPlayer2() instanceof NPC) {
-                            openWinView();
-                        }
-
                     });
+                    if(gameManager.getPlayer2() instanceof NPC) {
+                        openWinView();
+                    }
                 }
             } else {
                 Platform.runLater(() -> {

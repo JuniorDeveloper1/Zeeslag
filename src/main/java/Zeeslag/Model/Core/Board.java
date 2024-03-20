@@ -114,8 +114,6 @@ public class Board {
                     cell.setStroke(Color.GREEN);
                 }
             }
-
-            placedShips.add(ship);
             return true;
         }
 
