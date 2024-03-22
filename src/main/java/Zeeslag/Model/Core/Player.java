@@ -39,10 +39,17 @@ public  class Player {
             Cell opponentCell = otherplayer.getBoard().getCell(x, y);
             this.setAmountOfAttacks(getAmountOfAttacks() + 1);
             if (opponentCell.hasShip()) {
+                if(opponentCell.isHit() && cell.isHit()){
+                    SceneUtil.showAlert("Already hit!", "You have already hit this cell!");
+                    return false;
+                }
                 Ship ship = opponentCell.getShip();
                 cell.setFill(Color.RED);
                 opponentCell.setFill(Color.RED);
                 ship.hit();
+
+                cell.setHit(true);
+                opponentCell.setHit(true);
                 if (ship.isSunk()) {
                     SceneUtil.showAlert(otherplayer.getName() + " schip is gezonken!",
                             "Schip met grootte " + ship.getSize() + " is gezonken!!");
@@ -96,15 +103,20 @@ public  class Player {
      * @param currentIndex
      */
     public void setCurrentIndex(int currentIndex) {
+        // Check if currentIndex is within bounds
         if (currentIndex < 0) {
             currentIndex = 0;
         }
 
-        if (currentIndex >= 5) {
+        if (currentIndex >= board.getAmountShips()) {
             getBoard().setAllShipsPlaced(true);
         }
-        this.currentIndex = currentIndex;
+
+            this.currentIndex = currentIndex;
     }
+
+
+
 
     public String getName() {
         return name;

@@ -1,6 +1,7 @@
 package Zeeslag.Model.Core;
 
 import Zeeslag.Model.GameManager;
+import Zeeslag.Model.helper.SceneUtil;
 
 import java.util.*;
 
@@ -30,7 +31,11 @@ public class NPC extends Player {
      * @return
      */
     public boolean attackPlayer(Player otherPlayer) {
+        if(!hasWon(otherPlayer)) {
             return randomAttack(otherPlayer);
+        }
+
+        return true;
     }
 
 

@@ -14,7 +14,6 @@ public class WinPresenter implements Presenter {
 
     public WinPresenter(WinView view) {
         this.view = view;
-        this.winnerName = winnerName;
         this.addEventHandlers();
         this.updateView();
     }

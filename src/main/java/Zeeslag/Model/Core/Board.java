@@ -3,6 +3,7 @@ package Zeeslag.Model.Core;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -10,6 +11,7 @@ public class Board {
     private final Cell[][] cells;
     private  List<Ship> placedShips;
     private boolean allShipsPlaced;
+    private int amountShips = 5;
 
     private int sizeBoard = 10;
 
@@ -32,15 +34,33 @@ public class Board {
      * Clearing the ship list first
      * Initializing the ships
      */
-    private void initializeShips(){
+    /**
+     * Clearing the ship list first
+     * Initializing the ships
+     */
+    private void initializeShips() {
         getPlacedShips().clear();
         getPlacedShips().add(new Ship(5));
         getPlacedShips().add(new Ship(4));
         getPlacedShips().add(new Ship(3));
         getPlacedShips().add(new Ship(3));
         getPlacedShips().add(new Ship(2));
-
     }
+
+    public void adjustShipSize(int amountShips) {
+        int originalAmountOfShips = getPlacedShips().size();
+        if(originalAmountOfShips > amountShips){
+            for (int i = originalAmountOfShips - 1; i >= amountShips; i--) {
+                getPlacedShips().remove(i);
+            }
+        }
+        System.out.println("Ships in the list: ");
+        for (int i = 0; i < getPlacedShips().size(); i++) {
+            System.out.println(getPlacedShips().get(i).getSize());
+        }
+    }
+
+
 
     /**
      * Making a board x board with cells of a certain size.
@@ -199,5 +219,13 @@ public class Board {
 
     public int getSizeBoard() {
         return sizeBoard;
+    }
+
+    public int getAmountShips() {
+        return amountShips;
+    }
+
+    public void setAmountShips(int amountShips) {
+        this.amountShips = amountShips;
     }
 }

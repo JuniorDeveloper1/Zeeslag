@@ -44,12 +44,4 @@ public class Ship extends Coord {
         isSunk = sunk;
     }
 
-    public boolean isHit(int x, int y) {
-        // Check if the ship is vertical or horizontal and if the position matches
-        if (vertical) {
-            return getX() == x && y >= getY() && y < getY() + size;
-        } else {
-            return getY() == y && x >= getX() && x < getX() + size;
-        }
-    }
 }

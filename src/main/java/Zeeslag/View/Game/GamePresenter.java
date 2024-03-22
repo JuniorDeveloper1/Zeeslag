@@ -38,12 +38,12 @@ public class GamePresenter implements Presenter {
                 String player2Name = view.getPlayName2Field().getText();
 
                 try {
-                    model.playGame(player1Name, player2Name, view.getBoardSizes());
+                    model.playGame(player1Name, player2Name, view.getBoardSizes(), view.getAmountOfShips());
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }
 
-                PlayerManager playerManager = new PlayerManager(player1Name, player2Name);
+                PlayerManager playerManager = new PlayerManager();
                 PlayerView player1View = new PlayerView();
                 PlayerPresenter player1Presenter = new PlayerPresenter(playerManager, player1View);
 

@@ -21,7 +21,7 @@ import java.io.File;
 public class Player2Presenter implements Presenter {
     private final PlayerManager model;
     private final Player2View view;
-    private  Player currentPlayer;
+    private final Player currentPlayer;
     private final GameManager gameManager = GameManager.getInstance();
 
     public Player2Presenter(PlayerManager model, Player2View view) {
@@ -145,7 +145,7 @@ public class Player2Presenter implements Presenter {
                 });
             }
         } else {
-            SceneUtil.showAlert("Not your turn!", "It is the turn of " + model.getGameManager().getPlayer1().getName());
+            SceneUtil.showAlert("Not your turn!", "It is the turn of " + gameManager.getPlayer2().getName());
         }
     }
 

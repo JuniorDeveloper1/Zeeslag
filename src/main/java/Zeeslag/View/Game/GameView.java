@@ -32,14 +32,23 @@ public class GameView extends VBox implements MVPView {
     private Label player2;
 
     private Button playButton;
-    private VBox configurationBox;
+    private HBox configurationBox;
+
+    private Text configurationText;
 
     private  Label boardSizeLabel;
-    private ObservableList<Integer> options;
+    private ObservableList<Integer> boardOptions;
 
     private ComboBox boardSizes;
 
-    private Text configurationText;
+    private Label amountOfShipsLabel;
+    private ObservableList<Integer> amountOfShipsOptions;
+    private ComboBox amountOfShips;
+
+    private VBox amountOfShipsBox;
+
+    private VBox boardSizeBox;
+
     private GameManager gameManager = GameManager.getInstance();
     private Button returnButton;
 
@@ -68,14 +77,23 @@ public class GameView extends VBox implements MVPView {
         playName2Field.setPromptText("Enter player 2's name");
 
         configurationText = new Text("Configuration");
-        configurationBox = new VBox();
+        configurationBox = new HBox();
 
 
          boardSizeLabel= new Label("Board Size:");
 
         // Dropdown menu for board sizes
-        options = FXCollections.observableArrayList(10, 5, 8, 12);
-        boardSizes = new ComboBox<>(options);
+        boardOptions = FXCollections.observableArrayList(10, 5, 8, 12);
+        boardSizes = new ComboBox<>(boardOptions);
+
+        amountOfShipsLabel = new Label("Amount of ships:");
+
+        amountOfShipsOptions = FXCollections.observableArrayList(5, 4, 3, 2, 1);
+        amountOfShips = new ComboBox<>(amountOfShipsOptions);
+
+        boardSizeBox = new VBox();
+
+        amountOfShipsBox = new VBox();
 
         playButton = new Button("play");
         returnButton = new Button("return");
@@ -102,17 +120,28 @@ public class GameView extends VBox implements MVPView {
         playName2Field.setMaxWidth(300);
 
         boardSizeLabel.setPadding(new Insets(0, 10, 0, 0));
-        boardSizes.setValue(options.get(0));
+        boardSizes.setValue(boardOptions.get(0));
+
+        amountOfShipsLabel.setPadding(new Insets(0, 10, 0, 0));
+        amountOfShips.setValue(amountOfShipsOptions.get(0));
+
+        boardSizeBox.setSpacing(10);
+        boardSizeBox.setAlignment(Pos.CENTER);
 
 
-        configurationBox.getChildren().addAll(boardSizeLabel, boardSizes);
+        amountOfShipsBox.setSpacing(10);
+        amountOfShipsBox.setAlignment(Pos.CENTER);
+
+        boardSizeBox.getChildren().addAll(boardSizeLabel, boardSizes);
+        amountOfShipsBox.getChildren().addAll(amountOfShipsLabel, amountOfShips);
+
+        configurationBox.getChildren().addAll(boardSizeBox, amountOfShipsBox);
 
         SceneUtil.setButtonStyles(playButton);
         SceneUtil.setButtonHoverEffects(playButton);
 
         SceneUtil.setButtonStyles(returnButton);
         SceneUtil.setButtonHoverEffects(returnButton);
-
 
         // Add all nodes to the VBox
         getChildren().addAll(title, player1, playName1Field, player2, playName2Field,
@@ -140,5 +169,9 @@ public class GameView extends VBox implements MVPView {
 
     public MusicPlayer getMusicPlayer() {
         return gameManager.getMusicPlayer();
+    }
+
+    public ComboBox getAmountOfShips() {
+        return amountOfShips;
     }
 }

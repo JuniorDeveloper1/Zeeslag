@@ -7,30 +7,36 @@ import Zeeslag.Model.GameManager;
 import javafx.scene.paint.Color;
 
 public class PlayerManager {
-    private GameManager gameManager = GameManager.getInstance();
-    private Player player1;
-    private Player player2;
+    private final GameManager gameManager = GameManager.getInstance();
+    private final Player player1;
+    private final Player player2;
 
-    public PlayerManager(String player1Name, String player2Name) {
-        this.player1 = new Player(player1Name);
-        this.player2 = new Player(player2Name);
-        initializePlayers();
+    public PlayerManager() {
+        this.player1 = gameManager.getPlayer1();
+        this.player2 = gameManager.getPlayer2();
+        this.player1.setCurrentIndex(0);
+        this.player2.setCurrentIndex(0);
     }
 
-    private void initializePlayers() {
-        player1.getBoard().setAllShipsPlaced(false);
-        player2.getBoard().setAllShipsPlaced(false);
-    }
 
     public boolean placeShipHorizontal(Player player, int x, int y) {
         Board board = player.getBoard();
         int currentIndex = player.getCurrentIndex();
-        Ship currentShip = board.getPlacedShips().get(currentIndex);
-        int size = currentShip.getSize();
-        int boardSize = board.getSizeBoard();
-        currentShip.setVertical(false);
+        Ship currentShip = null;
+        int size = -1;
+        int boardSize =-1;
 
-        if (x + size > boardSize || currentIndex >= 5) {
+
+        if (currentIndex < board.getAmountShips()) {
+            currentShip = board.getPlacedShips().get(currentIndex);
+            currentShip.setVertical(false);
+            size = currentShip.getSize();
+            boardSize = board.getSizeBoard();
+        }
+        int maxIndex =  player.getBoard().getAmountShips();
+        int currentIndexForErrorCatch = currentIndex + 1;
+
+        if (x + size > boardSize || currentIndexForErrorCatch > maxIndex) {
             return false;
         }
 
@@ -44,19 +50,31 @@ public class PlayerManager {
             board.placeShip(currentShip, x, y);
         }
 
-        player.setCurrentIndex(currentIndex + 1);
+        if(!player.getBoard().isAllShipsPlaced()) {
+            player.setCurrentIndex(currentIndex + 1);
+        }
+
         return true;
     }
 
     public boolean placeShipVertical(Player player, int x, int y) {
         Board board = player.getBoard();
         int currentIndex = player.getCurrentIndex();
-        Ship currentShip = board.getPlacedShips().get(currentIndex);
-        int size = currentShip.getSize();
-        int boardSize = board.getSizeBoard();
-        currentShip.setVertical(true);
+        Ship currentShip = null;
+        int size = -1;
+        int boardSize =-1;
 
-        if (y + size > boardSize || currentIndex >= 5) {
+        if (currentIndex < board.getAmountShips()) {
+            currentShip = board.getPlacedShips().get(currentIndex);
+            currentShip.setVertical(true);
+            size = currentShip.getSize();
+            boardSize = board.getSizeBoard();
+        }
+
+        int maxIndex =  player.getBoard().getAmountShips();
+        int currentIndexForErrorCatch = currentIndex + 1;
+
+        if (y + size > boardSize || currentIndexForErrorCatch > maxIndex) {
             return false;
         }
 
@@ -70,8 +88,10 @@ public class PlayerManager {
             board.placeShip(currentShip, x, y);
         }
 
-        currentShip.setVertical(false);
-        player.setCurrentIndex(currentIndex + 1);
+        if(!player.getBoard().isAllShipsPlaced()) {
+            player.setCurrentIndex(currentIndex + 1);
+        }
+
         return true;
     }
 

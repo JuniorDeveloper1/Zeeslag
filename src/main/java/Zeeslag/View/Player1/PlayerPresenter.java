@@ -161,9 +161,7 @@ public class PlayerPresenter implements Presenter {
                     Platform.runLater(() -> {
                         SceneUtil.showAlert("Game Over", "You have lost the game.");
                     });
-                    if(gameManager.getPlayer2() instanceof NPC) {
                         openWinView();
-                    }
                 }
             } else {
                 Platform.runLater(() -> {
@@ -172,7 +170,7 @@ public class PlayerPresenter implements Presenter {
                 });
             }
         } else {
-            Platform.runLater(() -> SceneUtil.showAlert("Not your turn!", "It is the turn of " + model.getGameManager().getTurn().getCurrentPlayer().getName()));
+            Platform.runLater(() -> SceneUtil.showAlert("Not your turn!", "It is the turn of " + model.getGameManager().getPlayer2().getName()));
         }
     }
 

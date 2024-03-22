@@ -42,15 +42,28 @@ public class GameManager {
      * Starts a new game with the specified player names and board size.
      * @param player1Name Name of the first player
      * @param player2Name Name of the second player (null for bot)
-     * @param comboBox ComboBox containing board size options
+     * @param boardSize ComboBox containing board size options
      * @throws FileNotFoundException if leaderboard data file is not found
      */
-    public void startNewGame(String player1Name, String player2Name, ComboBox comboBox) throws FileNotFoundException {
-        Board player1Board = new Board((Integer) comboBox.getValue());
-        Board player1OppBoard = new Board((Integer) comboBox.getValue());
+    public void startNewGame(String player1Name, String player2Name, ComboBox boardSize, ComboBox amountOfShips) throws FileNotFoundException {
+        int amountOfShipsValue = (Integer) amountOfShips.getValue();
 
-        Board player2Board = new Board((Integer) comboBox.getValue());
-        Board player2OppBoard = new Board((Integer) comboBox.getValue());
+        Board player1Board = new Board((Integer) boardSize.getValue());
+        player1Board.setAmountShips(amountOfShipsValue);
+        player1Board.adjustShipSize(player1Board.getAmountShips());
+
+        Board player1OppBoard = new Board((Integer) boardSize.getValue());
+        player1OppBoard.setAmountShips(amountOfShipsValue);
+        player1OppBoard.adjustShipSize(player1OppBoard.getAmountShips());
+
+        Board player2Board = new Board((Integer) boardSize.getValue());
+        player2Board.setAmountShips(amountOfShipsValue);
+        player2Board.adjustShipSize(player2Board.getAmountShips());
+
+        Board player2OppBoard = new Board((Integer) boardSize.getValue());
+        player2OppBoard.setAmountShips(amountOfShipsValue);
+        player2OppBoard.adjustShipSize(player2OppBoard.getAmountShips());
+
 
         player1 = new Player(player1Name);
         turn = new Turn(player1);
@@ -71,6 +84,8 @@ public class GameManager {
         player2.setBoard(player2Board);
         player2.setOpponentBoard(player1OppBoard);
 
+
+
         if(getPlayer2() instanceof NPC) {
             player2.getBoard().placeRandomShips();
         }
@@ -83,9 +98,9 @@ public class GameManager {
      * @param boardSize ComboBox containing board size options
      * @throws FileNotFoundException if leaderboard data file is not found
      */
-    public void playGame(String player1, String player2, ComboBox boardSize) throws FileNotFoundException {
+    public void playGame(String player1, String player2, ComboBox boardSize, ComboBox amountOfShips) throws FileNotFoundException {
         createPlayers(player1, player2);
-        gameManager.startNewGame(player1, player2, boardSize);
+        gameManager.startNewGame(player1, player2, boardSize, amountOfShips);
     }
 
     public void createPlayers(String sPlayer1, String sPlayer2) {
