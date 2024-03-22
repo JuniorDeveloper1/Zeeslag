@@ -54,10 +54,6 @@ public class Board {
                 getPlacedShips().remove(i);
             }
         }
-        System.out.println("Ships in the list: ");
-        for (int i = 0; i < getPlacedShips().size(); i++) {
-            System.out.println(getPlacedShips().get(i).getSize());
-        }
     }
 
 

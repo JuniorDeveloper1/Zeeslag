@@ -21,7 +21,6 @@ import javafx.util.Duration;
 public class PlayerPresenter implements Presenter {
     private final PlayerManager model;
     private final PlayerView view;
-
     private final Player currentPlayer;
     private final Player bot;
     private final GameManager gameManager = GameManager.getInstance();
@@ -149,44 +148,35 @@ public class PlayerPresenter implements Presenter {
 
     private void handleAttackAgainstBot(int x, int y) {
         if (model.getGameManager().getTurn().getCurrentPlayer() == getCurrentPlayer()) {
-            if (!getCurrentPlayer().hasWon(getBot())) {
+            if (!getCurrentPlayer().hasWon(getBot(), view.getScene())) {
                 boolean successfulAttack = getCurrentPlayer().attack(getBot(), x, y);
-                if (!getBot().hasWon(getCurrentPlayer())) {
+                if (!getBot().hasWon(getCurrentPlayer(), view.getScene())) {
                     if (successfulAttack) {
                         Platform.runLater(this::startBotAttack);
                     } else {
                         Platform.runLater(() -> SceneUtil.showAlert("Invalid Attack", "You cannot attack this cell."));
                     }
-                } else {
-                    Platform.runLater(() -> {
-                        SceneUtil.showAlert("Game Over", "You have lost the game.");
-                    });
-                        openWinView();
                 }
             } else {
                 Platform.runLater(() -> {
                     SceneUtil.showAlert("Game Over", "You have already won the game.");
-                    openWinView();
+
                 });
             }
         } else {
-            Platform.runLater(() -> SceneUtil.showAlert("Not your turn!", "It is the turn of " + model.getGameManager().getPlayer2().getName()));
+            Platform.runLater(() -> SceneUtil.showAlert("Not your turn!", "It is the turn of "
+                    + model.getGameManager().getPlayer2().getName()));
         }
     }
 
     private void handleAttackAgainstPlayer(int x, int y) {
         if (model.getGameManager().getTurn().getCurrentPlayer() == getCurrentPlayer()) {
-            if(!getCurrentPlayer().hasWon(gameManager.getPlayer2())) {
+            if(!getCurrentPlayer().hasWon(gameManager.getPlayer2(), view.getScene())) {
                 getCurrentPlayer().attack(model.getGameManager().getPlayer2(), x, y);
-            } else {
-                Platform.runLater(() -> {
-                    SceneUtil.showAlert("Game Over", getCurrentPlayer().getName()
-                            +"'s has already won the game.");
-                    openWinView();
-                });
             }
         } else {
-            SceneUtil.showAlert("Not your turn!", "It is the turn of " + model.getGameManager().getPlayer1().getName());
+            SceneUtil.showAlert("Not your turn!", "It is the turn of "
+                    + model.getGameManager().getPlayer2().getName());
         }
     }
 
@@ -195,7 +185,7 @@ public class PlayerPresenter implements Presenter {
                 new KeyFrame(Duration.seconds(1), event -> {
                     Platform.runLater(() -> {
                         if (model.getGameManager().getTurn().getCurrentPlayer() == getBot()) {
-                            if (!getBot().hasWon(getCurrentPlayer())) {
+                            if (!getBot().hasWon(getCurrentPlayer(), view.getScene())) {
                                 if (getBot() instanceof NPC) {
                                     boolean hit = ((NPC) getBot()).attackPlayer(getCurrentPlayer());
                                     if (!hit) {
@@ -212,14 +202,6 @@ public class PlayerPresenter implements Presenter {
 
         botAttackTimer.setCycleCount(Timeline.INDEFINITE);
         botAttackTimer.play();
-    }
-
-    private void openWinView() {
-        WinView winView = new WinView();
-        WinPresenter winPresenter = new WinPresenter(winView);
-        SceneUtil.closeScene(view.getScene());
-
-        SceneUtil.openView(winPresenter);
     }
 
     @Override

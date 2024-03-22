@@ -2,7 +2,11 @@ package Zeeslag.Model.Core;
 
 import Zeeslag.Model.GameManager;
 import Zeeslag.Model.helper.SceneUtil;
+import Zeeslag.View.Win.WinPresenter;
+import Zeeslag.View.Win.WinView;
+import javafx.scene.Scene;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.util.UUID;
 
@@ -34,7 +38,6 @@ public  class Player {
      * @return
      */
     public boolean attack(Player otherplayer, int x, int y) {
-        if (!hasWon(otherplayer)) {
             Cell cell = opponentBoard.getCell(x, y);
             Cell opponentCell = otherplayer.getBoard().getCell(x, y);
             this.setAmountOfAttacks(getAmountOfAttacks() + 1);
@@ -60,9 +63,6 @@ public  class Player {
                 opponentCell.setFill(Color.BLACK);
                 getGameManager().getTurn().setPlayerTurn(otherplayer);
             }
-        } else {
-            SceneUtil.showAlert(getName() + "WON!", getName() + " Heeft het spel gewonnen!");
-        }
         return true;
     }
 
@@ -74,7 +74,7 @@ public  class Player {
      * @param otherPlayer
      * @return
      */
-    public boolean hasWon(Player otherPlayer) {
+    public boolean hasWon(Player otherPlayer, Scene view) {
         for (Ship ship : otherPlayer.getBoard().getPlacedShips()) {
             if (!ship.isSunk()) {
                 return false;
@@ -82,15 +82,24 @@ public  class Player {
         }
 
         if(getAmountLeaderBoardUpdates() == 0){
-            PlayerGameData.save(this.getName(), this.getAmountOfAttacks());
-            getGameManager().getLeaderboard().updateLeaderboardForPlayer(this.getName());
-            this.setAmountLeaderBoardUpdates(1);
             /**
              * We gebruiken de setAmountLeaderBoardUpdates
              * zodat de speler niet oneindig kan klikken zodat hij oneindig in de playergamedata.txt file komt.
              */
+            PlayerGameData.save(this.getName(), this.getAmountOfAttacks());
+            getGameManager().getLeaderboard().updateLeaderboardForPlayer(this.getName());
+            this.setAmountLeaderBoardUpdates(1);
+
+            openWinView(view);
         }
         return true;
+    }
+
+    private void openWinView(Scene view) {
+        WinView winView = new WinView();
+        WinPresenter winPresenter = new WinPresenter(winView);
+        SceneUtil.closeScene(view);
+        SceneUtil.openView(winPresenter);
     }
 
     public int getCurrentIndex() {

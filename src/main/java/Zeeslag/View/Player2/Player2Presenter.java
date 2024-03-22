@@ -9,6 +9,7 @@ import Zeeslag.View.Win.WinPresenter;
 import Zeeslag.View.Win.WinView;
 import javafx.application.Platform;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -68,8 +69,6 @@ public class Player2Presenter implements Presenter {
         double mouseY = mouseEvent.getY();
         int x = (int) (mouseX / cellWidth);
         int y = (int) (mouseY / cellHeight);
-        System.out.println("Mouse coordinates: (" + mouseX + ", " + mouseY + ")");
-        System.out.println("Clicked cell coordinates: (" + x + ", " + y + ")");
 
         if (button == MouseButton.PRIMARY && !model.getGameManager().hasStarted()) {
             handlePrimaryClick(x, y);
@@ -135,30 +134,13 @@ public class Player2Presenter implements Presenter {
 
     private void handleAttackAgainstPlayer(int x, int y) {
         if (model.getGameManager().getTurn().getCurrentPlayer() == getCurrentPlayer()) {
-            if(!getCurrentPlayer().hasWon(gameManager.getPlayer1())) {
+            if(!getCurrentPlayer().hasWon(gameManager.getPlayer1(), view.getScene())) {
                 getCurrentPlayer().attack(model.getGameManager().getPlayer1(), x, y);
-            } else {
-                Platform.runLater(() -> {
-                    SceneUtil.showAlert("Game Over", getCurrentPlayer().getName()
-                            +"'s has already won the game.");
-                    openWinView();
-                });
             }
         } else {
-            SceneUtil.showAlert("Not your turn!", "It is the turn of " + gameManager.getPlayer2().getName());
+            SceneUtil.showAlert("Not your turn!", "It is the turn of " + gameManager.getPlayer1().getName());
         }
     }
-
-    private void openWinView() {
-        WinView winView = new WinView();
-        WinPresenter winPresenter = new WinPresenter(winView);
-
-        SceneUtil.closeScene(view.getScene());
-        SceneUtil.openView(winPresenter);
-    }
-
-
-
 
     public Player getCurrentPlayer() {
         return currentPlayer;

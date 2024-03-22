@@ -2,6 +2,8 @@ package Zeeslag.Model.Core;
 
 import Zeeslag.Model.GameManager;
 import Zeeslag.Model.helper.SceneUtil;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import java.util.*;
 
@@ -31,11 +33,11 @@ public class NPC extends Player {
      * @return
      */
     public boolean attackPlayer(Player otherPlayer) {
-        if(!hasWon(otherPlayer)) {
+        if(getHitShipCoords().isEmpty()) {
             return randomAttack(otherPlayer);
+        } else {
+            return searchForNeighbor(otherPlayer);
         }
-
-        return true;
     }
 
 
@@ -75,7 +77,7 @@ public class NPC extends Player {
      * @return null if the attackCoord has failed.
      */
     private boolean searchForNeighbor(Player otherPlayer) {
-        attackCoord = null;
+        attackCoord = generateRandomAttackCoord();
 
         Coord lastAttackCoord = (!getAttackedCoordinates().isEmpty()) ? getAttackedCoordinates().get(getAttackedCoordinates().size() - 1) : null;
 
@@ -121,8 +123,7 @@ public class NPC extends Player {
                 if (!getAttackedCoordinates().contains(neighborCoord)) {
                     // Attempt to attack the neighboring cell
                     boolean hit = super.attack(otherPlayer, nx, ny);
-                    System.out.println("ATTACKED: (" + nx + ", " + ny + ")");
-
+                    
                     // If the attack is successful, add the coordinates to hit ship coords and attacked coordinates
                     if (hit) {
                         getHitShipCoords().add(neighborCoord);

@@ -30,7 +30,7 @@ public class WinPresenter implements Presenter {
     }
     private void updateView() {
         if(gameManager.getPlayer1().hasWon(
-                gameManager.getPlayer2()
+                gameManager.getPlayer2(), view.getScene()
         )) {
             view.getPlayerName().setText(gameManager.getPlayer1().getName() + " has won");
             System.out.println(gameManager.getPlayer1().getName() + " has won");
